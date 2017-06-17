@@ -31,6 +31,14 @@ module.exports = {
         exclude: /node_modules/, 
         options: {presets: ['es2015', 'react']}
       },
+      {
+        test: [/\.css$/],
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+        use: 'url-loader'
+      }
     ],
   },
   plugins: [

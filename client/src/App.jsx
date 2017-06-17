@@ -4,38 +4,72 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import Faq from './components/Faq.jsx';
 
+// Components for pages 
+import Faq from './components/Faq.jsx';
+import About from './components/About.jsx';
+import Signup from './components/Signup.jsx';
+import Nav from './components/Nav.jsx';
+import Landing from './components/Landing.jsx'
+
+import { Menu } from 'semantic-ui-react'
+
+const routes = [
+  { path: '/',
+    exact: true,
+    sidebar: () => <Landing/>,
+    main: () => <Landing/>
+  },
+  { path: '/about',
+    sidebar: () => <About/>,
+    main: () => <About/>
+  },
+  { path: '/faq',
+    sidebar: () => <Faq/>,
+    main: () => <Faq/>
+  },
+  { path: '/signup',
+    sidebar: () => <Signup/>,
+    main: () => <Signup/>
+  }
+]
 
 const App = () => (
   <Router>
-    <div>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/faq">FAQ</Link></li>
-      </ul>
+    <div style={{ display: 'flex' }}>
+      <div style={{
+        padding: '10px',
+        width: '20%',
+        background: '#f0f0f0',
+        height: '100vh'
+      }}>
+        <ul style={{ listStyleType: 'none', padding: 0, position: 'fixed' }}>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/faq">FAQ</Link></li>
+          <li><Link to="/signup">Signup</Link></li>
+        </ul>
 
-      <hr/>
+        
+      </div>
 
-      <Route exact path="/" component={Home}/>
-      <Route path="/about" component={About}/>
-      <Route path="/faq" component={Faq}/>
+      <div style={{ flex: 1, padding: '20px' }}>
+        {routes.map((route, index) => (
+          // Render more <Route>s with the same paths as
+          // above, but different components this time.
+          <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            component={route.main}
+          />
+        ))}
+      </div>
     </div>
   </Router>
 )
 
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-)
 
 
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
-)
 
 export default App
