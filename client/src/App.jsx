@@ -11,6 +11,7 @@ import About from './components/About.jsx';
 import Signup from './components/Signup.jsx';
 import Nav from './components/Nav.jsx';
 import Landing from './components/Landing.jsx'
+import Games from './components/Games.jsx'
 
 import { Menu } from 'semantic-ui-react'
 
@@ -31,6 +32,10 @@ const routes = [
   { path: '/signup',
     sidebar: () => <Signup/>,
     main: () => <Signup/>
+  },
+  { path: '/games', 
+    sidebar: () => <Games/>,
+    main: () => <Games/> 
   }
 ]
 
@@ -48,6 +53,8 @@ const App = () => (
           <li><Link to="/about">About</Link></li>
           <li><Link to="/faq">FAQ</Link></li>
           <li><Link to="/signup">Signup</Link></li>
+          <br/>
+          <li><Link to="/games">Games</Link></li>
         </ul>
 
         
