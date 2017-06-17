@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
     table.string('email');
     table.string('password');
     table.string('phone');
+    table.string('facebook_id')
     table.boolean('text_notification');
     table.boolean('email_notification');
   });

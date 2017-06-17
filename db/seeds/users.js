@@ -45,6 +45,16 @@ exports.seed = function(knex, Promise) {
         phone: 183456790,
         text_notification: true,
         email_notification: false
+      }),
+      knex('users').insert({
+        id: 5,
+        first_name: 'Spencer',
+        last_name: 'Ang',
+        email: 'Spencer@Ang',
+        phone: 183456590,
+        facebook_id: 'sdfsdf435654fdgeg6575fdgdf',
+        text_notification: false,
+        email_notification: true
       })
     ])
   })
@@ -97,6 +107,12 @@ exports.seed = function(knex, Promise) {
         game_id: 1,
         user_id: 4,
         going: true
+      }),
+      knex('games_users').insert({
+        id: 5,
+        game_id: 1,
+        user_id: 5,
+        going: true
       })
     ]);
   })
@@ -121,6 +137,11 @@ exports.seed = function(knex, Promise) {
         id: 4,
         team_id: 1,
         user_id: 4
+      }),
+      knex('teams_users').insert({
+        id: 5,
+        team_id: 1,
+        user_id: 5
       })
     ]);
   })
