@@ -12,21 +12,25 @@ class Games extends Component {
       <div>
       <Card>
         <Card.Content>
-          <Image floated='right' size='mini' src='/assets/images/avatar/large/steve.jpg' />
           <Card.Header>
-            Steve Sanders
+            June 17th 2017
           </Card.Header>
           <Card.Meta>
-            Friends of Elliot
+            <span className="time">
+              10PM
+            </span>
+            <span className="rink">
+              Rink 1
+            </span>
           </Card.Meta>
           <Card.Description>
-            Steve wants to add you to the group <strong>best friends</strong>
+              Wearing dark. 
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
           <div className='ui two buttons'>
-            <Button basic color='green'>Approve</Button>
-            <Button basic color='red'>Decline</Button>
+            <Button basic color='green' active>Available</Button>
+            <Button basic color='red'>Unavailable</Button>
           </div>
         </Card.Content>
       </Card>
