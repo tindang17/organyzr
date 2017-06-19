@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {
   HashRouter as Router,
   Route,
@@ -15,31 +15,41 @@ import Games from './components/Games.jsx'
 
 import { Menu } from 'semantic-ui-react'
 
-const routes = [
-  { path: '/',
-    exact: true,
-    sidebar: () => <Landing/>,
-    main: () => <Landing/>
-  },
-  { path: '/about',
-    sidebar: () => <About/>,
-    main: () => <About/>
-  },
-  { path: '/faq',
-    sidebar: () => <Faq/>,
-    main: () => <Faq/>
-  },
-  { path: '/signup',
-    sidebar: () => <Signup/>,
-    main: () => <Signup/>
-  },
-  { path: '/games', 
-    sidebar: () => <Games/>,
-    main: () => <Games/> 
-  }
-]
 
-const App = () => (
+class App extends Component {
+  constructor (props) {
+    super(props);
+  }
+
+  componentDidMount() {
+
+  }
+  
+  render () {
+    const routes = [
+      { path: '/',
+        exact: true,
+        sidebar: () => <Landing/>,
+        main: () => <Landing/>
+      },
+      { path: '/about',
+        sidebar: () => <About/>,
+        main: () => <About/>
+      },
+      { path: '/faq',
+        sidebar: () => <Faq/>,
+        main: () => <Faq/>
+      },
+      { path: '/signup',
+        sidebar: () => <Signup/>,
+        main: () => <Signup/>
+      },
+      { path: '/games', 
+        sidebar: () => <Games/>,
+        main: () => <Games/> 
+      }
+    ]
+  return (
   <Router>
     <div style={{ display: 'flex' }}>
       <div style={{
@@ -74,8 +84,8 @@ const App = () => (
       </div>
     </div>
   </Router>
-)
-
+  )}
+}
 
 
 
