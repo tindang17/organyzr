@@ -5,13 +5,14 @@ import {
   Link
 } from 'react-router-dom'
 
-// Components for pages 
+// Components for pages
 import Faq from './components/Faq.jsx';
 import About from './components/About.jsx';
 import Signup from './components/Signup.jsx';
 import Nav from './components/Nav.jsx';
 import Landing from './components/Landing.jsx'
 import Games from './components/Games.jsx'
+import Login from './components/Login.jsx'
 
 import { Menu } from 'semantic-ui-react'
 
@@ -33,9 +34,13 @@ const routes = [
     sidebar: () => <Signup/>,
     main: () => <Signup/>
   },
-  { path: '/games', 
+  { path: '/games',
     sidebar: () => <Games/>,
-    main: () => <Games/> 
+    main: () => <Games/>
+  },
+  { path: '/login',
+    sidebar: () => <Login/>,
+    main: () => <Login/>
   }
 ]
 
@@ -53,11 +58,12 @@ const App = () => (
           <li><Link to="/about">About</Link></li>
           <li><Link to="/faq">FAQ</Link></li>
           <li><Link to="/signup">Signup</Link></li>
+          <li><Link to="/login">Login</Link></li>
           <br/>
           <li><Link to="/games">Games</Link></li>
         </ul>
 
-        
+
       </div>
 
       <div style={{ flex: 1, padding: '20px' }}>

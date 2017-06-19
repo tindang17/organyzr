@@ -35,8 +35,6 @@ app.post('/signup', function(req, res) {
   // Do a MySQL query.
   console.log(user)
   add_user_local(knex, user, res)
-
-
 });
 
 
