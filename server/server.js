@@ -2,14 +2,14 @@ const express = require('express');
 const ENV = process.env.ENV || "development";
 const body = require('body-parser');
 const cookies = require('cookie-parser');
-const WebpackDevServer = require('webpack-dev-server');
+// const WebpackDevServer = require('webpack-dev-server');
 
 
 const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
 
-// const gamesRoutes = require('./routes/games')
+const gamesRoutes = require('./routes/games')
 
 const webpack = {
   core: require('webpack'),
@@ -21,7 +21,7 @@ const webpack = {
 const app = express()
 const compiler = webpack.core(webpack.config);
 
-// const PORT = 8080;
+const PORT = 8080;
 
 //Functions
 
@@ -45,19 +45,9 @@ app.post('/signup', function(req, res) {
 });
 
 app.get('/games/data', function(req, res) {
-  // console.log('res', res);
-  // knex('games').select("*").then((results) => {
     console.log('server side');
-    res.send('hello');
-    // gameRoutes(knex, res);
-      // knex
-      // .select("*")
-      // .from("games")
-      // .then(function(results){
-      //   console.log('in games.js', results);
-      //   res.send(results);
-      // });
-  // })
+    gamesRoutes(knex, res); 
+
 })
 
 app.use(webpack.middleware(compiler, {
@@ -68,23 +58,23 @@ app.use(webpack.middleware(compiler, {
   }
 }));
 
-new WebpackDevServer(webpack.core(webpack.config), {
-    publicPath: webpack.config.output.publicPath,
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000,
-      ignored: /node_modules/
-    }
-  })
-  .listen(3000, '0.0.0.0', function (err, result) {
-    if (err) {
-      console.log(err);
-    }
+// new WebpackDevServer(webpack.core(webpack.config), {
+//     publicPath: webpack.config.output.publicPath,
+//     watchOptions: {
+//       aggregateTimeout: 300,
+//       poll: 1000,
+//       ignored: /node_modules/
+//     }
+//   })
+//   .listen(3000, '0.0.0.0', function (err, result) {
+//     if (err) {
+//       console.log(err);
+//     }
 
-    console.log('Running at http://0.0.0.0:3000');
-  });
+//     console.log('Running at http://0.0.0.0:3000');
+//   });
 
-// app.listen(PORT, () => {
-//   console.log(`Server running at http://localhost:${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+});
 

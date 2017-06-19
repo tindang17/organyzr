@@ -5,14 +5,20 @@ import axios from 'axios';
 class Games extends Component {
   constructor (props) {
     super(props);
-
+    this.state = {
+      games: []
+    }
   }
 
   componentDidMount() {
+    console.log('before axios request');
     axios.get(`/games/data`)
     .then(res => {
-      console.log(res);
+      this.setState({games: res.data})
+      console.log(this.state.games);
     })
+  
+  console.log('last thing in comp did mount');
   }
 
   render () {
