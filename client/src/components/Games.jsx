@@ -1,10 +1,18 @@
 import React, {Component} from 'react';
-import { Button, Card, Image, Grid } from 'semantic-ui-react'
+import { Button, Card, Image, Grid } from 'semantic-ui-react';
+import axios from 'axios';
 
 class Games extends Component {
   constructor (props) {
     super(props);
 
+  }
+
+  componentDidMount() {
+    axios.get(`/games/data`)
+    .then(res => {
+      console.log(res);
+    })
   }
 
   render () {

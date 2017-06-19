@@ -9,6 +9,8 @@ const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
 
+// const gamesRoutes = require('./routes/games')
+
 const webpack = {
   core: require('webpack'),
   middleware: require('webpack-dev-middleware'),
@@ -28,6 +30,7 @@ const add_user_facebook = require("./functions/add_user_facebook.js");
 
 app.use(body.json());
 app.use(cookies());
+// app.use('/games', gamesRoutes(knex));
 
 // Listen to POST requests to /users.
 app.post('/signup', function(req, res) {
@@ -41,6 +44,21 @@ app.post('/signup', function(req, res) {
 
 });
 
+app.get('/games/data', function(req, res) {
+  // console.log('res', res);
+  // knex('games').select("*").then((results) => {
+    console.log('server side');
+    res.send('hello');
+    // gameRoutes(knex, res);
+      // knex
+      // .select("*")
+      // .from("games")
+      // .then(function(results){
+      //   console.log('in games.js', results);
+      //   res.send(results);
+      // });
+  // })
+})
 
 app.use(webpack.middleware(compiler, {
   publicPath: webpack.config.output.publicPath,
@@ -49,7 +67,6 @@ app.use(webpack.middleware(compiler, {
     colors: true
   }
 }));
-
 
 new WebpackDevServer(webpack.core(webpack.config), {
     publicPath: webpack.config.output.publicPath,
@@ -66,7 +83,6 @@ new WebpackDevServer(webpack.core(webpack.config), {
 
     console.log('Running at http://0.0.0.0:3000');
   });
-
 
 // app.listen(PORT, () => {
 //   console.log(`Server running at http://localhost:${PORT}`);
