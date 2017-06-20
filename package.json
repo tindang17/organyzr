@@ -2,9 +2,10 @@
   "name": "final",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "./node_modules/.bin/nodemon -L --ignore public/"
   },
   "keywords": [],
   "author": "",
@@ -37,5 +38,8 @@
     "webpack-dev-middleware": "^1.10.2",
     "webpack-dev-server": "^2.4.5",
     "webpack-hot-middleware": "^2.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }

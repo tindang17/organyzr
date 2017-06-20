@@ -1,7 +1,17 @@
+"use strict";
+
+require('dotenv').config();
+// set up server
+const ENV = process.env.ENV || "development";
+const PORT = process.env.PORT || 8080;
 const express = require('express');
 const ENV = process.env.ENV || "development";
 const body = require('body-parser');
 const cookies = require('cookie-parser');
+
+// set up knex
+// set up webpack
+=======
 // const WebpackDevServer = require('webpack-dev-server');
 
 
@@ -10,23 +20,29 @@ const knex        = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
 
 const gamesRoutes = require('./routes/games')
-
+ 
 const webpack = {
   core: require('webpack'),
   middleware: require('webpack-dev-middleware'),
   hot: require('webpack-hot-middleware'),
   config: require('../client/webpack.config.js')
-}
+};
 
-const app = express()
+const app = express();
 const compiler = webpack.core(webpack.config);
 
-const PORT = 8080;
 
+
+if (ENV === 'development') {
+  const knexLogger = require('knex-logger');
+  app.use(knexLogger(knex));
+}
+=======
 //Functions
 
 const add_user_local = require("./functions/add_user_local.js");
 const add_user_facebook = require("./functions/add_user_facebook.js");
+
 
 app.use(body.json());
 app.use(cookies());
@@ -40,8 +56,6 @@ app.post('/signup', function(req, res) {
   // Do a MySQL query.
   console.log(user)
   add_user_local(knex, user, res)
-
-
 });
 
 app.get('/games/data', function(req, res) {
@@ -49,6 +63,7 @@ app.get('/games/data', function(req, res) {
     gamesRoutes(knex, res); 
 
 })
+
 
 app.use(webpack.middleware(compiler, {
   publicPath: webpack.config.output.publicPath,
@@ -58,6 +73,10 @@ app.use(webpack.middleware(compiler, {
   }
 }));
 
+
+// routes to handle react request
+
+=======
 // new WebpackDevServer(webpack.core(webpack.config), {
 //     publicPath: webpack.config.output.publicPath,
 //     watchOptions: {
@@ -73,6 +92,7 @@ app.use(webpack.middleware(compiler, {
 
 //     console.log('Running at http://0.0.0.0:3000');
 //   });
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
