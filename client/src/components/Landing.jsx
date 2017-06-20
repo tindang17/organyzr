@@ -1,18 +1,35 @@
 import React, {Component} from 'react';
+import {
+  HashRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 import { Segment, Button, Divider, Image } from 'semantic-ui-react'
-
+import Signup from './Signup.jsx';
 
 const Landing = () => (
-
-  <div>
-    <Image src='client/src/images/organyzr.png' fluid size='large' centered/>
-    <Segment padded>
-      <Button primary fluid>Login</Button>
-      <Divider horizontal>Or</Divider>
-      <Button secondary fluid>Sign Up Now</Button>
-    </Segment>
-  </div>
-
+  <Router>
+    <div>
+      <Image src={require('../images/organyzr.png')} size='large' centered/>
+      <Segment padded>
+        <Link to='/login'>
+          <Button primary fluid>Login</Button>
+        </Link>
+        
+        <Divider horizontal>Or</Divider>
+        
+        <Link to='/signup'>
+          <Button secondary fluid>Sign Up Now</Button>
+        </Link>
+      </Segment>
+    
+      {/*<Route path='/login' component={Login}/>*/}
+      <Route path='/signup' component={Signup}/>
+    </div>
+  </Router>
 )
 
+
+
+  
 export default Landing;

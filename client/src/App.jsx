@@ -52,42 +52,43 @@ class App extends Component {
     ]
 
     
-  return (
-  <Router>
-    <div style={{ display: 'flex' }}>
-      <div style={{
-        padding: '10px',
-        width: '20%',
-        background: '#f0f0f0',
-        height: '100vh'
-      }}>
-        <ul style={{ listStyleType: 'none', padding: 0, position: 'fixed' }}>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/faq">FAQ</Link></li>
-          <li><Link to="/signup">Signup</Link></li>
-          <br/>
-          <li><Link to="/games">Games</Link></li>
-        </ul>
+    return (
+    <Router>
+      <div style={{ display: 'flex' }}>
+        <div style={{
+          padding: '10px',
+          width: '20%',
+          background: '#f0f0f0',
+          height: '100vh'
+        }}>
+          <ul style={{ listStyleType: 'none', padding: 0, position: 'fixed' }}>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/faq">FAQ</Link></li>
+            <li><Link to="/signup">Signup</Link></li>
+            <br/>
+            <li><Link to="/games">Games</Link></li>
+          </ul>
 
-        
-      </div>
+          
+        </div>
 
-      <div style={{ flex: 1, padding: '20px' }}>
-        {routes.map((route, index) => (
-          // Render more <Route>s with the same paths as
-          // above, but different components this time.
-          <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            component={route.main}
-          />
-        ))}
+        <div style={{ flex: 1, padding: '20px' }}>
+          {routes.map((route, index) => (
+            // Render more <Route>s with the same paths as
+            // above, but different components this time.
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              component={route.main}
+            />
+          ))}
+        </div>
       </div>
-    </div>
-  </Router>
-  )}
+    </Router>
+    )
+  }
 }
 
 
