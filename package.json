@@ -2,9 +2,10 @@
   "name": "final",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "./node_modules/.bin/nodemon -L --ignore public/"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "express": "^4.15.3",
     "html-webpack-plugin": "^2.28.0",
     "knex": "^0.13.0",
+    "knex-logger": "^0.1.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "pg": "^6.2.4",
@@ -34,5 +36,8 @@
     "webpack": "^2.6.1",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
