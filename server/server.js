@@ -5,13 +5,11 @@ require('dotenv').config();
 const ENV = process.env.ENV || "development";
 const PORT = process.env.PORT || 8080;
 const express = require('express');
-const ENV = process.env.ENV || "development";
 const body = require('body-parser');
 const cookies = require('cookie-parser');
 
 // set up knex
 // set up webpack
-=======
 // const WebpackDevServer = require('webpack-dev-server');
 
 
@@ -37,7 +35,7 @@ if (ENV === 'development') {
   const knexLogger = require('knex-logger');
   app.use(knexLogger(knex));
 }
-=======
+
 //Functions
 
 const add_user_local = require("./functions/add_user_local.js");
@@ -76,7 +74,6 @@ app.use(webpack.middleware(compiler, {
 
 // routes to handle react request
 
-=======
 // new WebpackDevServer(webpack.core(webpack.config), {
 //     publicPath: webpack.config.output.publicPath,
 //     watchOptions: {
