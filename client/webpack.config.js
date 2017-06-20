@@ -7,6 +7,7 @@ module.exports = {
   // context: path(__dirname, 'src'),
 
   entry: [
+    // 'webpack-dev-server/client?http://localhost:3000',
     './client/src/index.jsx'
     // the entry point of our app
   ],
