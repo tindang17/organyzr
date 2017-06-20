@@ -2,6 +2,7 @@ const express = require('express');
 const ENV = process.env.ENV || "development";
 const body = require('body-parser');
 const cookies = require('cookie-parser');
+const cookieSession = require('cookie-session');
 
 const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
@@ -21,11 +22,102 @@ const PORT = 8080;
 
 //Functions
 
-const add_user_local = require("./functions/add_user_local.js");
-const add_user_facebook = require("./functions/add_user_facebook.js");
+// const add_user_local = require("./functions/passport/add_user_local.js");
+// const add_user_facebook = require("./functions/add_user_facebook.js");
 
 app.use(body.json());
 app.use(cookies());
+app.use(knexLogger(knex));
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['kfpoier0tu5g0rejgre', 'erljfo34if0jwfdkepf']
+}));
+
+
+var passport = require('passport')
+LocalStrategy = require('passport-local').Strategy;
+// FacebookStrategy = require('passport-facebook').Strategy;
+
+passport.use(new LocalStrategy(
+  function(email, password, done) {
+      knex
+          .select()
+          .where({email: email})
+          .from("users").first().then(user => {
+      if (!user) {
+        return done(null, false, { message: 'Incorrect email.' });
+      }
+      if (!(user.password === password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+          }).catch(function(err) {
+return done(err);
+
+          });
+
+  }
+));
+
+// passport.use(new FacebookStrategy({
+//     clientID: '891703524347118',
+//     clientSecret: '98717a1f70a79ad745206c6a7e6323f9',
+//     callbackURL: "http://localhost:3000/auth/facebook/callback",
+//     profileFields: ['id', 'email', 'name']
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     // User.findOrCreate(..., function(err, user) {
+//     //   if (err) { return done(err); }
+//     //   done(null, user);
+//     // });
+//     console.log('sdfsfd')
+//     console.log(accessToken)
+//     console.log(refreshToken)
+//     console.log(profile)
+//     console.log(done)
+//     knex('users')
+//     done(null, )
+//   }
+// ));
+
+
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+    console.log("serialize", user.id)
+  });
+
+  passport.deserializeUser((id, done) => {
+    console.log("deserialize", id)
+    knex('users').where({id: id}).first()
+    .then((user) => { done(null, user); })
+    .catch((err) => { done(err,null); });
+  });
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+// // Redirect the user to Facebook for authentication.  When complete,
+// // Facebook will redirect the user back to the application at
+// //     /auth/facebook/callback
+// app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email']}));
+
+// // Facebook will redirect the user to this URL after approval.  Finish the
+// // authentication process by attempting to obtain an access token.  If
+// // access was granted, the user will be logged in.  Otherwise,
+// // authentication has failed.
+// app.get('/auth/facebook/callback',
+//   passport.authenticate('facebook', { successRedirect: '/',
+//                                       failureRedirect: '/login' }));
+
 
 // Listen to POST requests to /users.
 app.post('/signup', function(req, res) {
