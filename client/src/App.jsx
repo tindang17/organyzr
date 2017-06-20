@@ -4,6 +4,7 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import axios from 'axios';
 
 // Components for pages 
 import Faq from './components/Faq.jsx';
@@ -49,6 +50,8 @@ class App extends Component {
         main: () => <Games/> 
       }
     ]
+
+    
   return (
   <Router>
     <div style={{ display: 'flex' }}>

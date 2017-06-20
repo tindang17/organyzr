@@ -72,14 +72,23 @@ exports.seed = function(knex, Promise) {
 // insert data into games table
   .then(() => {
     return Promise.all([
-      knex('games').insert({
+      knex('games').insert([
+        {
         id: 1,
         location: 'lighthouse labs',
         date: '2017-06-15',
         time: '04:05:06 PST',
         description: 'get lit',
         team_id: 1
-      })
+      }, 
+      {
+        id: 2,
+        location: 'gastown',
+        date: '2017-08-15',
+        time: '14:05:06 PST',
+        description: 'gastown desc',
+        team_id: 1
+      }])
     ]);
   })
   .then(() => {
