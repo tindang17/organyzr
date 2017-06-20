@@ -37,7 +37,7 @@ class Games extends Component {
               <Card fluid color='violet'>
                 <Card.Content>
                   <Card.Header>
-                    Date
+                  {gameCards[i].date}
                   </Card.Header>
                   <Card.Meta>
                     <span className="time">
