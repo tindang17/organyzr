@@ -5,9 +5,10 @@ require('dotenv').config();
 const ENV = process.env.ENV || "development";
 const PORT = process.env.PORT || 8080;
 const express = require('express');
-const body = require('body-parser');
-const cookies = require('cookie-parser');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+const path = require('path');
 
 // set up knex
 // set up webpack
@@ -30,7 +31,7 @@ const webpack = {
 const app = express();
 const compiler = webpack.core(webpack.config);
 
-
+app.set('view engine', 'ejs');
 
 if (ENV === 'development') {
   const knexLogger = require('knex-logger');
@@ -39,12 +40,13 @@ if (ENV === 'development') {
 
 //Functions
 
+const add_user_local = require("./functions/add_user_local.js");
+
 // const add_user_local = require("./functions/passport/add_user_local.js");
 // const add_user_facebook = require("./functions/add_user_facebook.js");
 
 
-app.use(body.json());
-app.use(cookies());
+
 
 app.use(knexLogger(knex));
 
@@ -54,20 +56,23 @@ app.use(cookieSession({
 }));
 
 
-var passport = require('passport')
-LocalStrategy = require('passport-local').Strategy;
+const passport = require('passport')
+ , LocalStrategy = require('passport-local').Strategy;
 // FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new LocalStrategy(
   function(email, password, done) {
+    console.log('local passport', email, password)
       knex
           .select()
           .where({email: email})
           .from("users").first().then(user => {
       if (!user) {
+        console.log('user not found')
         return done(null, false, { message: 'Incorrect email.' });
       }
       if (!(user.password === password)) {
+        console.log('incoorrect password')
         return done(null, false, { message: 'Incorrect password.' });
       }
       return done(null, user);
@@ -115,7 +120,7 @@ return done(err);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -151,11 +156,36 @@ app.post('/signup', function(req, res) {
   add_user_local(knex, user, res)
 });
 
+app.post('/login',
+  passport.authenticate('local',  { successRedirect: '/',
+                                   failureRedirect: '/test/login',
+                                   failureFlash: false }),
+    function(req, res) {
+      console.log(req)
+      console.log('post to login')
+      res.json({ success: false, message: 'success'})
+    }
+);
+
+app.get('/test/login', function(req, res) {
+    let templateVars = req.session.passport;
+    console.log('templatevars', templateVars)
+    res.render('login', templateVars);
+  });
+app.post('/test/login',
+  passport.authenticate('local',  { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: false }),
+    function(req, res) {
+      console.log(req)
+      console.log('post to login')
+      res.json({ success: false, message: 'success'})
+    }
+);
 
 app.get('/games/data', function(req, res) {
     console.log('server side');
     gamesRoutes(knex, res);
-
 })
 
 
@@ -169,23 +199,7 @@ app.use(webpack.middleware(compiler, {
 }));
 
 
-// routes to handle react request
 
-// new WebpackDevServer(webpack.core(webpack.config), {
-//     publicPath: webpack.config.output.publicPath,
-//     watchOptions: {
-//       aggregateTimeout: 300,
-//       poll: 1000,
-//       ignored: /node_modules/
-//     }
-//   })
-//   .listen(3000, '0.0.0.0', function (err, result) {
-//     if (err) {
-//       console.log(err);
-//     }
-
-//     console.log('Running at http://0.0.0.0:3000');
-//   });
 
 
 app.listen(PORT, () => {

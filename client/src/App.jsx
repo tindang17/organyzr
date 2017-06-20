@@ -51,6 +51,10 @@ class App extends Component {
       { path: '/games',
         sidebar: () => <Games/>,
         main: () => <Games/>
+      },
+      { path: '/login',
+        sidebar: () => <Login/>,
+        main: () => <Login/>
       }
     ]
 

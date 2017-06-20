@@ -41,11 +41,11 @@ class Login extends React.Component {
       })
       .then(function(response) {
         console.log('response', response)
-        if (response.status === 200) {
-          console.log('success')
-          console.log('json', response.json)
-          console.log('body', response.body)
-        }
+        // if (response.status === 200) {
+        //   console.log('success')
+        //   console.log('json', response.json)
+        //   console.log('body', response.body)
+        // }
         return response.json()
       })
       .then(function(body) {
