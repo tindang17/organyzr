@@ -56,6 +56,11 @@ app.post('/signup', function(req, res) {
   add_user_local(knex, user, res)
 });
 
+// Listen to POST request to /uuid/player.
+// app.post('/uuid/player', function(req, res) {
+
+// })
+
 app.get('/games/data', function(req, res) {
     console.log('server side');
     gamesRoutes(knex, res); 

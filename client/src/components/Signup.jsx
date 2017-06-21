@@ -36,7 +36,7 @@ class Signup extends React.Component {
     fetch('/signup', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           first_name: this.state.first_name,
@@ -50,7 +50,7 @@ class Signup extends React.Component {
       })
       .then(function(response) {
         console.log('response', response)
-        if (response.status === 400) {
+        if (response.status === 200) {
           console.log('success')
           console.log(response.json)
           console.log(response.body)

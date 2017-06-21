@@ -11,10 +11,11 @@ import Faq from './components/Faq.jsx';
 import About from './components/About.jsx';
 import Signup from './components/Signup.jsx';
 import Nav from './components/Nav.jsx';
-import Landing from './components/Landing.jsx'
-import Games from './components/Games.jsx'
-
-import { Menu } from 'semantic-ui-react'
+import Landing from './components/Landing.jsx';
+import Games from './components/Games.jsx';
+import PlayerSignup from './components/Playersignup.jsx';
+import Teams from './components/teams/Teams.jsx';
+import { Menu } from 'semantic-ui-react';
 
 
 class App extends Component {
@@ -48,6 +49,9 @@ class App extends Component {
       { path: '/games', 
         sidebar: () => <Games/>,
         main: () => <Games/> 
+      },
+      { path: '/uuid/player', 
+        main: () => <PlayerSignup/> 
       }
     ]
 
