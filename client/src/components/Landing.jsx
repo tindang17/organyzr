@@ -8,10 +8,11 @@ import { Segment, Button, Divider, Image } from 'semantic-ui-react'
 import Signup from './Signup.jsx';
 
 const Landing = () => (
+ 
   <Router>
     <div>
       <Image src={require('../images/organyzr.png')} size='large' centered/>
-      <Segment padded>
+      <Segment padded size='tiny'>
         <Link to='/login'>
           <Button primary fluid>Login</Button>
         </Link>
@@ -27,6 +28,7 @@ const Landing = () => (
       <Route path='/signup' component={Signup}/>
     </div>
   </Router>
+
 )
 
 
