@@ -19,22 +19,26 @@ import Games from './components/Games.jsx';
 import Manage from './components/Manage.jsx';
 
 
-import { Menu } from 'semantic-ui-react'
+import { Menu, Loader, Segment } from 'semantic-ui-react'
 
 
 
 class App extends Component {
   constructor (props) {
     super(props);
+    this.state = { 
+      userid: false
+    }
 
   }
 
   componentDidMount() {
     // console.log('component did mount');
-    // axios.get(`/landing/check`)
-    // .then(res => {
-    //   console.log('appjsx', res);
-    // })
+    var self = this;
+    axios.get(`/landing/check`)
+    .then(res => {
+      self.setState({userid: res.data})
+    })
   }
 
   render () {
@@ -82,7 +86,15 @@ class App extends Component {
         padding: 10
       }
     };
-
+     let signupLogin = []; 
+     if (this.state.userid === false) {
+      signupLogin = [];
+    } else if (this.state.userid === 'not logged in') {
+      signupLogin.push(<ul><li style={styles.liitem}><Link to="/signup">Signup</Link></li>
+          <li style={styles.liitem}><Link to="/login">Login</Link></li></ul>)
+    } else {
+      signupLogin = [];
+    }
 
   return (
   <Router>
@@ -97,8 +109,7 @@ class App extends Component {
           <li style={styles.liitem}><Link to="/">Home</Link></li>
           <li style={styles.liitem}><Link to="/about">About</Link></li>
           <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
-          <li style={styles.liitem}><Link to="/signup">Signup</Link></li>
-          <li style={styles.liitem}><Link to="/login">Login</Link></li>
+          {signupLogin}
           <br/>
           <li style={styles.liitem}><Link to="/games">Games</Link></li>
           <li style={styles.liitem}><Link to="/manage">Manage</Link></li>

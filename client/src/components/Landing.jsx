@@ -19,6 +19,7 @@ class Landing extends Component {
     var self = this;
    axios.get(`/landing/check`)
     .then(res => {
+      console.log(res);
       self.setState({userid: res.data})
     })
   }
@@ -28,7 +29,7 @@ class Landing extends Component {
     let landing = [];
     if (this.state.userid === false) {
       landing.push(<Loader active inline='centered' />) 
-    } else if (this.state.userid === undefined) {
+    } else if (this.state.userid === 'not logged in') {
       landing.push(<Segment padded size='tiny'> 
           <Button primary fluid>Login</Button> 
           <Divider horizontal>Or</Divider> 
@@ -36,7 +37,7 @@ class Landing extends Component {
         </Segment>)
     } else {
       landing.push(<Segment>
-        <div> Hello {this.state.userid}</div>
+        <div> Hello </div>
         </Segment>)
     }
 

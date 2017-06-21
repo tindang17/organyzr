@@ -1,9 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+const ENV = process.env.NODE_ENV || 'development';
+
+const config = {
   // context: path(__dirname, 'src'),
 
   entry: [
@@ -16,13 +19,13 @@ module.exports = {
     filename: 'bundle.js',
     // the output bundle
 
-    path: path.resolve(__dirname, '/dist' )
+    path: path.resolve(__dirname, 'dist' )
 
     // publicPath: '/'
     // necessary for HMR to know where to load the hot update chunks
   },
 
-  devtool: 'inline-source-map',
+  devtool: ENV === 'production' ? 'cheap-source-map' : 'inline-source-map',
 
   module: {
     rules: [
@@ -44,6 +47,10 @@ module.exports = {
     ],
   },
   plugins: [
+    new BundleAnalyzerPlugin({
+      analyzerHost: '0.0.0.0',
+      analyzerPort: 3000
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
@@ -51,3 +58,13 @@ module.exports = {
       template: './client/index.html'
     })]
 }
+
+if(process.env.NODE_ENV === 'production') {
+  config.plugins.push(new webpack.DefinePlugin({
+    'process.env': {
+      'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }
+  }))
+}
+
+module.exports = config;

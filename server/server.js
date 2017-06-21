@@ -149,6 +149,11 @@ app.use(webpack.middleware(compiler, {
   noInfo: true,
   stats: {
     colors: true
+  },
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000,
+    ignored: /node_modules/
   }
 }));
 
@@ -164,16 +169,13 @@ app.post('/signup', function(req, res) {
   add_user_local(knex, user, res)
 });
 
-app.post('/login',
-  passport.authenticate('local',  { successRedirect: '/',
-                                   failureRedirect: '/test/login',
-                                   failureFlash: false }),
-    function(req, res) {
-      console.log(req)
-      console.log('post to login')
-      res.json({ success: false, message: 'success'})
-    }
-);
+// app.post('/login', function(req, res, next) {
+//   passport.authenticate('local',
+//     function(error, user, info) {
+//       res.json({ success: false, message: 'success'})
+//     }
+//   )(req, res, next);
+// })
 
 
 app.get('/test/login', function(req, res) {
@@ -182,7 +184,7 @@ app.get('/test/login', function(req, res) {
     res.render('login', templateVars);
   });
 
-app.post('/test/login',
+app.post('/login',
   passport.authenticate('local',  { successRedirect: '/',
                                    failureRedirect: '/login',
                                    failureFlash: false }),
@@ -199,10 +201,14 @@ app.get('/games/data', function(req, res) {
 })
 
 app.get('/landing/check', function(req, res) {
-  console.log('server side landing');
-  res.send(req.session.passport.user.toString())
+  // console.log(req.session.passport.user);
+  if (!req.user) {
+    res.send('not logged in');
+  } else {
+    // console.log('no user');
+    res.send(req.session.passport.user.toString())
   }
-)
+})
 
 // routes to handle react request
 

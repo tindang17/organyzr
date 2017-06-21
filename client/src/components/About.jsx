@@ -19,7 +19,7 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
       }
       return (
         <div>
-        <Header as='h2' textAlign='center'> About Us! </Header>
+        <Header as='h2' textAlign='center'> About Us! HELLO </Header>
         <br/>
           <Grid divided centered style={styles.text}>
             <Grid.Row>

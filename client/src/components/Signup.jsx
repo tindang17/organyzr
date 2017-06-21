@@ -83,7 +83,7 @@ class Signup extends React.Component {
     }
     return (
      <div>
-             <Header as='h2' textAlign='centered'> Signup With Us!! </Header> 
+             <Header as='h2' textAlign='centered'> Hi Signup With Us!! Hi </Header> 
     <Grid divided padded >
       <Grid.Row columns={2}>
         <Grid.Column width={5}>
