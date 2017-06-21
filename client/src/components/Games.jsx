@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Button, Card, Image, Grid } from 'semantic-ui-react';
 import axios from 'axios';
+import Moment from 'react-moment';
 
 class Games extends Component {
   constructor (props) {
@@ -37,7 +38,7 @@ class Games extends Component {
               <Card fluid color='violet'>
                 <Card.Content>
                   <Card.Header>
-                  {gameCards[i].date}
+                  <Moment date={gameCards[i].date}/>
                   </Card.Header>
                   <Card.Meta>
                     <span className="time">

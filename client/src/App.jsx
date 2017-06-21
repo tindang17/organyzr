@@ -31,10 +31,10 @@ class App extends Component {
 
   componentDidMount() {
     // console.log('component did mount');
-    axios.get(`/landing/check`)
-    .then(res => {
-      console.log('appjsx', res);
-    })
+    // axios.get(`/landing/check`)
+    // .then(res => {
+    //   console.log('appjsx', res);
+    // })
   }
 
   render () {

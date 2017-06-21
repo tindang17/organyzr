@@ -200,12 +200,9 @@ app.get('/games/data', function(req, res) {
 
 app.get('/landing/check', function(req, res) {
   console.log('server side landing');
-  passport.authenticate('cookie', {session: false}),
-  function (req, res) {
-    console.log('inside auth', req);
-    res.send(req);
+  res.send(req.session.passport.user.toString())
   }
-})
+)
 
 // routes to handle react request
 
