@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>kjn</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+<form action="/login" method="post">
+    <div>
+        <label>Username:</label>
+        <input type="text" name="username"/>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" name="password"/>
+    </div>
+    <div>
+        <input type="submit" value="Log In"/>
+    </div>
+</form>
+<a href="/auth/facebook">Login with Facebook</a>
+<div>dfdsf</div>
+<% if (typeof user !== 'undefined')  { %>
+<div>
+<%= user %>
+</div>
+<% } %>
+</html>

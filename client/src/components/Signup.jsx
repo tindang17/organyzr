@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Message } from 'semantic-ui-react'
 
 
 
@@ -13,7 +13,8 @@ class Signup extends React.Component {
                   email: '',
                   password: '',
                   confirm_password: '',
-                  phone: ''};
+                  phone: '',
+                  message: 'no message'};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,13 +51,18 @@ class Signup extends React.Component {
       })
       .then(function(response) {
         console.log('response', response)
-        if (response.status === 400) {
+        if (response.status === 200) {
           console.log('success')
-          console.log(response.json)
-          console.log(response.body)
+          console.log('json', response.json)
+          console.log('body', response.body)
         }
-      }).then(function(body) {
+        return response.json()
+      })
+      .then(function(body) {
         console.log('body', body);
+        console.log(body.message);
+        self.setState({message: body.message});
+        console.log('self msg', self.state.message)
       });
   }
   render() {
@@ -94,6 +100,9 @@ class Signup extends React.Component {
             </Form.Field >
             <Button type='submit'>Submit</Button>
           </Form>
+
+            <Message content={this.state.message} header='error msg'>
+            </Message>
         </div>
     );
   }

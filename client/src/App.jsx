@@ -6,27 +6,33 @@ import {
 } from 'react-router-dom'
 import axios from 'axios';
 
-// Components for pages 
+// Components for pages
 import Faq from './components/Faq.jsx';
 import About from './components/About.jsx';
 import Signup from './components/Signup.jsx';
 import Nav from './components/Nav.jsx';
+
+import Login from './components/Login.jsx'
+
 import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
 import Manage from './components/Manage.jsx';
 
+
 import { Menu } from 'semantic-ui-react'
+
 
 
 class App extends Component {
   constructor (props) {
     super(props);
+
   }
 
   componentDidMount() {
 
   }
-  
+
   render () {
     const routes = [
       { path: '/',
@@ -46,18 +52,22 @@ class App extends Component {
         sidebar: () => <Signup/>,
         main: () => <Signup/>
       },
-      { path: '/games', 
+      { path: '/games',
         sidebar: () => <Games/>,
-        main: () => <Games/> 
+        main: () => <Games/>
+      },
+      { path: '/login',
+        sidebar: () => <Login/>,
+        main: () => <Login/>
       },
       {
-        path: '/manage', 
+        path: '/manage',
         sidebar: () => <Manage/>,
         main: () => <Manage/>
       }
     ]
 
-    
+
   return (
   <Router>
     <div style={{ display: 'flex' }}>
@@ -72,12 +82,13 @@ class App extends Component {
           <li><Link to="/about">About</Link></li>
           <li><Link to="/faq">FAQ</Link></li>
           <li><Link to="/signup">Signup</Link></li>
+          <li><Link to="/login">Login</Link></li>
           <br/>
           <li><Link to="/games">Games</Link></li>
           <li><Link to="/manage">Manage</Link></li>
         </ul>
 
-        
+
       </div>
 
       <div style={{ flex: 1, padding: '20px' }}>
