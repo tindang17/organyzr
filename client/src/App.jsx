@@ -12,8 +12,7 @@ import About from './components/About.jsx';
 import Signup from './components/Signup.jsx';
 import Nav from './components/Nav.jsx';
 
-import PlayerSignup from './components/Playersignup.jsx';
-import Teams from './components/teams/Teams.jsx';
+// import Teams from './components/teams/Teams.jsx';
 import { Menu } from 'semantic-ui-react';
 
 
@@ -60,9 +59,6 @@ class App extends Component {
         sidebar: () => <Games/>,
         main: () => <Games/> 
       },
-      { path: '/uuid/player', 
-        main: () => <PlayerSignup/> 
-      },
       { path: '/login',
         sidebar: () => <Login/>,
         main: () => <Login/>
@@ -72,6 +68,11 @@ class App extends Component {
         sidebar: () => <Manage/>,
         main: () => <Manage/>
       }
+      // {
+      //   path: '/team',
+      //   sidebar: () => <Teams/>,
+      //   main: () => <Teams/>
+      // }
     ]
 
 
@@ -93,6 +94,7 @@ class App extends Component {
             <br/>
             <li><Link to="/games">Games</Link></li>
             <li><Link to="/manage">Manage</Link></li>
+            {/*<li><Link to="/team">Teams</Link></li>*/}
           </ul>
 
 

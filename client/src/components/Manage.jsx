@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Icon, Label, Menu, Table, Button } from 'semantic-ui-react'
-
+import { Icon, Label, Menu, Table, Button, Segment } from 'semantic-ui-react'
+import Calendar from './teams/Calendar.jsx';
 class Manage extends Component {
   constructor (props) {
     super(props);
@@ -46,6 +46,9 @@ class Manage extends Component {
             </Table.Row>
           </Table.Body>
         </Table>
+        <div>
+          <Calendar className='team-calendar'/>
+        </div>
       </div>
     );
   }

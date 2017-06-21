@@ -68,7 +68,7 @@ class Signup extends React.Component {
   render() {
     return (
         <div>
-          <h2> Signup for an account with Organyzr!!! FUck you </h2>
+          <h2> Signup for an account with Organyzr!!!!</h2>
           <Form onSubmit={this.handleSubmit}>
             <Form.Field width='5'>
               <label>First Name</label>
@@ -84,7 +84,7 @@ class Signup extends React.Component {
             </Form.Field>
             <Form.Field width='5'>
               <label>Email</label>
-              <input name="email" placeholder='Email Name' value={this.state.email} onChange={this.handleInputChange}/>
+              <input name="email" type="email" placeholder='Email' value={this.state.email} onChange={this.handleInputChange}/>
             </Form.Field>
             <Form.Field width='5'>
               <label>Password</label>

@@ -44,6 +44,10 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "css-loader": "^0.28.4",
+    "moment": "^2.18.1",
+    "nodemon": "^1.11.0",
+    "react-big-calendar": "^0.14.2",
+    "style-loader": "^0.18.2"
   }
 }

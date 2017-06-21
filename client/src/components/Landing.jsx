@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 import { Segment, Button, Divider, Image } from 'semantic-ui-react'
 import Signup from './Signup.jsx';
-
+import Login from './Login.jsx';
 const Landing = () => (
  
   <Router>
@@ -24,7 +24,7 @@ const Landing = () => (
         </Link>
       </Segment>
     
-      {/*<Route path='/login' component={Login}/>*/}
+      <Route path='/login' component={Login}/>
       <Route path='/signup' component={Signup}/>
     </div>
   </Router>

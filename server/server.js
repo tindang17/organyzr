@@ -77,8 +77,7 @@ passport.use(new LocalStrategy(
       }
       return done(null, user);
           }).catch(function(err) {
-return done(err);
-
+            return done(err);
           });
 
   }
@@ -147,6 +146,7 @@ app.use(passport.session());
 app.use(webpack.middleware(compiler, {
   publicPath: webpack.config.output.publicPath,
   noInfo: true,
+  hot: true,
   stats: {
     colors: true
   }
