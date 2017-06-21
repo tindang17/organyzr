@@ -10,11 +10,6 @@ const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const path = require('path');
 
-// set up knex
-// set up webpack
-// const WebpackDevServer = require('webpack-dev-server');
-
-
 const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
@@ -201,22 +196,6 @@ app.get('/games/data', function(req, res) {
     console.log('server side');
     gamesRoutes(knex, res);
 })
-
-// routes to handle react request
-
-// new WebpackDevServer(webpack.core(webpack.config), {
-//     publicPath: webpack.config.output.publicPath,
-//     watchOptions: {
-//       aggregateTimeout: 300,
-//       poll: 1000,
-//       ignored: /node_modules/
-//     }
-//   })
-//   .listen(3000, '0.0.0.0', function (err, result) {
-//     if (err) {
-//       console.log(err);
-//     }
-
 
 
 app.listen(PORT, () => {

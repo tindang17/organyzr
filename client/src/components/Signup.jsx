@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-
-import { Button, Checkbox, Form, Message } from 'semantic-ui-react'
-
+import { Button, Checkbox, Form, Message } from 'semantic-ui-react';
+import Password from './Password.jsx';
 
 
 class Signup extends React.Component {
@@ -86,14 +85,9 @@ class Signup extends React.Component {
               <label>Email</label>
               <input name="email" type="email" placeholder='Email' value={this.state.email} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Form.Field width='5'>
-              <label>Password</label>
-              <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Form.Field width='5'>
-              <label>Password Confirmation</label>
-              <input name="confirm_password" type="password" value={this.state.confirm_password} onChange={this.handleInputChange}/>
-            </Form.Field>
+            
+            <Password className="password-verification" />
+            
             <Form.Field width='5'>
               <label>Phone Number</label>
               <input name="phone" placeholder='10 digits' value={this.state.phone} onChange={this.handleInputChange}/>
