@@ -175,11 +175,13 @@ app.post('/login',
     }
 );
 
+
 app.get('/test/login', function(req, res) {
     let templateVars = req.session.passport;
     console.log('templatevars', templateVars)
     res.render('login', templateVars);
   });
+
 app.post('/test/login',
   passport.authenticate('local',  { successRedirect: '/',
                                    failureRedirect: '/login',
@@ -194,6 +196,15 @@ app.post('/test/login',
 app.get('/games/data', function(req, res) {
     console.log('server side');
     gamesRoutes(knex, res);
+})
+
+app.get('/landing/check', function(req, res) {
+  console.log('server side landing');
+  passport.authenticate('cookie', {session: false}),
+  function (req, res) {
+    console.log('inside auth', req);
+    res.send(req);
+  }
 })
 
 // routes to handle react request

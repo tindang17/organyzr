@@ -30,7 +30,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-
+    // console.log('component did mount');
+    axios.get(`/landing/check`)
+    .then(res => {
+      console.log('appjsx', res);
+    })
   }
 
   render () {
@@ -77,7 +81,7 @@ class App extends Component {
         background: '#AAD097',
         height: '100vh'
       }}>
-        <ul style={{ listStyleType: 'none', padding: 0, position: 'fixed' }}>
+        <ul style={{ listStyleType: 'none', padding: 0, position: 'fixed'}}>
           <li><Link to="/">Home</Link></li>
           <li><Link to="/about">About</Link></li>
           <li><Link to="/faq">FAQ</Link></li>
