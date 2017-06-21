@@ -12,11 +12,9 @@ class Landing extends Component {
     }
   }
 
-
-
   componentDidMount() { 
     
-    var self = this;
+  let self = this;
    axios.get(`/landing/check`)
     .then(res => {
       console.log(res);

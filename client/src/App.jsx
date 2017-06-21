@@ -18,8 +18,8 @@ import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
 import Manage from './components/Manage.jsx';
 
-
 import { Menu, Loader, Segment } from 'semantic-ui-react'
+import Settings from './components/Settings.jsx';
 
 
 
@@ -72,6 +72,11 @@ class App extends Component {
         path: '/manage',
         sidebar: () => <Manage/>,
         main: () => <Manage/>
+      },
+      {
+        path: '/settings',
+        sidebar: () => <Settings/>,
+        main: () => <Settings/>
       }
     ]
 
@@ -111,8 +116,11 @@ class App extends Component {
           <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
           {signupLogin}
           <br/>
+
           <li style={styles.liitem}><Link to="/games">Games</Link></li>
           <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
+          <br/>
+          <li><Link to="/settings">Settings</Link></li>
         </ul>
 
 

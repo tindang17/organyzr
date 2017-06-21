@@ -20,7 +20,6 @@ module.exports = (knex, data, res) => {
     .catch(function(err) {console.log(err)
                         res
                         .json({ success: false, message: err.constraint})
-
                      })
   }
 }
