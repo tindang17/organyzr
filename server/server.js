@@ -46,6 +46,16 @@ app.use(body.json());
 app.use(cookies());
 // app.use('/games', gamesRoutes(knex));
 
+app.use(webpack.middleware(compiler, {
+  publicPath: webpack.config.output.publicPath,
+  noInfo: true,
+  stats: {
+    colors: true
+  }
+}));
+
+app.use(webpack.hot(compiler));
+
 // Listen to POST requests to /users.
 app.post('/signup', function(req, res) {
   // Get sent data.
@@ -61,15 +71,6 @@ app.get('/games/data', function(req, res) {
     gamesRoutes(knex, res); 
 
 })
-
-
-app.use(webpack.middleware(compiler, {
-  publicPath: webpack.config.output.publicPath,
-  noInfo: true,
-  stats: {
-    colors: true
-  }
-}));
 
 
 // routes to handle react request
