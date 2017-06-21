@@ -68,7 +68,7 @@ class Signup extends React.Component {
   render() {
     return (
         <div>
-          <h2> Signup for an account with Organyzr!!! </h2>
+          <h2> Signup for an account with Organyzr!!! FUck you </h2>
           <Form onSubmit={this.handleSubmit}>
             <Form.Field width='5'>
               <label>First Name</label>

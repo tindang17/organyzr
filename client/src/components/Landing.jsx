@@ -7,7 +7,7 @@ const Landing = () => (
   <div>
 
     <Image src={require('../images/organyzr.png')} size='large' centered/>
-    <Segment padded size='4'>
+    <Segment padded size='tiny'>
 
       <Button primary fluid>Login</Button>
       <Divider horizontal>Or</Divider>
