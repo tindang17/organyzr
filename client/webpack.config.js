@@ -8,6 +8,7 @@ module.exports = {
 
   entry: [
     // 'webpack-dev-server/client?http://localhost:3000',
+    'webpack-hot-middleware/client',
     './client/src/index.jsx'
     // the entry point of our app
   ],

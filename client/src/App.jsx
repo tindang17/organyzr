@@ -11,9 +11,13 @@ import Faq from './components/Faq.jsx';
 import About from './components/About.jsx';
 import Signup from './components/Signup.jsx';
 import Nav from './components/Nav.jsx';
-import Landing from './components/Landing.jsx'
-import Games from './components/Games.jsx'
+
 import Login from './components/Login.jsx'
+
+import Landing from './components/Landing.jsx';
+import Games from './components/Games.jsx';
+import Manage from './components/Manage.jsx';
+
 
 import { Menu } from 'semantic-ui-react'
 
@@ -55,6 +59,11 @@ class App extends Component {
       { path: '/login',
         sidebar: () => <Login/>,
         main: () => <Login/>
+      },
+      {
+        path: '/manage',
+        sidebar: () => <Manage/>,
+        main: () => <Manage/>
       }
     ]
 
@@ -65,7 +74,7 @@ class App extends Component {
       <div style={{
         padding: '10px',
         width: '20%',
-        background: '#f0f0f0',
+        background: '#AAD097',
         height: '100vh'
       }}>
         <ul style={{ listStyleType: 'none', padding: 0, position: 'fixed' }}>
@@ -76,6 +85,7 @@ class App extends Component {
           <li><Link to="/login">Login</Link></li>
           <br/>
           <li><Link to="/games">Games</Link></li>
+          <li><Link to="/manage">Manage</Link></li>
         </ul>
 
 

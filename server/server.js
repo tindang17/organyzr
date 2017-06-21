@@ -145,6 +145,18 @@ app.use(passport.session());
 
 // app.use('/games', gamesRoutes(knex));
 
+<<<<<<< HEAD
+=======
+app.use(webpack.middleware(compiler, {
+  publicPath: webpack.config.output.publicPath,
+  noInfo: true,
+  stats: {
+    colors: true
+  }
+}));
+
+app.use(webpack.hot(compiler));
+>>>>>>> 33b0b7487fa73b727fbee58deb77cb4d8531ef2d
 
 // Listen to POST requests to /users.
 app.post('/signup', function(req, res) {
@@ -189,6 +201,7 @@ app.get('/games/data', function(req, res) {
 })
 
 
+<<<<<<< HEAD
 
 app.use(webpack.middleware(compiler, {
   publicPath: webpack.config.output.publicPath,
@@ -199,6 +212,22 @@ app.use(webpack.middleware(compiler, {
 }));
 
 
+=======
+// routes to handle react request
+
+// new WebpackDevServer(webpack.core(webpack.config), {
+//     publicPath: webpack.config.output.publicPath,
+//     watchOptions: {
+//       aggregateTimeout: 300,
+//       poll: 1000,
+//       ignored: /node_modules/
+//     }
+//   })
+//   .listen(3000, '0.0.0.0', function (err, result) {
+//     if (err) {
+//       console.log(err);
+//     }
+>>>>>>> 33b0b7487fa73b727fbee58deb77cb4d8531ef2d
 
 
 
