@@ -49,7 +49,7 @@ const add_user_local = require("./functions/add_user_local.js");
 const add_user_facebook = require("./functions/add_user_facebook.js");
 
 
-
+const update_user = require("./functions/update_user.js");
 
 app.use(knexLogger(knex));
 
@@ -186,6 +186,20 @@ app.post('/signup', function(req, res) {
   // Do a MySQL query.
   console.log(user)
   add_user_local(knex, user, res)
+});
+
+// Listen to POST requests to /users.
+app.post('/settings', function(req, res) {
+  // Get sent data.
+
+  const data = req.body;
+  let user_id = req.session.passport.user;
+  console.log('user_id', user_id)
+  console.log('data', data)
+  // Do a MySQL query.
+
+  // add_user_local(knex, user, res)
+  update_user(knex, data, user_id, res)
 });
 
 app.post('/login',
