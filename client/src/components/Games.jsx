@@ -63,9 +63,15 @@ class Games extends Component {
       }
     }
 
+    const styles = {
+      grid: {
+        paddingLeft: 50,
+        paddingRight: 50
+      }
+    }
     return (
 
-      <Grid columns={3}>
+      <Grid columns={3} style={styles.grid}>
       <Grid.Row>
       {htmlGames}
       </Grid.Row>

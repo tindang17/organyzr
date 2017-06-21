@@ -71,6 +71,18 @@ class App extends Component {
       }
     ]
 
+    const styles = {
+      ulitem: {
+        fontSize: 24,
+        listStyleType: 'none', 
+        padding: 0, 
+        position: 'fixed'
+      }, 
+      liitem: {
+        padding: 10
+      }
+    };
+
 
   return (
   <Router>
@@ -81,15 +93,15 @@ class App extends Component {
         background: '#AAD097',
         height: '100vh'
       }}>
-        <ul style={{ listStyleType: 'none', padding: 0, position: 'fixed'}}>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/faq">FAQ</Link></li>
-          <li><Link to="/signup">Signup</Link></li>
-          <li><Link to="/login">Login</Link></li>
+        <ul style={styles.ulitem}>
+          <li style={styles.liitem}><Link to="/">Home</Link></li>
+          <li style={styles.liitem}><Link to="/about">About</Link></li>
+          <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
+          <li style={styles.liitem}><Link to="/signup">Signup</Link></li>
+          <li style={styles.liitem}><Link to="/login">Login</Link></li>
           <br/>
-          <li><Link to="/games">Games</Link></li>
-          <li><Link to="/manage">Manage</Link></li>
+          <li style={styles.liitem}><Link to="/games">Games</Link></li>
+          <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
         </ul>
 
 

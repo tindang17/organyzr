@@ -11,11 +11,17 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
     }
 
     render () {
+
+      const styles = {
+        text: {
+          fontSize: 16
+        }
+      }
       return (
         <div>
         <Header as='h2' textAlign='center'> About Us! </Header>
         <br/>
-          <Grid divided centered>
+          <Grid divided centered style={styles.text}>
             <Grid.Row>
               <Grid.Column width={3}>
                 <Image src={require('../images/gtran.jpg')}/>

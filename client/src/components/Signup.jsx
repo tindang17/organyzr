@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import { Button, Checkbox, Form, Message } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Message, Grid, Header } from 'semantic-ui-react'
 
 
 
@@ -66,46 +66,72 @@ class Signup extends React.Component {
       });
   }
   render() {
+
+    const items = [
+      'Manage your team', 
+      'Automate your reminders - choose from text, email, or Facebook messenger', 
+      'Your players never have to visit our page!'
+    ]
+
+    const styles = {
+      form: {
+        paddingLeft: 100
+      },
+      message: {
+        fontSize: 16
+      }
+    }
     return (
-        <div>
-          <h2> Signup for an account with Organyzr!!! </h2>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Field width='5'>
+     <div>
+             <Header as='h2' textAlign='centered'> Signup With Us!! </Header> 
+    <Grid divided padded >
+      <Grid.Row columns={2}>
+        <Grid.Column width={5}>
+          <Form onSubmit={this.handleSubmit} style={styles.form}>
+            <Form.Field width='12'>
               <label>First Name</label>
               <input name="first_name" placeholder='First Name' value={this.state.first_name} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Form.Field width='5'>
+            <Form.Field width='12'>
               <label>Last Name</label>
               <input name= "last_name" placeholder='Last Name' value={this.state.last_name} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Form.Field width='5'>
+            <Form.Field width='12'>
               <label>Team Name</label>
               <input name="team_name" placeholder='Team Name' value={this.state.team_name} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Form.Field width='5'>
+            <Form.Field width='12'>
               <label>Email</label>
               <input name="email" placeholder='Email Name' value={this.state.email} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Form.Field width='5'>
+            <Form.Field width='12'>
               <label>Password</label>
               <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Form.Field width='5'>
+            <Form.Field width='12'>
               <label>Password Confirmation</label>
               <input name="confirm_password" type="password" value={this.state.confirm_password} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Form.Field width='5'>
+            <Form.Field width='12'>
               <label>Phone Number</label>
               <input name="phone" placeholder='10 digits' value={this.state.phone} onChange={this.handleInputChange}/>
             </Form.Field >
             <Button type='submit'>Submit</Button>
           </Form>
-
-            <Message content={this.state.message} header='error msg'>
+        </Grid.Column>
+        <Grid.Column width={8}>
+            <Message style={styles.message}>
+              <Message.Header>What can you do with Organyzr?</Message.Header>
+              <Message.List items={items} />
             </Message>
-        </div>
-    );
-  }
+        </Grid.Column>
+      </Grid.Row>
+    </Grid>
+
+    <Message content={this.state.message} header='error msg'>
+            </Message>
+    </div>
+    )}
 }
 
 export default Signup;

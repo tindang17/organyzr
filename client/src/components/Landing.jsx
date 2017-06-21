@@ -28,9 +28,15 @@ class Landing extends Component {
         </Segment>)
     } 
 
+    const styles = {
+      div: {
+        paddingLeft: 100, 
+        paddingRight: 100
+      }
+    }
 
     return(
-      <div>
+      <div style={styles.div}>
         <Image src={require('../images/organyzr.png')} size='large' centered/>
         <Message>
           <p>
