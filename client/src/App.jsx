@@ -13,7 +13,6 @@ import Signup from './components/Signup.jsx';
 import Nav from './components/Nav.jsx';
 
 // import Teams from './components/teams/Teams.jsx';
-import { Menu } from 'semantic-ui-react';
 
 
 import Login from './components/Login.jsx'
@@ -100,43 +99,58 @@ class App extends Component {
         padding: 10
       }
     };
-     let signupLogin = []; 
-     if (this.state.userid === false) {
+    
+    let signupLogin = []; 
+    if (this.state.userid === false) {
       signupLogin = [];
     } else if (this.state.userid === 'not logged in') {
       signupLogin.push(<ul><li style={styles.liitem}><Link to="/signup">Signup</Link></li>
-          <li style={styles.liitem}><Link to="/login">Login</Link></li></ul>)
+      <li style={styles.liitem}><Link to="/login">Login</Link></li></ul>)
     } else {
       signupLogin = [];
     }
 
-  return (
-  <Router>
-    <div style={{ display: 'flex' }}>
-      <div style={{
-        padding: '10px',
-        width: '20%',
-        background: '#AAD097',
-        height: '100vh'
-      }}>
-        <ul style={styles.ulitem}>
-          <li style={styles.liitem}><Link to="/">Home</Link></li>
-          <li style={styles.liitem}><Link to="/about">About</Link></li>
-          <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
-          {signupLogin}
-          <br/>
+    return (
+      <Router>
+        <div style={{ display: 'flex' }}>
+          <div style={{
+            padding: '10px',
+            width: '20%',
+            background: '#AAD097',
+            height: '100vh'
+          }}>
+            <ul style={styles.ulitem}>
+              <li style={styles.liitem}><Link to="/">Home</Link></li>
+              <li style={styles.liitem}><Link to="/about">About</Link></li>
+              <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
+              <li >{signupLogin}</li>
+              <br/>
 
-          <li style={styles.liitem}><Link to="/games">Games</Link></li>
-          <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
-          <br/>
-          <li><Link to="/settings">Settings</Link></li>
-        </ul>
-      </div>
-    </Router>
+              <li style={styles.liitem}><Link to="/games">Games</Link></li>
+              <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
+              <br/>
+              <li><Link to="/settings">Settings</Link></li>
+            </ul>
+          </div>
+          
+          <div style={{ flex: 1, padding: '20px' }}>
+            {routes.map((route, index) => (
+          // Render the content of the pages
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              component={route.main}
+            />
+            ))}
+          </div>
+        
+        </div>
+      </Router> 
     )
   }
 }
 
 
 
-export default App
+export default App;

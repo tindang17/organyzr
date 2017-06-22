@@ -46,6 +46,11 @@ const add_user_facebook = require("./functions/add_user_facebook.js");
 
 const update_user = require("./functions/update_user.js");
 
+const passport = require('passport')
+ , LocalStrategy = require('passport-local').Strategy
+ , FacebookStrategy = require('passport-facebook').Strategy;
+// FacebookStrategy = require('passport-facebook').Strategy;
+
 app.use(knexLogger(knex));
 
 app.use(cookieSession({
@@ -53,11 +58,13 @@ app.use(cookieSession({
   keys: ['kfpoier0tu5g0rejgre', 'erljfo34if0jwfdkepf']
 }));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
-const passport = require('passport')
- , LocalStrategy = require('passport-local').Strategy
- , FacebookStrategy = require('passport-facebook').Strategy;
-// FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new LocalStrategy(
   function(email, password, done) {
@@ -121,12 +128,6 @@ return done(err);
     .catch((err) => { done(err,null); });
   });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email']}));
 app.get('/auth/facebook/callback',
@@ -139,7 +140,7 @@ app.get('/auth/facebook/callback',
 
 app.get('/logout', function(req, res){
   req.logout();
-  res.redirect('/test/login');
+  res.redirect('/login');
 });
 
 
@@ -171,23 +172,12 @@ app.post('/signup', function(req, res) {
   add_user_local(knex, user, res)
 });
 
-app.get('/test/login', function(req, res) {
+app.get('/login', function(req, res) {
     let templateVars = req.session.passport;
     console.log('templatevars', templateVars)
     res.render('login', templateVars);
   });
 
-
-app.post('/login',
-  passport.authenticate('local',  { successRedirect: '/',
-                                   failureRedirect: '/login',
-                                   failureFlash: false }),
-    function(req, res) {
-      console.log(req)
-      console.log('post to login')
-      res.json({ success: false, message: 'success'})
-    }
-);
 
 // Listen to POST requests to /users.
 app.post('/settings', function(req, res) {
@@ -215,7 +205,8 @@ app.post('/login',
 );
 
 
-app.use('/test/login', loginRoutes(knex, passport));
+app.use('/login', loginRoutes(knex, passport));
+
 app.get('/games/data', function(req, res) {
     console.log('server side');
     console.log(req.session.passport.id)

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Password from './Password.jsx';
+// import Password from './Password.jsx';
 import { Button, Checkbox, Form, Message, Grid, Header } from 'semantic-ui-react'
 
 
@@ -8,14 +8,17 @@ import { Button, Checkbox, Form, Message, Grid, Header } from 'semantic-ui-react
 class Signup extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {first_name: '',
-                  last_name: '',
-                  team_name: '',
-                  email: '',
-                  password: '',
-                  confirm_password: '',
-                  phone: '',
-                  message: 'no message'};
+    this.state = {formInputs: {
+                              first_name: '',
+                              last_name: '',
+                              team_name: '',
+                              email: '',
+                              password: '',
+                              password_confirmation: '',
+                              phone: ''
+                },
+                message: 'no message',
+                isEnabled: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,14 +28,32 @@ class Signup extends React.Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-
+    let newFormInputs = this.state.formInputs;
+    newFormInputs[name] = value;
     this.setState({
-      [name]: value
+      formInputs: newFormInputs
     });
+    console.log('give me your valueeeee', this.state);
+    let allGood = true;
+    for (let input in this.state.formInputs) {
+      var inputValue = this.state.formInputs[input];
+      console.log('where is the input',inputValue);
+      allGood = allGood && (inputValue.length > 0);
+    }
+    this.setState({isEnabled:allGood});
+   
+    console.log('true or false', this.state.isEnabled)
+    
+    
   }
 
   handleSubmit(e) {
+    console.log("Submit clicked");
     e.preventDefault();
+    if(this.state.formInputs.password !== this.state.formInputs.password_confirmation) {
+      alert(`passwords do not match`);
+      return;
+    }
     var self = this;
     // On submit of the form, send a POST request with the data to the server.
     fetch('/signup', {
@@ -41,13 +62,13 @@ class Signup extends React.Component {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          first_name: this.state.first_name,
-          last_name: this.state.last_name,
-          team_name: this.state.team_name,
-          email: this.state.email,
-          password: this.state.password,
-          confirmation: this.state.confirm_password,
-          phone: this.state.phone
+          first_name: this.state.formInputs.first_name,
+          last_name: this.state.formInputs.last_name,
+          team_name: this.state.formInputs.team_name,
+          email: this.state.formInputs.email,
+          password: this.state.formInputs.password,
+          confirmation: this.state.formInputs.password_confirmation,
+          phone: this.state.formInputs.phone
         })
       })
       .then(function(response) {
@@ -67,7 +88,7 @@ class Signup extends React.Component {
       });
   }
   render() {
-
+    
     const items = [
       'Manage your team', 
       'Automate your reminders - choose from text, email, or Facebook messenger', 
@@ -82,56 +103,57 @@ class Signup extends React.Component {
         fontSize: 16
       }
     }
+    // checking whether input fields are empty
     return (
 
      <div>
-             <Header as='h2' textAlign='centered'> Hi Signup With Us!! Hi </Header> 
-    <Grid divided padded >
-      <Grid.Row columns={2}>
-        <Grid.Column width={5}>
-          <Form onSubmit={this.handleSubmit} style={styles.form}>
-            <Form.Field width='12'>
-              <label>First Name</label>
-              <input name="first_name" placeholder='First Name' value={this.state.first_name} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Form.Field width='12'>
-              <label>Last Name</label>
-              <input name= "last_name" placeholder='Last Name' value={this.state.last_name} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Form.Field width='12'>
-              <label>Team Name</label>
-              <input name="team_name" placeholder='Team Name' value={this.state.team_name} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Form.Field width='12'>
-              <label>Email</label>
-              <input name="email" placeholder='Email Name' value={this.state.email} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Form.Field width='12'>
-              <label>Password</label>
-              <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Form.Field width='12'>
-              <label>Password Confirmation</label>
-              <input name="confirm_password" type="password" value={this.state.confirm_password} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Form.Field width='12'>
-              <label>Phone Number</label>
-              <input name="phone" placeholder='10 digits' value={this.state.phone} onChange={this.handleInputChange}/>
-            </Form.Field >
-            <Button type='submit'>Submit</Button>
-          </Form>
-        </Grid.Column>
-        <Grid.Column width={8}>
-            <Message style={styles.message}>
-              <Message.Header>What can you do with Organyzr?</Message.Header>
-              <Message.List items={items} />
-            </Message>
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+      <Header as='h2' textAlign='centered'> Hi Signup With Us!! Hi </Header> 
+      <Grid divided padded >
+        <Grid.Row columns={2}>
+          <Grid.Column width={5}>
+            <Form onSubmit={this.handleSubmit} style={styles.form}>
+              <Form.Field width='12'>
+                <label>First Name</label>
+                <input name="first_name" placeholder='First Name' value={this.state.formInputs.first_name} onChange={this.handleInputChange}/>
+              </Form.Field>
+              <Form.Field width='12'>
+                <label>Last Name</label>
+                <input name= "last_name" placeholder='Last Name' value={this.state.formInputs.last_name} onChange={this.handleInputChange}/>
+              </Form.Field>
+              <Form.Field width='12'>
+                <label>Team Name</label>
+                <input name="team_name" placeholder='Team Name' value={this.state.formInputs.team_name} onChange={this.handleInputChange}/>
+              </Form.Field>
+              <Form.Field width='12'>
+                <label>Email</label>
+                <input name="email" type="email"placeholder='Email Name' value={this.state.formInputs.email} onChange={this.handleInputChange}/>
+              </Form.Field>
+              <Form.Field width='12'>
+                <label>Password</label>
+                <input name="password" type="password" value={this.state.formInputs.password} onChange={this.handleInputChange}/>
+              </Form.Field>
+              <Form.Field width='12'>
+                <label>Password Confirmation</label>
+                <input name="password_confirmation" type="password" value={this.state.formInputs.password_confirmation} onChange={this.handleInputChange}/>
+              </Form.Field>
+              <Form.Field width='12'>
+                <label>Phone Number</label>
+                <input name="phone" placeholder='10 digits' value={this.state.formInputs.phone} onChange={this.handleInputChange}/>
+              </Form.Field >
+              <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
+            </Form>
+          </Grid.Column>
+          <Grid.Column width={8}>
+              <Message style={styles.message}>
+                <Message.Header>What can you do with Organyzr?</Message.Header>
+                <Message.List items={items} />
+              </Message>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
 
-    <Message content={this.state.message} header='error msg'>
-            </Message>
+      <Message content={this.state.message} header='error msg'>
+      </Message>
     </div>
     )}
 }
