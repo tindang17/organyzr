@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Route, Redirect} from 'react-router-dom'
 
 import { Button, Checkbox, Form, Message } from 'semantic-ui-react'
 
@@ -9,7 +10,8 @@ class Login extends React.Component {
     super(props);
     this.state = {email: '',
                   password: '',
-                  message: 'no message'};
+                  message: 'no message', 
+                  redirect: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,14 +49,19 @@ class Login extends React.Component {
       })
       .then(response => response.text())
       .then(function(body) {
-        console.log('body', body);
-        console.log(body.message);
-        self.setState({message: body.message});
-        console.log('self msg', self.state.message)
+        
+        self.setState({message: body.message, redirect: true});
+        
       });
   }
   render() {
+    const {redirect} = this.state;
+
+    if (redirect) {
+      return <Redirect to='/'/>;
+    }
     return (
+
         <div>
           <Form onSubmit={this.handleSubmit}>
             <Form.Field>

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Password from './Password.jsx';
 import { Button, Checkbox, Form, Message, Grid, Header } from 'semantic-ui-react'
-
+import { Route, Redirect} from 'react-router-dom'
 
 
 
@@ -15,7 +15,8 @@ class Signup extends React.Component {
                   password: '',
                   confirm_password: '',
                   phone: '',
-                  message: 'no message'};
+                  message: 'no message', 
+                  redirect: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,6 +41,7 @@ class Signup extends React.Component {
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'same-origin',
         body: JSON.stringify({
           first_name: this.state.first_name,
           last_name: this.state.last_name,
@@ -51,22 +53,21 @@ class Signup extends React.Component {
         })
       })
       .then(function(response) {
-        console.log('response', response)
         if (response.status === 200) {
-          console.log('success')
-          console.log('json', response.json)
-          console.log('body', response.body)
         }
         return response.json()
       })
       .then(function(body) {
-        console.log('body', body);
-        console.log(body.message);
-        self.setState({message: body.message});
-        console.log('self msg', self.state.message)
+        self.setState({message: body.message, redirect: true});
       });
   }
   render() {
+
+    const {redirect} = this.state;
+
+    if (redirect) {
+      return <Redirect to='/'/>;
+    }
 
     const items = [
       'Manage your team', 
@@ -85,7 +86,7 @@ class Signup extends React.Component {
     return (
 
      <div>
-             <Header as='h2' textAlign='centered'> Hi Signup With Us!! Hi </Header> 
+             <Header as='h2' textAlign='center'> Hi Signup With Us!! Hi </Header> 
     <Grid divided padded >
       <Grid.Row columns={2}>
         <Grid.Column width={5}>
