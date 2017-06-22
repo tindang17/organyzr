@@ -13,7 +13,6 @@ import Signup from './components/Signup.jsx';
 import Nav from './components/Nav.jsx';
 
 // import Teams from './components/teams/Teams.jsx';
-import { Menu } from 'semantic-ui-react';
 
 
 import Login from './components/Login.jsx'
@@ -111,13 +110,15 @@ class App extends Component {
     }
 
   return (
-  <Router>
-    <div style={{ display: 'flex' }}>
-      <div style={{
-        padding: '10px',
-        width: '20%',
-        background: '#AAD097',
-        height: '100vh'
+
+<Router>
+  <div>
+  <div style={{ display: 'flex' }}>
+    <div style={{
+      padding: '10px',
+      width: '20%',
+      background: '#AAD097',
+      height: '100vh'
       }}>
         <ul style={styles.ulitem}>
           <li style={styles.liitem}><Link to="/">Home</Link></li>
@@ -132,7 +133,21 @@ class App extends Component {
           <li><Link to="/settings">Settings</Link></li>
         </ul>
       </div>
-    </Router>
+      <div style={{ flex: 1, padding: '20px' }}>
+        {routes.map((route, index) => (
+        // Render more <Route>s with the same paths as
+        // above, but different components this time.
+          <Route
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          component={route.main}
+          />
+        ))}
+    </div>
+  </div>
+  </div>
+</Router>
     )
   }
 }

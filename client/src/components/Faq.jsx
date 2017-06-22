@@ -30,7 +30,7 @@ class Faq extends React.Component {
     }
     return (
     <div>
-    <Header as='h2' textAlign='centered'> FAQ </Header> 
+    <Header as='h2' textAlign='center'> FAQ </Header> 
     <br/>
       <Grid divided centered style={styles.grid}>
         <Grid.Column width={4}>

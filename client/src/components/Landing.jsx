@@ -37,6 +37,7 @@ class Landing extends Component {
       landing.push(<Loader active inline='centered' />) 
     } else if (this.state.userid === 'not logged in') {
       landing.push(<Router>
+        <div>
       <Segment padded size='tiny'>
         <Link to='/login'>
           <Button primary fluid>Login</Button>
@@ -51,6 +52,7 @@ class Landing extends Component {
     
       <Route path='/login' component={Login}/>
       <Route path='/signup' component={Signup}/>
+      </div>
        </Router>)
     } else {
       landing.push(<Segment>
