@@ -26,28 +26,26 @@ class Login extends React.Component {
   }
 
   handleSubmit(e) {
+    console.log(e)
+    console.log('fetch call')
     e.preventDefault();
     var self = this;
+    // let formData = new FormData();
+    // formData.append('username', self.state.email)
     // On submit of the form, send a POST request with the data to the server.
-    fetch('/login', {
+    fetch('/test/login', {
         method: 'POST',
         headers: {
+          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
+        credentials: 'same-origin',
         body: JSON.stringify({
-          email: this.state.email,
+          username: this.state.email,
           password: this.state.password
         })
       })
-      .then(function(response) {
-        console.log('response', response)
-        // if (response.status === 200) {
-        //   console.log('success')
-        //   console.log('json', response.json)
-        //   console.log('body', response.body)
-        // }
-        return response.json()
-      })
+      .then(response => response.text())
       .then(function(body) {
         console.log('body', body);
         console.log(body.message);
@@ -71,6 +69,7 @@ class Login extends React.Component {
           </Form>
             <Message content={this.state.message} header='error msg'>
             </Message>
+            <a href="/auth/facebook">Login with Facebook</a>
         </div>
     );
   }
