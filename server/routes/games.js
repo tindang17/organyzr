@@ -3,7 +3,7 @@
 const express = require('express');
 const router  = express.Router();
 
-module.exports = (knex, res) => {
+module.exports = (knex, res, userid) => {
     knex
       .select("*")
       .from("games")

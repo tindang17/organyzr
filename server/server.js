@@ -14,7 +14,10 @@ const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
 
+
+//Routes
 const gamesRoutes = require('./routes/games')
+const loginRoutes = require('./routes/test/login');
 
 const webpack = {
   core: require('webpack'),
@@ -38,10 +41,10 @@ if (ENV === 'development') {
 const add_user_local = require("./functions/add_user_local.js");
 
 // const add_user_local = require("./functions/passport/add_user_local.js");
-// const add_user_facebook = require("./functions/add_user_facebook.js");
+const add_user_facebook = require("./functions/add_user_facebook.js");
 
 
-
+const update_user = require("./functions/update_user.js");
 
 app.use(knexLogger(knex));
 
@@ -52,7 +55,8 @@ app.use(cookieSession({
 
 
 const passport = require('passport')
- , LocalStrategy = require('passport-local').Strategy;
+ , LocalStrategy = require('passport-local').Strategy
+ , FacebookStrategy = require('passport-facebook').Strategy;
 // FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new LocalStrategy(
@@ -78,26 +82,31 @@ passport.use(new LocalStrategy(
   }
 ));
 
-// passport.use(new FacebookStrategy({
-//     clientID: '891703524347118',
-//     clientSecret: '98717a1f70a79ad745206c6a7e6323f9',
-//     callbackURL: "http://localhost:3000/auth/facebook/callback",
-//     profileFields: ['id', 'email', 'name']
-//   },
-//   function(accessToken, refreshToken, profile, done) {
-//     // User.findOrCreate(..., function(err, user) {
-//     //   if (err) { return done(err); }
-//     //   done(null, user);
-//     // });
-//     console.log('sdfsfd')
-//     console.log(accessToken)
-//     console.log(refreshToken)
-//     console.log(profile)
-//     console.log(done)
-//     knex('users')
-//     done(null, )
-//   }
-// ));
+//CHANGE CALLBACK URL TO WHAT WE USE
+passport.use(new FacebookStrategy({
+    clientID: '891703524347118',
+    clientSecret: '98717a1f70a79ad745206c6a7e6323f9',
+    callbackURL: "http://localhost:8080/auth/facebook/callback",
+    profileFields: ['id', 'email', 'name']
+  },
+  function(accessToken, refreshToken, profile, done) {
+          knex
+          .select()
+          .where({email: profile.emails[0].value})
+          .from("users").first().then(user => {
+      if (!user) {
+        console.log('user not found')
+        return done(null, false, { message: 'Incorrect email.' });
+      }
+
+      return done(null, user);
+          }).catch(function(err) {
+return done(err);
+});
+
+
+  }
+));
 
 
   passport.serializeUser((user, done) => {
@@ -112,9 +121,6 @@ passport.use(new LocalStrategy(
     .catch((err) => { done(err,null); });
   });
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -122,32 +128,38 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-// // Redirect the user to Facebook for authentication.  When complete,
-// // Facebook will redirect the user back to the application at
-// //     /auth/facebook/callback
-// app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email']}));
-
-// // Facebook will redirect the user to this URL after approval.  Finish the
-// // authentication process by attempting to obtain an access token.  If
-// // access was granted, the user will be logged in.  Otherwise,
-// // authentication has failed.
-// app.get('/auth/facebook/callback',
-//   passport.authenticate('facebook', { successRedirect: '/',
-//                                       failureRedirect: '/login' }));
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email']}));
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: '/#/',
+                                      failureRedirect: '/#/login' }));
 
 
 // app.use('/games', gamesRoutes(knex));
+
+
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/test/login');
+});
+
+
+
 app.use(webpack.middleware(compiler, {
   publicPath: webpack.config.output.publicPath,
   noInfo: true,
   hot: true,
   stats: {
     colors: true
+  },
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000,
+    ignored: /node_modules/
   }
 }));
 
 app.use(webpack.hot(compiler));
+
 
 // Listen to POST requests to /users.
 app.post('/signup', function(req, res) {
@@ -159,11 +171,37 @@ app.post('/signup', function(req, res) {
   add_user_local(knex, user, res)
 });
 
+app.get('/test/login', function(req, res) {
+    let templateVars = req.session.passport;
+    console.log('templatevars', templateVars)
+    res.render('login', templateVars);
+  });
 
-// Listen to POST request to /uuid/player.
-// app.post('/uuid/player', function(req, res) {
 
-// })
+app.post('/login',
+  passport.authenticate('local',  { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: false }),
+    function(req, res) {
+      console.log(req)
+      console.log('post to login')
+      res.json({ success: false, message: 'success'})
+    }
+);
+
+// Listen to POST requests to /users.
+app.post('/settings', function(req, res) {
+  // Get sent data.
+
+  const data = req.body;
+  let user_id = req.session.passport.user;
+  console.log('user_id', user_id)
+  console.log('data', data)
+  // Do a MySQL query.
+
+  // add_user_local(knex, user, res)
+  update_user(knex, data, user_id, res)
+});
 
 app.post('/login',
   passport.authenticate('local',  { successRedirect: '/',
@@ -176,27 +214,24 @@ app.post('/login',
     }
 );
 
-app.get('/test/login', function(req, res) {
-    let templateVars = req.session.passport;
-    console.log('templatevars', templateVars)
-    res.render('login', templateVars);
-  });
-app.post('/test/login',
-  passport.authenticate('local',  { successRedirect: '/',
-                                   failureRedirect: '/login',
-                                   failureFlash: false }),
-    function(req, res) {
-      console.log(req)
-      console.log('post to login')
-      res.json({ success: false, message: 'success'})
-    }
-);
 
+app.use('/test/login', loginRoutes(knex, passport));
 app.get('/games/data', function(req, res) {
     console.log('server side');
-    gamesRoutes(knex, res);
+    console.log(req.session.passport.id)
+    gamesRoutes(knex, res, req.session.passport.id);
 })
 
+
+app.get('/landing/check', function(req, res) {
+  // console.log(req.session.passport.user);
+  if (!req.user) {
+    res.send('not logged in');
+  } else {
+    // console.log('no user');
+    res.send(req.session.passport.user.toString())
+  }
+})
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
