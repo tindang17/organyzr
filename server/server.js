@@ -10,7 +10,6 @@ const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const path = require('path');
 
-
 const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
@@ -77,8 +76,7 @@ passport.use(new LocalStrategy(
       }
       return done(null, user);
           }).catch(function(err) {
-return done(err);
-
+            return done(err);
           });
 
   }
@@ -149,6 +147,7 @@ app.get('/logout', function(req, res){
 app.use(webpack.middleware(compiler, {
   publicPath: webpack.config.output.publicPath,
   noInfo: true,
+  hot: true,
   stats: {
     colors: true
   },
@@ -172,12 +171,12 @@ app.post('/signup', function(req, res) {
   add_user_local(knex, user, res)
 });
 
-
 app.get('/test/login', function(req, res) {
     let templateVars = req.session.passport;
     console.log('templatevars', templateVars)
     res.render('login', templateVars);
   });
+
 
 app.post('/login',
   passport.authenticate('local',  { successRedirect: '/',
@@ -222,6 +221,7 @@ app.get('/games/data', function(req, res) {
     console.log(req.session.passport.id)
     gamesRoutes(knex, res, req.session.passport.id);
 })
+
 
 app.get('/landing/check', function(req, res) {
   // console.log(req.session.passport.user);

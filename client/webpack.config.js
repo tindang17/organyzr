@@ -10,7 +10,7 @@ const config = {
   // context: path(__dirname, 'src'),
 
   entry: [
-    // 'webpack-dev-server/client?http://localhost:3000',
+    // 'webpack-dev-server/client?http://localhost:8080',
     'webpack-hot-middleware/client',
     './client/src/index.jsx'
     // the entry point of our app
@@ -56,6 +56,7 @@ const config = {
     new HtmlWebpackPlugin({
       inject: false,
       template: './client/index.html'
+
     })]
 }
 
@@ -68,3 +69,4 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 module.exports = config;
+

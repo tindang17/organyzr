@@ -12,14 +12,18 @@ import About from './components/About.jsx';
 import Signup from './components/Signup.jsx';
 import Nav from './components/Nav.jsx';
 
+// import Teams from './components/teams/Teams.jsx';
+import { Menu } from 'semantic-ui-react';
+
+
 import Login from './components/Login.jsx'
 
 import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
 import Manage from './components/Manage.jsx';
-
 import { Menu, Loader, Segment } from 'semantic-ui-react'
 import Settings from './components/Settings.jsx';
+
 
 
 
@@ -62,7 +66,7 @@ class App extends Component {
       },
       { path: '/games',
         sidebar: () => <Games/>,
-        main: () => <Games/>
+        main: () => <Games/> 
       },
       { path: '/login',
         sidebar: () => <Login/>,
@@ -78,6 +82,11 @@ class App extends Component {
         sidebar: () => <Settings/>,
         main: () => <Settings/>
       }
+      // {
+      //   path: '/team',
+      //   sidebar: () => <Teams/>,
+      //   main: () => <Teams/>
+      // }
     ]
 
     const styles = {
@@ -122,25 +131,10 @@ class App extends Component {
           <br/>
           <li><Link to="/settings">Settings</Link></li>
         </ul>
-
-
       </div>
-
-      <div style={{ flex: 1, padding: '20px' }}>
-        {routes.map((route, index) => (
-          // Render more <Route>s with the same paths as
-          // above, but different components this time.
-          <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            component={route.main}
-          />
-        ))}
-      </div>
-    </div>
-  </Router>
-  )}
+    </Router>
+    )
+  }
 }
 
 

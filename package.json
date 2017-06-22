@@ -48,7 +48,9 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "devDependencies": {
+    "moment": "^2.18.1",
     "nodemon": "^1.11.0",
+    "react-big-calendar": "^0.14.2",
     "webpack-bundle-analyzer": "^2.8.2"
   }
 }

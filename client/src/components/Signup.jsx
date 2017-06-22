@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-
+import Password from './Password.jsx';
 import { Button, Checkbox, Form, Message, Grid, Header } from 'semantic-ui-react'
+
 
 
 
@@ -37,7 +38,7 @@ class Signup extends React.Component {
     fetch('/signup', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           first_name: this.state.first_name,
@@ -82,6 +83,7 @@ class Signup extends React.Component {
       }
     }
     return (
+
      <div>
              <Header as='h2' textAlign='centered'> Hi Signup With Us!! Hi </Header> 
     <Grid divided padded >

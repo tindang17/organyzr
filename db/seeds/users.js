@@ -72,7 +72,7 @@ exports.seed = function(knex, Promise) {
       }),
       knex('teams').insert({
         name: 'LHL',
-        logo: 'logo.jpg',
+        logo: 'logo.png',
         uuid: 'vdweferge25ddsfdsf25t4wfew43t3',
         user_id: 6
       })
