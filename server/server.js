@@ -48,7 +48,7 @@ const add_user_local = require("./functions/add_user_local.js");
 // const add_user_local = require("./functions/passport/add_user_local.js");
 const add_user_facebook = require("./functions/add_user_facebook.js");
 
-
+const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
 
 app.use(knexLogger(knex));
@@ -220,6 +220,13 @@ app.get('/games/data', function(req, res) {
     console.log(req.session.passport.id)
     gamesRoutes(knex, res, req.session.passport.id);
 })
+
+app.get('/settings/data', function(req, res) {
+    console.log('server side');
+    console.log(req.session.passport.user)
+    settings_data(knex, res, req.session.passport.user);
+})
+
 
 
 
