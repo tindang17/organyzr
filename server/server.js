@@ -253,7 +253,11 @@ app.get('/games', function(req, res) {
 
 app.use('/test/login', loginRoutes(knex, passport));
 app.get('/games/data', function(req, res) {
+  if (!req.user) {
+    res.redirect('/#/login');
+  } else {
     gamesRoutes(knex, res, req.session.passport.user);
+  }
 })
 
 app.get('/teams/data', function(req, res) {

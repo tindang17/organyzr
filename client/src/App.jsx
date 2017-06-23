@@ -109,6 +109,12 @@ class App extends Component {
       signupLogin = [];
     }
 
+    let gamesLink; 
+    if (this.state.userid === 'not logged in') {
+      gamesLink = '/login';
+    } else {
+      gamesLink = '/games';
+    }
   return (
 
 <Router>
@@ -127,7 +133,7 @@ class App extends Component {
           {signupLogin}
           <br/>
 
-          <li style={styles.liitem}><Link to="/games">Games</Link></li>
+          <li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
           <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
           <br/>
           <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
