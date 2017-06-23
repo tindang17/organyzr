@@ -10,7 +10,7 @@ class Login extends React.Component {
     super(props);
     this.state = {email: '',
                   password: '',
-                  message: 'no message', 
+                  message: 'no message',
                   redirect: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -41,7 +41,7 @@ class Login extends React.Component {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        credentials: 'same-origin',
+        credentials: 'include',
         body: JSON.stringify({
           username: this.state.email,
           password: this.state.password
@@ -49,16 +49,16 @@ class Login extends React.Component {
       })
       .then(response => response.text())
       .then(function(body) {
-        
+        console.log("body message", body.message)
         self.setState({message: body.message, redirect: true});
-        
       });
   }
   render() {
     const {redirect} = this.state;
 
     if (redirect) {
-      return <Redirect to='/'/>;
+
+      window.location.reload()
     }
     return (
 

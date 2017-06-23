@@ -15,7 +15,7 @@ class Signup extends React.Component {
                   password: '',
                   confirm_password: '',
                   phone: '',
-                  message: 'no message', 
+                  message: 'no message',
                   redirect: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -58,7 +58,7 @@ class Signup extends React.Component {
         return response.json()
       })
       .then(function(body) {
-        self.setState({message: body.message, redirect: true});
+        self.setState({message: body.message, redirect: false});
       });
   }
   render() {
@@ -70,8 +70,8 @@ class Signup extends React.Component {
     }
 
     const items = [
-      'Manage your team', 
-      'Automate your reminders - choose from text, email, or Facebook messenger', 
+      'Manage your team',
+      'Automate your reminders - choose from text, email, or Facebook messenger',
       'Your players never have to visit our page!'
     ]
 
@@ -86,7 +86,7 @@ class Signup extends React.Component {
     return (
 
      <div>
-             <Header as='h2' textAlign='center'> Hi Signup With Us!! Hi </Header> 
+             <Header as='h2' textAlign='center'> Hi Signup With Us!! Hi </Header>
     <Grid divided padded >
       <Grid.Row columns={2}>
         <Grid.Column width={5}>
