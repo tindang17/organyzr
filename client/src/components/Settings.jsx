@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import { Button, Checkbox, Form, Message } from 'semantic-ui-react'
 
+import axios from 'axios';
 
 
 class Settings extends React.Component {
@@ -10,13 +11,24 @@ class Settings extends React.Component {
     this.state = {first_name: '',
                   last_name: '',
                   phone: '',
-                  phoneNotifications: false,
-                  emailNotifications: false,
+                  text_notification: false,
+                  email_notification: false,
                   message: 'no message'};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  componentDidMount() {
+    var self = this;
+    console.log('before axios request');
+    axios.get(`/settings/data`)
+    .then(res => {
+      self.setState(res.data[0])
+      console.log(res.data[0]);
+    })
+  }
+
 
   handleInputChange(event) {
     const target = event.target;
@@ -42,8 +54,8 @@ class Settings extends React.Component {
           first_name: this.state.first_name,
           last_name: this.state.last_name,
           phone: this.state.phone,
-          text_notification: this.state.phoneNotifications,
-          email_notification: this.state.emailNotifications
+          text_notification: this.state.text_notification,
+          email_notification: this.state.email_notification
         })
       })
       .then(function(response) {
@@ -77,11 +89,11 @@ class Settings extends React.Component {
             </Form.Field>
             <Form.Field width='5'>
                     <label>
-          Phone Notifications:
+          Text Notifications:
           <input
-            name="phoneNotifications"
+            name="text_notification"
             type="checkbox"
-            checked={this.state.phoneNotifications}
+            checked={this.state.text_notification}
             onChange={this.handleInputChange} />
         </label>
         </Form.Field>
@@ -93,9 +105,9 @@ class Settings extends React.Component {
                     <label>
           Email Notifications:
           <input
-            name="emailNotifications"
+            name="email_notification"
             type="checkbox"
-            checked={this.state.emailNotifications}
+            checked={this.state.email_notification}
             onChange={this.handleInputChange} />
         </label>
         </Form.Field>
