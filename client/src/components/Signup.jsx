@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 // import Password from './Password.jsx';
 import { Button, Checkbox, Form, Message, Grid, Header } from 'semantic-ui-react'
-
+import { Route, Redirect} from 'react-router-dom'
 
 class Signup extends React.Component {
   constructor(props) {
@@ -14,10 +14,11 @@ class Signup extends React.Component {
                               password: '',
                               password_confirmation: '',
                               phone: ''
-                },
-                message: 'no message',
-                errorMessages: {password: []},
-                isEnabled: false};
+                  },
+                  message: 'no message',
+                  errorMessages: {password: []},
+                  isEnabled: false,
+                  redirect: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -77,6 +78,7 @@ class Signup extends React.Component {
         headers: {
           'Content-Type': 'application/json'
         },
+        credentials: 'same-origin',
         body: JSON.stringify({
           first_name: this.state.formInputs.first_name,
           last_name: this.state.formInputs.last_name,
@@ -88,23 +90,21 @@ class Signup extends React.Component {
         })
       })
       .then(function(response) {
-        console.log('response', response)
         if (response.status === 200) {
-          console.log('success')
-          console.log('json', response.json)
-          console.log('body', response.body)
         }
         return response.json()
       })
       .then(function(body) {
-        console.log('body', body);
-        console.log(body.message);
-        self.setState({message: body.message});
-        console.log('self msg', self.state.message)
+        self.setState({message: body.message, redirect: true});
       });
   }
   render() {
-    
+    const {redirect} = this.state;
+
+    if (redirect) {
+      return <Redirect to='/'/>;
+    }
+
     const items = [
       'Manage your team', 
       'Automate your reminders - choose from text, email, or Facebook messenger', 
@@ -172,7 +172,6 @@ class Signup extends React.Component {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-
       <Message content={this.state.message} header='error msg'>
       </Message>
     </div>

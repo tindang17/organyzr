@@ -17,7 +17,10 @@ const knexLogger  = require('knex-logger');
 
 //Routes
 const gamesRoutes = require('./routes/games')
-// const loginRoutes = require('./routes/test/login');
+
+
+const teamsRoutes = require('./routes/teams')
+const loginRoutes = require('./routes/test/login');
 
 const webpack = {
   core: require('webpack'),
@@ -42,8 +45,10 @@ const add_user_local = require("./functions/add_user_local.js");
 
 // const add_user_local = require("./functions/passport/add_user_local.js");
 const add_user_facebook = require("./functions/add_user_facebook.js");
+const add_team = require("./functions/add_team.js");
 
 
+const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
 
 const passport = require('passport')
@@ -168,7 +173,21 @@ app.post('/signup', function(req, res) {
   add_user_local(knex, user, res)
 });
 
-app.get('/login', function(req, res) {
+
+// Listen to POST requests to /users.
+app.post('/new_team', function(req, res) {
+  // Get sent data.
+  console.log('req', req.body)
+  console.log('new_team')
+  let user_id = req.session.passport.user
+  // Do a MySQL query.
+
+  add_team(knex, user_id, req.body.name, req.body.logo)
+});
+
+
+
+app.get('/test/login', function(req, res) {
     let templateVars = req.session.passport;
     console.log('templatevars', templateVars)
     res.render('login', templateVars);
@@ -201,13 +220,28 @@ app.post('/settings', function(req, res) {
 
 
 
-// app.use('/login', loginRoutes(knex, passport));
+app.use('/login', loginRoutes(knex, passport));
 
 app.get('/games/data', function(req, res) {
     console.log('server side');
     console.log(req.session.passport.id)
     gamesRoutes(knex, res, req.session.passport.id);
 })
+
+app.get('/teams/data', function(req, res) {
+    console.log('server side');
+    console.log(req.session.passport)
+    console.log(req.session.passport.user)
+    teamsRoutes(knex, res, req.session.passport.user);
+})
+
+app.get('/settings/data', function(req, res) {
+    console.log('server side settings');
+    console.log(req.session.passport)
+    console.log(req.session.passport.user)
+    settings_data(knex, res, req.session.passport.user);
+})
+
 
 
 app.get('/landing/check', function(req, res) {
