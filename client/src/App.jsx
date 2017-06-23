@@ -130,7 +130,7 @@ class App extends Component {
           <li style={styles.liitem}><Link to="/games">Games</Link></li>
           <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
           <br/>
-          <li><Link to="/settings">Settings</Link></li>
+          <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
         </ul>
       </div>
       <div style={{ flex: 1, padding: '20px' }}>
