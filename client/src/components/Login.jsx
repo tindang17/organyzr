@@ -7,9 +7,12 @@ import { Button, Checkbox, Form, Message } from 'semantic-ui-react'
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {email: '',
-                  password: '',
-                  message: 'no message'};
+    this.state = {formInputs: {
+                    email: '',
+                    password: ''
+                  },
+                  message: 'no message',
+                  isEnabled: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,10 +22,22 @@ class Login extends React.Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-
+    let newFormInputs = this.state.formInputs;
+    newFormInputs[name]= value;
     this.setState({
-      [name]: value
+      formInputs: newFormInputs
     });
+    let allGood = true;
+    // looping through the all the field to check 
+    // for the form input.
+    for (let input in this.state.formInputs) {
+      var inputValue = this.state.formInputs[input];
+      console.log('where is the input',inputValue);
+      allGood = allGood && (inputValue.length > 0);
+    }
+    this.setState({isEnabled:allGood});
+   
+    console.log('true or false', this.state.isEnabled)
   }
 
   handleSubmit(e) {
@@ -59,13 +74,13 @@ class Login extends React.Component {
           <Form onSubmit={this.handleSubmit}>
             <Form.Field>
               <label>Email</label>
-              <input name="email" placeholder='Email Name' value={this.state.email} onChange={this.handleInputChange}/>
+              <input name="email"  type="email" placeholder='Email Name' value={this.state.formInputs.email} onChange={this.handleInputChange}/>
             </Form.Field>
             <Form.Field>
               <label>Password</label>
-              <input name="password" type="password" value={this.state.password} onChange={this.handleInputChange}/>
+              <input name="password" type="password" value={this.state.formInputs.password} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Button type='submit'>Submit</Button>
+            <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
           </Form>
             <Message content={this.state.message} header='error msg'>
             </Message>

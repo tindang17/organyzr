@@ -17,7 +17,7 @@ const knexLogger  = require('knex-logger');
 
 //Routes
 const gamesRoutes = require('./routes/games')
-const loginRoutes = require('./routes/test/login');
+// const loginRoutes = require('./routes/test/login');
 
 const webpack = {
   core: require('webpack'),
@@ -138,10 +138,6 @@ app.get('/auth/facebook/callback',
 // app.use('/games', gamesRoutes(knex));
 
 
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/login');
-});
 
 
 
@@ -178,6 +174,16 @@ app.get('/login', function(req, res) {
     res.render('login', templateVars);
   });
 
+app.post('/login',
+  passport.authenticate('local',  { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: false }),
+    function(req, res) {
+      console.log(req)
+      console.log('post to login')
+      res.json({ success: false, message: 'success'})
+    }
+);
 
 // Listen to POST requests to /users.
 app.post('/settings', function(req, res) {
@@ -193,19 +199,9 @@ app.post('/settings', function(req, res) {
   update_user(knex, data, user_id, res)
 });
 
-app.post('/login',
-  passport.authenticate('local',  { successRedirect: '/',
-                                   failureRedirect: '/test/login',
-                                   failureFlash: false }),
-    function(req, res) {
-      console.log(req)
-      console.log('post to login')
-      res.json({ success: false, message: 'success'})
-    }
-);
 
 
-app.use('/login', loginRoutes(knex, passport));
+// app.use('/login', loginRoutes(knex, passport));
 
 app.get('/games/data', function(req, res) {
     console.log('server side');
@@ -224,6 +220,10 @@ app.get('/landing/check', function(req, res) {
   }
 })
 
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/login');
+});
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

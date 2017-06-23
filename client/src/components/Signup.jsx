@@ -34,7 +34,7 @@ class Signup extends React.Component {
     this.setState({
       formInputs: newFormInputs
     });
-    console.log('give me your valueeeee', this.state);
+    console.log('give me your first_name', this.state.formInputs.first_name);
     let allGood = true;
     // looping through the all the field to check 
     // for the form input.
