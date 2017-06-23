@@ -232,10 +232,27 @@ app.post('/login',
 );
 
 
+// redirection routes 
+
+app.get('/about', function(req, res) {
+  res.redirect('/#/about');
+})
+
+app.get('/faq', function(req, res) {
+  res.redirect('/#/faq');
+})
+
+app.get('/games', function(req, res) {
+  if (!req.user) {
+    res.redirect('/#/login');
+  } else {
+    res.redirect('/#/games');
+  }
+})
+
+
 app.use('/test/login', loginRoutes(knex, passport));
 app.get('/games/data', function(req, res) {
-    console.log('server side');
-    console.log(req.session.passport.id)
     gamesRoutes(knex, res, req.session.passport.user);
 })
 
