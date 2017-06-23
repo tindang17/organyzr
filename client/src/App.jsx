@@ -5,7 +5,6 @@ import {
   Link
 } from 'react-router-dom'
 import axios from 'axios';
-
 // Components for pages
 import Faq from './components/Faq.jsx';
 import About from './components/About.jsx';

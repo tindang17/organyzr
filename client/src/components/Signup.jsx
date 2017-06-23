@@ -3,8 +3,6 @@ import React, {Component} from 'react';
 import { Button, Checkbox, Form, Message, Grid, Header } from 'semantic-ui-react'
 
 
-
-
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -18,16 +16,19 @@ class Signup extends React.Component {
                               phone: ''
                 },
                 message: 'no message',
+                errorMessages: {password: []},
                 isEnabled: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleFormValidation= this.handleFormValidation.bind(this);
   }
 
   handleInputChange(event) {
     const target = event.target;
     const value = target.value;
     const name = target.name;
+    // this will make sure that the each field will be validate individually
     let newFormInputs = this.state.formInputs;
     newFormInputs[name] = value;
     this.setState({
@@ -35,6 +36,8 @@ class Signup extends React.Component {
     });
     console.log('give me your valueeeee', this.state);
     let allGood = true;
+    // looping through the all the field to check 
+    // for the form input.
     for (let input in this.state.formInputs) {
       var inputValue = this.state.formInputs[input];
       console.log('where is the input',inputValue);
@@ -42,18 +45,31 @@ class Signup extends React.Component {
     }
     this.setState({isEnabled:allGood});
    
-    console.log('true or false', this.state.isEnabled)
-    
-    
+    console.log('true or false', this.state.isEnabled) 
   }
+
+  handleFormValidation(event) {
+    let valid = true;
+    let {password, password_confirmation} = this.state;
+    let errorMessages = {password: []};
+    if(this.state.formInputs.password !== this.state.formInputs.password_confirmation) {
+      errorMessages['password'].push('Passwords do not match');
+    }
+    console.log(this.state);
+    console.log(errorMessages);
+  
+    this.setState({
+      errorMessages: errorMessages
+    })
+  }
+
+
 
   handleSubmit(e) {
     console.log("Submit clicked");
     e.preventDefault();
-    if(this.state.formInputs.password !== this.state.formInputs.password_confirmation) {
-      alert(`passwords do not match`);
-      return;
-    }
+    this.handleFormValidation()
+    
     var self = this;
     // On submit of the form, send a POST request with the data to the server.
     fetch('/signup', {
@@ -103,7 +119,6 @@ class Signup extends React.Component {
         fontSize: 16
       }
     }
-    // checking whether input fields are empty
     return (
 
      <div>
@@ -131,10 +146,16 @@ class Signup extends React.Component {
               <Form.Field width='12'>
                 <label>Password</label>
                 <input name="password" type="password" value={this.state.formInputs.password} onChange={this.handleInputChange}/>
+                <div className='error'>
+                  <font color="red">{this.state.errorMessages.password}</font>
+                </div>
               </Form.Field>
               <Form.Field width='12'>
                 <label>Password Confirmation</label>
                 <input name="password_confirmation" type="password" value={this.state.formInputs.password_confirmation} onChange={this.handleInputChange}/>
+                <div className='error'>
+                  <font color="red">{this.state.errorMessages.password}</font>
+                </div>
               </Form.Field>
               <Form.Field width='12'>
                 <label>Phone Number</label>
