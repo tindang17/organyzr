@@ -219,7 +219,7 @@ app.use('/test/login', loginRoutes(knex, passport));
 app.get('/games/data', function(req, res) {
     console.log('server side');
     console.log(req.session.passport.id)
-    gamesRoutes(knex, res, req.session.passport.id);
+    gamesRoutes(knex, res, req.session.passport.user);
 })
 
 
