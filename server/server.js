@@ -206,20 +206,17 @@ app.post('/login',
   passport.authenticate('local'), function(err, user, info) {
     console.log('login post')
     if (err) { return (err); }
-    if (!user) { return res.json({ success: false, message: info.message}); }
+    if (!user) { return res.send({ success: false, message: info.message}); }
     else { return res.json({ success: true, message: 'success'}); }
   });
 
 
 
 app.post('/test/login',
-  passport.authenticate('local',  { successRedirect: '/',
-                                   failureRedirect: '/',
-                                   failureFlash: false }),
+  passport.authenticate('local'),
     function(req, res) {
-      console.log(req)
-      console.log('post to login')
-      res.json({ success: false, message: 'success'})
+      console.log('this is res', res)
+      res.json({message: 'success'})
     }
 );
 
