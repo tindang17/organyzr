@@ -143,9 +143,11 @@ app.get('/auth/facebook/callback',
 // app.use('/games', gamesRoutes(knex));
 
 
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/#/login');
+app.post('/logout', function(req, res){
+  // req.logout();
+  req.session = null; 
+  res.redirect('/');
+  // res.redirect('/#/login');
 });
 
 

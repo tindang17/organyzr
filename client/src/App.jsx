@@ -15,7 +15,8 @@ import Nav from './components/Nav.jsx';
 // import Teams from './components/teams/Teams.jsx';
 
 
-import Login from './components/Login.jsx'
+import Login from './components/Login.jsx';
+import Logout from './components/Logout.jsx';
 
 import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
@@ -87,11 +88,6 @@ class App extends Component {
         sidebar: () => <Settings/>,
         main: () => <Settings/>
       }
-      // {
-      //   path: '/team',
-      //   sidebar: () => <Teams/>,
-      //   main: () => <Teams/>
-      // }
     ]
 
     const styles = {
@@ -127,8 +123,10 @@ class App extends Component {
     } else if (this.state.userid === 'not logged in') {
       manageGames = [];
     } else {
-      manageGames.push(<div><h4>Hello</h4><br/><li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
-          <li style={styles.liitem}><Link to="/manage">Manage</Link></li></div>)
+      manageGames.push(<div><br/><li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
+          <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
+          <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
+          <br/> <li style={styles.liitem}><Link to="/logout">Logout</Link></li></div>)
     } 
   return (
 
@@ -148,7 +146,6 @@ class App extends Component {
           <br/>
           {manageGames}
           <br/>
-          <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
         </ul>
       </div>
       <div style={{ flex: 1, padding: '20px' }}>
@@ -166,6 +163,10 @@ class App extends Component {
       <Route path='/login' render = { () => 
       (checkLogin === 'not logged in') ? 
       (<Login/>) : (<Redirect to='/'/>)}/>
+
+      <Route path='/logout' render = { () => 
+      (checkLogin === 'not logged in') ? 
+      (<Redirect to='/'/>) : (<Logout/>)}/>
     </div>
   </div>
   </div>
