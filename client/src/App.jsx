@@ -15,7 +15,8 @@ import Nav from './components/Nav.jsx';
 // import Teams from './components/teams/Teams.jsx';
 
 
-import Login from './components/Login.jsx'
+import Login from './components/Login.jsx';
+import Logout from './components/Logout.jsx';
 
 import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
@@ -83,11 +84,6 @@ class App extends Component {
         sidebar: () => <Settings/>,
         main: () => <Settings/>
       }
-      // {
-      //   path: '/team',
-      //   sidebar: () => <Teams/>,
-      //   main: () => <Teams/>
-      // }
     ]
 
     const styles = {
@@ -107,6 +103,7 @@ class App extends Component {
       checkLogin = 'not logged in'
     } else {
       checkLogin = 'logged in'
+
     }
 
 console.log('login check', checkLogin)
@@ -119,16 +116,28 @@ console.log('login check', checkLogin)
           <li style={styles.liitem}><Link to="{checkLogin}">Login</Link></li></ul>)
     } else {
       signupLogin = [];
+
     }
 
 
-    let gamesLink; 
+    let gamesLink;
     if (this.state.userid === 'not logged in') {
       gamesLink = '/login';
     } else {
       gamesLink = '/games';
     }
 
+    let manageGames = [];
+     if (this.state.userid === false) {
+      manageGames = [];
+    } else if (this.state.userid === 'not logged in') {
+      manageGames = [];
+    } else {
+      manageGames.push(<div><br/><li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
+          <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
+          <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
+          <br/> <li style={styles.liitem}><Link to="/logout">Logout</Link></li></div>)
+    }
   return (
 
 <Router>
@@ -144,13 +153,9 @@ console.log('login check', checkLogin)
           <li style={styles.liitem}><Link to="/">Home</Link></li>
           <li style={styles.liitem}><Link to="/about">About</Link></li>
           <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
-          {signupLogin}
           <br/>
-
-          <li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
-          <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
+          {manageGames}
           <br/>
-          <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
         </ul>
       </div>
       <div style={{ flex: 1, padding: '20px' }}>
@@ -165,14 +170,14 @@ console.log('login check', checkLogin)
           />
         ))}
 
-        <Route path="/login" render={() => (
-          (checkLogin === 'not logged in') ?
-          ( <Login />) :
-          (<Redirect to="/"/>)
-        )}/>
 
+      <Route path='/login' render = { () =>
+      (checkLogin === 'not logged in') ?
+      (<Login/>) : (<Redirect to='/'/>)}/>
 
-
+      <Route path='/logout' render = { () =>
+      (checkLogin === 'not logged in') ?
+      (<Redirect to='/'/>) : (<Logout/>)}/>
 
     </div>
   </div>

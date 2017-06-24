@@ -14,6 +14,7 @@ class Login extends React.Component {
                     password: ''
                   },
                   message: 'no message',
+                  erroMessage: '',
                   isEnabled: false,
                   redirect: false};
 
@@ -63,11 +64,24 @@ class Login extends React.Component {
           password: this.state.formInputs.password
         })
       })
-      .then(response => response.text())
+      .then(function(response) {
+        if (response.statusText === 'Unauthorized') {
+          console.log('unauth'); 
+        } else {
+          return response.text();
+        }})
       .then(function(body) {
-        console.log("body message", body.message)
-        self.setState({message: body.message, redirect: true});
-      });
+        // console.log("body message", JSON.parse(body));
+        if (body) {
+          console.log('body');
+          self.setState({redirect: true});
+        } else {
+          self.setState({errorMessage: 'Incorrect Credentials'})
+        }
+          
+        
+        // 
+      })
   }
   render() {
     const {redirect} = this.state;
@@ -90,6 +104,7 @@ class Login extends React.Component {
             </Form.Field>
             <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
           </Form>
+          <span><font color="red">{this.state.errorMessage}</font></span>
             <Message content={this.state.message} header='error msg'>
             </Message>
             <a href="/auth/facebook">Login with Facebook</a>
