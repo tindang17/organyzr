@@ -49,7 +49,7 @@ const add_game = require("./functions/add_game.js");
 
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
-
+const getTeamGames =  require("./functions/get_team_games.js")
 app.use(knexLogger(knex));
 
 app.use(cookieSession({
@@ -235,10 +235,11 @@ app.post('/settings', function(req, res) {
 
 
 
-app.get('/games/data', function(req, res) {
+app.get('/games/data/:team_uuid', function(req, res) {
     console.log('server side');
+    console.log(req.params.team_uuid)
     console.log(req.session.passport.id)
-    gamesRoutes(knex, res, req.session.passport.id);
+    getTeamGames(knex, res, req.session.passport.id, req.params.team_uuid);
 })
 
 app.get('/teams/data', function(req, res) {

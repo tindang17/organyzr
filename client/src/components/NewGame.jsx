@@ -41,8 +41,8 @@ class NewGame extends React.Component {
         credentials: 'include',
         body: JSON.stringify({
           location: this.state.location,
-          date: this.state.name,
-          time: this.state.logo,
+          date: this.state.date,
+          time: this.state.time,
           description: this.state.description,
           team_uuid: this.props.uuid
         })

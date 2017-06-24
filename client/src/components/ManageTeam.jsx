@@ -25,7 +25,7 @@ class ManageTeam extends Component {
     console.log('before axios request');
     axios.get(`/games/data/`+self.state.team)
     .then(res => {
-      self.setState({gamems: self.state.games.concat(res.data)})
+      self.setState({games: self.state.games.concat(res.data)})
       console.log(self.state.games);
     })
     console.log('props in comp did mout ', self.props)
@@ -52,7 +52,7 @@ let team = self.state.team
 
               <Table.Cell>
 
-<div >{gameCards[i].name}</div>
+<div >{gameCards[i].description}</div>
 
 
 
