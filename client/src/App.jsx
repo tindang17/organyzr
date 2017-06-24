@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {
   HashRouter as Router,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom'
 import axios from 'axios';
 // Components for pages
@@ -14,7 +15,8 @@ import Nav from './components/Nav.jsx';
 // import Teams from './components/teams/Teams.jsx';
 
 
-import Login from './components/Login.jsx'
+import Login from './components/Login.jsx';
+import Logout from './components/Logout.jsx';
 
 import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
@@ -67,10 +69,10 @@ class App extends Component {
         sidebar: () => <Games/>,
         main: () => <Games/>
       },
-      { path: '/login',
-        sidebar: () => <Login user={this.state.userid}/>,
-        main: () => <Login user={this.state.userid}/>
-      },
+      // { path: '/login',
+      //   sidebar: () => <Login user={this.state.userid}/>,
+      //   main: () => <Login user={this.state.userid}/>
+      // },
       {
         path: '/manage',
         sidebar: () => <Manage/>,
@@ -86,11 +88,6 @@ class App extends Component {
         sidebar: () => <Settings/>,
         main: () => <Settings/>
       }
-      // {
-      //   path: '/team',
-      //   sidebar: () => <Teams/>,
-      //   main: () => <Teams/>
-      // }
     ]
 
     const styles = {
@@ -107,20 +104,9 @@ class App extends Component {
 
     let checkLogin;
     if (this.state.userid === 'not logged in') {
-      checkLogin = '/'
+      checkLogin = 'not logged in'
     } else {
-      checkLogin = '/'
-    }
-
-
-     let signupLogin = [];
-     if (this.state.userid === false) {
-      signupLogin = [];
-    } else if (this.state.userid === 'not logged in') {
-      signupLogin.push(<ul><li style={styles.liitem}><Link to="/signup">Signup</Link></li>
-          <li style={styles.liitem}><Link to="{checkLogin}">Login</Link></li></ul>)
-    } else {
-      signupLogin = [];
+      checkLogin = 'logged in'
     }
 
 
@@ -131,6 +117,17 @@ class App extends Component {
       gamesLink = '/games';
     }
 
+    let manageGames = []; 
+     if (this.state.userid === false) {
+      manageGames = [];
+    } else if (this.state.userid === 'not logged in') {
+      manageGames = [];
+    } else {
+      manageGames.push(<div><br/><li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
+          <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
+          <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
+          <br/> <li style={styles.liitem}><Link to="/logout">Logout</Link></li></div>)
+    } 
   return (
 
 <Router>
@@ -146,13 +143,9 @@ class App extends Component {
           <li style={styles.liitem}><Link to="/">Home</Link></li>
           <li style={styles.liitem}><Link to="/about">About</Link></li>
           <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
-          {signupLogin}
           <br/>
-
-          <li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
-          <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
+          {manageGames}
           <br/>
-          <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
         </ul>
       </div>
       <div style={{ flex: 1, padding: '20px' }}>
@@ -166,6 +159,14 @@ class App extends Component {
           component={route.main}
           />
         ))}
+
+      <Route path='/login' render = { () => 
+      (checkLogin === 'not logged in') ? 
+      (<Login/>) : (<Redirect to='/'/>)}/>
+
+      <Route path='/logout' render = { () => 
+      (checkLogin === 'not logged in') ? 
+      (<Redirect to='/'/>) : (<Logout/>)}/>
     </div>
   </div>
   </div>
