@@ -95,7 +95,7 @@ class Signup extends React.Component {
         return response.json()
       })
       .then(function(body) {
-        self.setState({message: body.message, redirect: true});
+        self.setState({message: body.message, redirect: false});
       });
   }
   render() {

@@ -50,7 +50,7 @@ class Login extends React.Component {
     // let formData = new FormData();
     // formData.append('username', self.state.email)
     // On submit of the form, send a POST request with the data to the server.
-    fetch('/login', {
+    fetch('/test/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
