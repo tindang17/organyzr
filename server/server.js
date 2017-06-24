@@ -50,7 +50,6 @@ const add_game = require("./functions/add_game.js");
 
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
-<<<<<<< HEAD
 const getTeamGames =  require("./functions/get_team_games.js")
 
 
@@ -146,7 +145,7 @@ app.get('/auth/facebook/callback',
 
 app.post('/logout', function(req, res){
   // req.logout();
-  req.session = null; 
+  req.session = null;
   res.redirect('/');
   // res.redirect('/#/login');
 });
@@ -267,13 +266,7 @@ app.get('/games/data/:team_uuid', function(req, res) {
     console.log(req.params.team_uuid)
     console.log(req.session.passport.id)
     getTeamGames(knex, res, req.session.passport.id, req.params.team_uuid);
-
-app.get('/games/data', function(req, res) {
-  if (!req.user) {
-    res.redirect('/#/login');
-  } else {
-    gamesRoutes(knex, res, req.session.passport.user);
-  }
+})
 
 
 app.get('/teams/data', function(req, res) {
