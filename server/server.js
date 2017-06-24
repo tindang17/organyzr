@@ -48,10 +48,11 @@ const add_user_facebook = require("./functions/add_user_facebook.js");
 const add_team = require("./functions/add_team.js");
 const add_game = require("./functions/add_game.js");
 
+const add_my_team = require("./functions/add_my_team.js");
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
-const getTeamGames =  require("./functions/get_team_games.js")
-
+const get_my_teams =  require("./functions/get_my_teams.js")
+const getTeamGames = require("./functions/get_team_games.js")
 
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
@@ -190,6 +191,16 @@ app.post('/new_team', function(req, res) {
   add_team(knex, user_id, req.body.name, req.body.logo)
 });
 
+app.post('/add_team', function(req, res) {
+  // Get sent data.
+    let user_id = req.session.passport.user
+  console.log('req', req.body)
+  console.log('adding a team for', user_id)
+
+  // Do a MySQL query.
+
+  add_my_team(knex, user_id, req.body.uuid)
+});
 
 
 // Listen to POST requests to /users.
@@ -268,6 +279,12 @@ app.get('/games/data/:team_uuid', function(req, res) {
     getTeamGames(knex, res, req.session.passport.id, req.params.team_uuid);
 })
 
+app.get('/myteams/data', function(req, res) {
+    console.log('server side');
+    console.log(req.session.passport)
+    console.log(req.session.passport.user)
+    get_my_teams(knex, res, req.session.passport.user);
+})
 
 app.get('/teams/data', function(req, res) {
     console.log('server side');
