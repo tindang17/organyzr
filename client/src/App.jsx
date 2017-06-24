@@ -6,7 +6,6 @@ import {
   Redirect
 } from 'react-router-dom'
 import axios from 'axios';
-
 // Components for pages
 import Faq from './components/Faq.jsx';
 import About from './components/About.jsx';
@@ -123,6 +122,12 @@ console.log('login check', checkLogin)
     }
 
 
+    let gamesLink; 
+    if (this.state.userid === 'not logged in') {
+      gamesLink = '/login';
+    } else {
+      gamesLink = '/games';
+    }
 
   return (
 
@@ -142,7 +147,7 @@ console.log('login check', checkLogin)
           {signupLogin}
           <br/>
 
-          <li style={styles.liitem}><Link to="/games">Games</Link></li>
+          <li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
           <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
           <br/>
           <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
@@ -173,10 +178,11 @@ console.log('login check', checkLogin)
   </div>
   </div>
 </Router>
+
     )
   }
 }
 
 
 
-export default App
+export default App;

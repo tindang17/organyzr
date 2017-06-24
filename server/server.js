@@ -18,6 +18,7 @@ const knexLogger  = require('knex-logger');
 //Routes
 const gamesRoutes = require('./routes/games')
 
+
 const teamsRoutes = require('./routes/teams')
 const loginRoutes = require('./routes/test/login');
 
@@ -49,7 +50,14 @@ const add_game = require("./functions/add_game.js");
 
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
+<<<<<<< HEAD
 const getTeamGames =  require("./functions/get_team_games.js")
+
+
+const passport = require('passport')
+ , LocalStrategy = require('passport-local').Strategy
+ , FacebookStrategy = require('passport-facebook').Strategy;
+
 app.use(knexLogger(knex));
 
 app.use(cookieSession({
@@ -57,11 +65,13 @@ app.use(cookieSession({
   keys: ['kfpoier0tu5g0rejgre', 'erljfo34if0jwfdkepf']
 }));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
+app.use(passport.session());
 
-const passport = require('passport')
- , LocalStrategy = require('passport-local').Strategy
- , FacebookStrategy = require('passport-facebook').Strategy;
-// FacebookStrategy = require('passport-facebook').Strategy;
 
 passport.use(new LocalStrategy(
   function(email, password, done) {
@@ -124,12 +134,6 @@ return done(err);
     .catch((err) => { done(err,null); });
   });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email']}));
 app.get('/auth/facebook/callback',
@@ -144,6 +148,7 @@ app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/#/login');
 });
+
 
 
 
@@ -172,6 +177,7 @@ app.post('/signup', function(req, res) {
   add_user_local(knex, user, res)
 });
 
+
 // Listen to POST requests to /users.
 app.post('/new_team', function(req, res) {
   // Get sent data.
@@ -195,7 +201,6 @@ app.post('/new_game', function(req, res) {
 
   add_game(knex, user_id, req.body)
 });
-
 
 
 app.post('/login',
@@ -234,13 +239,43 @@ app.post('/settings', function(req, res) {
 });
 
 
+// redirection routes
+
+app.get('/about', function(req, res) {
+  res.redirect('/#/about');
+})
+
+app.get('/faq', function(req, res) {
+  res.redirect('/#/faq');
+})
+
+app.get('/games', function(req, res) {
+  if (!req.user) {
+    res.redirect('/#/login');
+  } else {
+    res.redirect('/#/games');
+  }
+})
+
+
+app.use('/test/login', loginRoutes(knex, passport));
+
+
+
 
 app.get('/games/data/:team_uuid', function(req, res) {
     console.log('server side');
     console.log(req.params.team_uuid)
     console.log(req.session.passport.id)
     getTeamGames(knex, res, req.session.passport.id, req.params.team_uuid);
-})
+
+app.get('/games/data', function(req, res) {
+  if (!req.user) {
+    res.redirect('/#/login');
+  } else {
+    gamesRoutes(knex, res, req.session.passport.user);
+  }
+
 
 app.get('/teams/data', function(req, res) {
     console.log('server side');
@@ -267,6 +302,7 @@ app.get('/landing/check', function(req, res) {
     res.send(req.session.passport.user.toString())
   }
 })
+
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
