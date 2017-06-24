@@ -109,7 +109,6 @@ class App extends Component {
       checkLogin = 'logged in'
     }
 
-
     let gamesLink; 
     if (this.state.userid === 'not logged in') {
       gamesLink = '/login';
@@ -124,56 +123,54 @@ class App extends Component {
       manageGames = [];
     } else {
       manageGames.push(<div><br/><li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
-          <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
-          <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
-          <br/> <li style={styles.liitem}><Link to="/logout">Logout</Link></li></div>)
+        <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
+        <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
+        <br/> <li style={styles.liitem}><Link to="/logout">Logout</Link></li></div>)
     } 
+  
   return (
+    <Router>
+      <div>
+        <div style={{ display: 'flex' }}>
+          <div style={{
+            padding: '10px',
+            width: '20%',
+            background: '#AAD097',
+            height: '100vh'
+            }}>
+              <ul style={styles.ulitem}>
+                <li style={styles.liitem}><Link to="/">Home</Link></li>
+                <li style={styles.liitem}><Link to="/about">About</Link></li>
+                <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
+                <br/>
+                {manageGames}
+                <br/>
+              </ul>
+            </div>
+            <div style={{ flex: 1, padding: '20px' }}>
+              {routes.map((route, index) => (
+              // Render more <Route>s with the same paths as
+              // above, but different components this time.
+                <Route
+                key={index}
+                path={route.path}
+                exact={route.exact}
+                component={route.main}
+                />
+              ))}
 
-<Router>
-  <div>
-  <div style={{ display: 'flex' }}>
-    <div style={{
-      padding: '10px',
-      width: '20%',
-      background: '#AAD097',
-      height: '100vh'
-      }}>
-        <ul style={styles.ulitem}>
-          <li style={styles.liitem}><Link to="/">Home</Link></li>
-          <li style={styles.liitem}><Link to="/about">About</Link></li>
-          <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
-          <br/>
-          {manageGames}
-          <br/>
-        </ul>
+            <Route path='/login' render = { () => 
+              (checkLogin === 'not logged in') ? 
+              (<Login/>) : (<Redirect to='/'/>)}/>
+
+            <Route path='/logout' render = { () => 
+              (checkLogin === 'not logged in') ? 
+              (<Redirect to='/'/>) : (<Logout/>)}/>
+          </div>
+        </div>
       </div>
-      <div style={{ flex: 1, padding: '20px' }}>
-        {routes.map((route, index) => (
-        // Render more <Route>s with the same paths as
-        // above, but different components this time.
-          <Route
-          key={index}
-          path={route.path}
-          exact={route.exact}
-          component={route.main}
-          />
-        ))}
-
-      <Route path='/login' render = { () => 
-      (checkLogin === 'not logged in') ? 
-      (<Login/>) : (<Redirect to='/'/>)}/>
-
-      <Route path='/logout' render = { () => 
-      (checkLogin === 'not logged in') ? 
-      (<Redirect to='/'/>) : (<Logout/>)}/>
-    </div>
-  </div>
-  </div>
-</Router>
-
-    )
-  }
+    </Router>
+  )}
 }
 
 

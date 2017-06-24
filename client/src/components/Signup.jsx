@@ -52,7 +52,7 @@ class Signup extends React.Component {
   }
 
   handleFormValidation(event) {
-    let {email, password, password_confirmation, phone} = this.state.formInputs;
+    let {password, password_confirmation, phone} = this.state.formInputs;
     let errorMessages = {password: [],
                         phone: [],
                         email: []};
@@ -62,9 +62,7 @@ class Signup extends React.Component {
     if(this.state.formInputs.password !== this.state.formInputs.password_confirmation) {
       errorMessages['password'].push('Passwords do not match');
     };
-    if(this.state.message === 'users_email_unique') {
-      errorMessages['email'].push('Email already existed');
-    }
+  
     this.setState({
       errorMessages: errorMessages
     });
@@ -76,7 +74,7 @@ class Signup extends React.Component {
     console.log("Submit clicked");
     e.preventDefault();
     this.handleFormValidation()
-    
+    let errorMessages = {email: []};
     var self = this;
     // On submit of the form, send a POST request with the data to the server.
     fetch('/signup', {
@@ -102,6 +100,10 @@ class Signup extends React.Component {
       })
       .then(function(body) {
         self.setState({message: body.message, redirect: false});
+        if(self.state.message === 'users_email_unique') {
+          errorMessages['email'].push('Email already existed');
+        }
+        self.setState({errorMessages: errorMessages});
       });
   }
   render() {

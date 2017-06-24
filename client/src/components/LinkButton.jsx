@@ -20,16 +20,15 @@ class LinkButton extends Component {
     const active = this.state.showlink
 
     if(active) {
-            return (<input type="text" value={this.props.uuid} readonly />);
-  } else {
-    return (
-      <Button onClick={this.handleClick}>
-        Generate Team Code
-        {active}
-      </Button>
-        )
-}
-
+      return (<input type="text" value={this.props.uuid} readonly />);
+    } else {
+      return (
+        <Button onClick={this.handleClick}>
+          Generate Team Code
+          {active}
+        </Button>
+      )
+    } 
   }
 }
 
