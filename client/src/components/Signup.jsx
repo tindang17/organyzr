@@ -16,7 +16,9 @@ class Signup extends React.Component {
                               phone: ''
                   },
                   message: 'no message',
-                  errorMessages: {password: []},
+                  errorMessages: {email: [],
+                                  password: [],
+                                  phone: []},
                   isEnabled: false,
                   redirect: false};
 
@@ -50,18 +52,22 @@ class Signup extends React.Component {
   }
 
   handleFormValidation(event) {
-    let valid = true;
-    let {password, password_confirmation} = this.state;
-    let errorMessages = {password: []};
+    let {email, password, password_confirmation, phone} = this.state.formInputs;
+    let errorMessages = {password: [],
+                        phone: [],
+                        email: []};
+    if(this.state.formInputs.phone.length !== 10) {
+      errorMessages['phone'].push('Phone number must be 10 digits');
+    };
     if(this.state.formInputs.password !== this.state.formInputs.password_confirmation) {
       errorMessages['password'].push('Passwords do not match');
+    };
+    if(this.state.message === 'users_email_unique') {
+      errorMessages['email'].push('Email already existed');
     }
-    console.log(this.state);
-    console.log(errorMessages);
-  
     this.setState({
       errorMessages: errorMessages
-    })
+    });
   }
 
 
@@ -141,6 +147,9 @@ class Signup extends React.Component {
               <Form.Field width='12'>
                 <label>Email</label>
                 <input name="email" type="email"placeholder='Email Name' value={this.state.formInputs.email} onChange={this.handleInputChange}/>
+                <div className='error'>
+                  <font color="red">{this.state.errorMessages.email}</font>
+                </div>
               </Form.Field>
               <Form.Field width='12'>
                 <label>Password</label>
@@ -159,6 +168,9 @@ class Signup extends React.Component {
               <Form.Field width='12'>
                 <label>Phone Number</label>
                 <input name="phone" placeholder='10 digits' value={this.state.formInputs.phone} onChange={this.handleInputChange}/>
+                <div className='error'>
+                  <font color="red">{this.state.errorMessages.phone}</font>
+                </div>      
               </Form.Field >
               <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
             </Form>
