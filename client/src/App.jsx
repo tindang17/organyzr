@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {
   HashRouter as Router,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom'
 import axios from 'axios';
 
@@ -68,10 +69,6 @@ class App extends Component {
         sidebar: () => <Games/>,
         main: () => <Games/>
       },
-      { path: '/login',
-        sidebar: () => <Login user={this.state.userid}/>,
-        main: () => <Login user={this.state.userid}/>
-      },
       {
         path: '/manage',
         sidebar: () => <Manage/>,
@@ -108,11 +105,12 @@ class App extends Component {
 
     let checkLogin;
     if (this.state.userid === 'not logged in') {
-      checkLogin = '/'
+      checkLogin = 'not logged in'
     } else {
-      checkLogin = '/'
+      checkLogin = 'logged in'
     }
 
+console.log('login check', checkLogin)
 
      let signupLogin = [];
      if (this.state.userid === false) {
@@ -161,6 +159,16 @@ class App extends Component {
           component={route.main}
           />
         ))}
+
+        <Route path="/login" render={() => (
+          (checkLogin === 'not logged in') ?
+          ( <Login />) :
+          (<Redirect to="/"/>)
+        )}/>
+
+
+
+
     </div>
   </div>
   </div>

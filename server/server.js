@@ -102,7 +102,6 @@ passport.use(new FacebookStrategy({
         console.log('user not found')
         return done(null, false, { message: 'Incorrect email.' });
       }
-
       return done(null, user);
           }).catch(function(err) {
 return done(err);
