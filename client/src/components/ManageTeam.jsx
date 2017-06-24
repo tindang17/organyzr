@@ -1,32 +1,37 @@
 import React, {Component} from 'react';
 import { Icon, Label, Menu, Table, Button, Segment, Image, Grid, Form } from 'semantic-ui-react'
+import { Router, Route, Link, IndexRoute, hashHistory, browserHistory, withRouter } from 'react-router';
+
 
 import axios from 'axios';
 import Calendar from './teams/Calendar.jsx';
-import NewTeam from './teams/NewTeam.jsx';
+import NewGame from './NewGame.jsx';
 import LinkButton from './LinkButton.jsx';
-class Manage extends Component {
+class ManageTeam extends Component {
   constructor (props) {
     super(props);
+    console.log('super props', this.props.location.pathname.split('/')[1])
     this.state = {
-      teams: [],
-      edit: null
+      team: this.props.location.pathname.split('/')[2],
+      games: []
     }
-      }
+
+  }
 
 
   componentDidMount() {
     let teams;
     var self = this;
     console.log('before axios request');
-    axios.get(`/teams/data`)
+    axios.get(`/games/data/`+self.state.team)
     .then(res => {
-      self.setState({teams: self.state.teams.concat(res.data)})
-      console.log(self.state.teams);
+      self.setState({gamems: self.state.games.concat(res.data)})
+      console.log(self.state.games);
     })
-
-  // console.log('last thing in comp did mount');
+    console.log('props in comp did mout ', self.props)
   }
+
+
 
 
   render () {
@@ -34,20 +39,20 @@ class Manage extends Component {
 
 let self = this
 
-    console.log('first in render', this.state.teams);
-    let teamCards = this.state.teams;
-
-  let htmlTeams = [];
-    if (teamCards.length !=  null) {
-      for (let i = 0; i < teamCards.length; i++) {
-        htmlTeams.push(
+    console.log('first in render', this.state.games);
+let team = self.state.team
+    let gameCards = this.state.games;
+  let htmlGames = [];
+    if (gameCards.length !=  null) {
+      for (let i = 0; i < gameCards.length; i++) {
+        htmlGames.push(
 
 
             <Table.Row>
 
               <Table.Cell>
 
-<div >{teamCards[i].name}</div>
+<div >{gameCards[i].name}</div>
 
 
 
@@ -67,6 +72,8 @@ let self = this
       <div>
         <h3> Hello Manager </h3>
 
+
+
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -77,12 +84,12 @@ let self = this
 
           <Table.Body>
 
-          {htmlTeams}
+          {htmlGames}
 
           </Table.Body>
         </Table>
         <div>
-          <NewTeam className='new-team'/>
+          <NewGame className='new-team' uuid={team}/>
         </div>
         <div>
           <Calendar className='team-calendar'/>
@@ -93,4 +100,4 @@ let self = this
 
 }
 
-export default Manage;
+export default ManageTeam;

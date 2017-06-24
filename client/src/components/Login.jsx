@@ -8,6 +8,7 @@ import { Button, Checkbox, Form, Message } from 'semantic-ui-react'
 class Login extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {formInputs: {
                     email: '',
                     password: ''
@@ -56,24 +57,24 @@ class Login extends React.Component {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        credentials: 'same-origin',
+        credentials: 'include',
         body: JSON.stringify({
-          username: this.state.email,
-          password: this.state.password
+          username: this.state.formInputs.email,
+          password: this.state.formInputs.password
         })
       })
       .then(response => response.text())
       .then(function(body) {
-        
+        console.log("body message", body.message)
         self.setState({message: body.message, redirect: true});
-        
       });
   }
   render() {
     const {redirect} = this.state;
 
     if (redirect) {
-      return <Redirect to='/'/>;
+
+      window.location.reload()
     }
     return (
 

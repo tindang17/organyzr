@@ -19,6 +19,7 @@ import Login from './components/Login.jsx'
 import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
 import Manage from './components/Manage.jsx';
+import ManageTeam from './components/ManageTeam.jsx';
 import { Menu, Loader, Segment } from 'semantic-ui-react'
 import Settings from './components/Settings.jsx';
 
@@ -28,7 +29,7 @@ import Settings from './components/Settings.jsx';
 class App extends Component {
   constructor (props) {
     super(props);
-    this.state = { 
+    this.state = {
       userid: false
     }
 
@@ -64,16 +65,21 @@ class App extends Component {
       },
       { path: '/games',
         sidebar: () => <Games/>,
-        main: () => <Games/> 
+        main: () => <Games/>
       },
       { path: '/login',
-        sidebar: () => <Login/>,
-        main: () => <Login/>
+        sidebar: () => <Login user={this.state.userid}/>,
+        main: () => <Login user={this.state.userid}/>
       },
       {
         path: '/manage',
         sidebar: () => <Manage/>,
         main: () => <Manage/>
+      },
+      {
+        path: '/manageteam/:teamid',
+        sidebar: () => <ManageTeam/>,
+        main: ManageTeam
       },
       {
         path: '/settings',
@@ -90,62 +96,80 @@ class App extends Component {
     const styles = {
       ulitem: {
         fontSize: 24,
-        listStyleType: 'none', 
-        padding: 0, 
+        listStyleType: 'none',
+        padding: 0,
         position: 'fixed'
-      }, 
+      },
       liitem: {
         padding: 10
       }
     };
-    
-    let signupLogin = []; 
-    if (this.state.userid === false) {
+
+    let checkLogin;
+    if (this.state.userid === 'not logged in') {
+      checkLogin = '/'
+    } else {
+      checkLogin = '/'
+    }
+
+
+     let signupLogin = [];
+     if (this.state.userid === false) {
       signupLogin = [];
     } else if (this.state.userid === 'not logged in') {
       signupLogin.push(<ul><li style={styles.liitem}><Link to="/signup">Signup</Link></li>
-      <li style={styles.liitem}><Link to="/login">Login</Link></li></ul>)
+          <li style={styles.liitem}><Link to="{checkLogin}">Login</Link></li></ul>)
     } else {
       signupLogin = [];
     }
 
-    return (
-      <Router>
-        <div style={{ display: 'flex' }}>
-          <div style={{
-            padding: '10px',
-            width: '20%',
-            background: '#AAD097',
-            height: '100vh'
-          }}>
-            <ul style={styles.ulitem}>
-              <li style={styles.liitem}><Link to="/">Home</Link></li>
-              <li style={styles.liitem}><Link to="/about">About</Link></li>
-              <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
-              <li >{signupLogin}</li>
-              <br/>
 
-              <li style={styles.liitem}><Link to="/games">Games</Link></li>
-              <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
-              <br/>
-              <li><Link to="/settings">Settings</Link></li>
-            </ul>
-          </div>
-          
-          <div style={{ flex: 1, padding: '20px' }}>
-            {routes.map((route, index) => (
-          // Render the content of the pages
-            <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              component={route.main}
-            />
-            ))}
-          </div>
-        
-        </div>
-      </Router> 
+    let gamesLink; 
+    if (this.state.userid === 'not logged in') {
+      gamesLink = '/login';
+    } else {
+      gamesLink = '/games';
+    }
+
+  return (
+
+<Router>
+  <div>
+  <div style={{ display: 'flex' }}>
+    <div style={{
+      padding: '10px',
+      width: '20%',
+      background: '#AAD097',
+      height: '100vh'
+      }}>
+        <ul style={styles.ulitem}>
+          <li style={styles.liitem}><Link to="/">Home</Link></li>
+          <li style={styles.liitem}><Link to="/about">About</Link></li>
+          <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
+          {signupLogin}
+          <br/>
+
+          <li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
+          <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
+          <br/>
+          <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
+        </ul>
+      </div>
+      <div style={{ flex: 1, padding: '20px' }}>
+        {routes.map((route, index) => (
+        // Render more <Route>s with the same paths as
+        // above, but different components this time.
+          <Route
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          component={route.main}
+          />
+        ))}
+    </div>
+  </div>
+  </div>
+</Router>
 
     )
   }

@@ -106,8 +106,8 @@ class Signup extends React.Component {
     }
 
     const items = [
-      'Manage your team', 
-      'Automate your reminders - choose from text, email, or Facebook messenger', 
+      'Manage your team',
+      'Automate your reminders - choose from text, email, or Facebook messenger',
       'Your players never have to visit our page!'
     ]
 
@@ -120,7 +120,6 @@ class Signup extends React.Component {
       }
     }
     return (
-
      <div>
       <Header as='h2' textAlign='centered'> Hi Signup With Us!! Hi </Header> 
       <Grid divided padded >
