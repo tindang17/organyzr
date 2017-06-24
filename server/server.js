@@ -50,11 +50,12 @@ const add_game = require("./functions/add_game.js");
 
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
+const getTeamGames =  require("./functions/get_team_games.js")
+
 
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
  , FacebookStrategy = require('passport-facebook').Strategy;
-// FacebookStrategy = require('passport-facebook').Strategy;
 
 app.use(knexLogger(knex));
 
@@ -110,7 +111,6 @@ passport.use(new FacebookStrategy({
         console.log('user not found')
         return done(null, false, { message: 'Incorrect email.' });
       }
-
       return done(null, user);
           }).catch(function(err) {
 return done(err);
@@ -145,7 +145,7 @@ app.get('/auth/facebook/callback',
 
 app.post('/logout', function(req, res){
   // req.logout();
-  req.session = null; 
+  req.session = null;
   res.redirect('/');
   // res.redirect('/#/login');
 });
@@ -237,7 +237,7 @@ app.post('/settings', function(req, res) {
 });
 
 
-// redirection routes 
+// redirection routes
 
 app.get('/about', function(req, res) {
   res.redirect('/#/about');
@@ -260,13 +260,14 @@ app.use('/test/login', loginRoutes(knex, passport));
 
 
 
-app.get('/games/data', function(req, res) {
-  if (!req.user) {
-    res.redirect('/#/login');
-  } else {
-    gamesRoutes(knex, res, req.session.passport.user);
-  }
+
+app.get('/games/data/:team_uuid', function(req, res) {
+    console.log('server side');
+    console.log(req.params.team_uuid)
+    console.log(req.session.passport.id)
+    getTeamGames(knex, res, req.session.passport.id, req.params.team_uuid);
 })
+
 
 app.get('/teams/data', function(req, res) {
     console.log('server side');

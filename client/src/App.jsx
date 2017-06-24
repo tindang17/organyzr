@@ -69,10 +69,6 @@ class App extends Component {
         sidebar: () => <Games/>,
         main: () => <Games/>
       },
-      // { path: '/login',
-      //   sidebar: () => <Login user={this.state.userid}/>,
-      //   main: () => <Login user={this.state.userid}/>
-      // },
       {
         path: '/manage',
         sidebar: () => <Manage/>,
@@ -107,17 +103,31 @@ class App extends Component {
       checkLogin = 'not logged in'
     } else {
       checkLogin = 'logged in'
+
+    }
+
+console.log('login check', checkLogin)
+
+     let signupLogin = [];
+     if (this.state.userid === false) {
+      signupLogin = [];
+    } else if (this.state.userid === 'not logged in') {
+      signupLogin.push(<ul><li style={styles.liitem}><Link to="/signup">Signup</Link></li>
+          <li style={styles.liitem}><Link to="{checkLogin}">Login</Link></li></ul>)
+    } else {
+      signupLogin = [];
+
     }
 
 
-    let gamesLink; 
+    let gamesLink;
     if (this.state.userid === 'not logged in') {
       gamesLink = '/login';
     } else {
       gamesLink = '/games';
     }
 
-    let manageGames = []; 
+    let manageGames = [];
      if (this.state.userid === false) {
       manageGames = [];
     } else if (this.state.userid === 'not logged in') {
@@ -127,7 +137,7 @@ class App extends Component {
           <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
           <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
           <br/> <li style={styles.liitem}><Link to="/logout">Logout</Link></li></div>)
-    } 
+    }
   return (
 
 <Router>
@@ -160,13 +170,15 @@ class App extends Component {
           />
         ))}
 
-      <Route path='/login' render = { () => 
-      (checkLogin === 'not logged in') ? 
+
+      <Route path='/login' render = { () =>
+      (checkLogin === 'not logged in') ?
       (<Login/>) : (<Redirect to='/'/>)}/>
 
-      <Route path='/logout' render = { () => 
-      (checkLogin === 'not logged in') ? 
+      <Route path='/logout' render = { () =>
+      (checkLogin === 'not logged in') ?
       (<Redirect to='/'/>) : (<Logout/>)}/>
+
     </div>
   </div>
   </div>

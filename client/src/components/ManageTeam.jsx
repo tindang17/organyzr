@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { Icon, Label, Menu, Table, Button, Segment, Image, Grid, Form } from 'semantic-ui-react'
+import { Card, Icon, Label, Menu, Table, Button, Segment, Image, Grid, Form } from 'semantic-ui-react'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory, withRouter } from 'react-router';
-
+import Moment from 'react-moment';
 
 import axios from 'axios';
 import Calendar from './teams/Calendar.jsx';
@@ -25,7 +25,7 @@ class ManageTeam extends Component {
     console.log('before axios request');
     axios.get(`/games/data/`+self.state.team)
     .then(res => {
-      self.setState({gamems: self.state.games.concat(res.data)})
+      self.setState({games: self.state.games.concat(res.data)})
       console.log(self.state.games);
     })
     console.log('props in comp did mout ', self.props)
@@ -43,25 +43,44 @@ let self = this
 let team = self.state.team
     let gameCards = this.state.games;
   let htmlGames = [];
+  console.log('games', gameCards)
     if (gameCards.length !=  null) {
       for (let i = 0; i < gameCards.length; i++) {
-        htmlGames.push(
+        htmlGames.push(<Grid.Column>
+              <Card fluid color='violet'>
+                <Card.Content>
+                  <Card.Header>
+                  <Moment date={gameCards[i].date}/>
+                  </Card.Header>
+                  <Card.Meta>
+                    <span className="time">
+                      {gameCards[i].time}
+                    </span>
+                    <span className="rink">
+                      {gameCards[i].location}
+                    </span>
+                  </Card.Meta>
+                  <Card.Description>
+                      {gameCards[i].description}
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <div className='ui three buttons'>
+                    <Button basic color='green' active>Edit</Button>
+                    <Button basic color='red'>Delete</Button>
+                    <Button basic color='red'>Send Notification</Button>
+                  </div>
+                </Card.Content>
+              </Card>
+              <br/>
+        </Grid.Column>)
+      }
+    }
 
-
-            <Table.Row>
-
-              <Table.Cell>
-
-<div >{gameCards[i].name}</div>
-
-
-
-</Table.Cell>
-
-
-              <Table.Cell><Button >Manage</Button><LinkButton uuid={teamCards[i].uuid}></LinkButton></Table.Cell>
-            </Table.Row>
-)
+    const styles = {
+      grid: {
+        paddingLeft: 50,
+        paddingRight: 50
       }
     }
 
@@ -74,20 +93,12 @@ let team = self.state.team
 
 
 
-        <Table celled>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Team Name</Table.HeaderCell>
-              <Table.HeaderCell>Options</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+      <Grid columns={3} style={styles.grid}>
+      <Grid.Row>
+      {htmlGames}
+      </Grid.Row>
+      </Grid>
 
-          <Table.Body>
-
-          {htmlGames}
-
-          </Table.Body>
-        </Table>
         <div>
           <NewGame className='new-team' uuid={team}/>
         </div>
