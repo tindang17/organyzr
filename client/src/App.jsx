@@ -5,7 +5,6 @@ import {
   Link
 } from 'react-router-dom'
 import axios from 'axios';
-
 // Components for pages
 import Faq from './components/Faq.jsx';
 import About from './components/About.jsx';
@@ -125,9 +124,6 @@ class App extends Component {
     }
 
 
-
-
-
     let gamesLink; 
     if (this.state.userid === 'not logged in') {
       gamesLink = '/login';
@@ -174,10 +170,11 @@ class App extends Component {
   </div>
   </div>
 </Router>
+
     )
   }
 }
 
 
 
-export default App
+export default App;
