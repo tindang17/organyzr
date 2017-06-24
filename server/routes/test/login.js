@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 
 
 
-module.exports = (knex, passport) => {
+module.exports = (knex, passport, res) => {
 
   //GET Login Page
   router.get('/', function(req, res) {
@@ -15,9 +15,7 @@ module.exports = (knex, passport) => {
   });
   //Post Login ***
   router.post('/',
-    passport.authenticate('local', { successRedirect: '/#/',
-                                     failureRedirect: '/test/login'}),
-
+    passport.authenticate('local'),
     function(req, res) {
       console.log(req)
       console.log('post to login')

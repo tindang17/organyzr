@@ -45,7 +45,7 @@ const add_user_local = require("./functions/add_user_local.js");
 // const add_user_local = require("./functions/passport/add_user_local.js");
 const add_user_facebook = require("./functions/add_user_facebook.js");
 const add_team = require("./functions/add_team.js");
-
+const add_game = require("./functions/add_game.js");
 
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
@@ -143,7 +143,7 @@ app.get('/auth/facebook/callback',
 
 app.get('/logout', function(req, res){
   req.logout();
-  res.redirect('/test/login');
+  res.redirect('/#/login');
 });
 
 
@@ -167,11 +167,9 @@ app.use(webpack.hot(compiler));
 
 // Listen to POST requests to /users.
 app.post('/signup', function(req, res) {
-  // Get sent data.
-  console.log('req', req)
   let user = req.body;
   // Do a MySQL query.
-  console.log(user)
+
   add_user_local(knex, user, res)
 });
 
@@ -188,16 +186,32 @@ app.post('/new_team', function(req, res) {
 
 
 
-app.get('/test/login', function(req, res) {
-    let templateVars = req.session.passport;
-    console.log('templatevars', templateVars)
-    res.render('login', templateVars);
-  });
+// Listen to POST requests to /users.
+app.post('/new_game', function(req, res) {
+  // Get sent data.
+  console.log('req', req.body)
+  console.log('new_team')
+  let user_id = req.session.passport.user
+  // Do a MySQL query.
+
+  add_game(knex, user_id, req.body)
+});
+
 
 
 app.post('/login',
+  passport.authenticate('local'), function(err, user, info) {
+    console.log('login post')
+    if (err) { return (err); }
+    if (!user) { return res.json({ success: false, message: info.message}); }
+    else { return res.json({ success: true, message: 'success'}); }
+  });
+
+
+
+app.post('/test/login',
   passport.authenticate('local',  { successRedirect: '/',
-                                   failureRedirect: '/login',
+                                   failureRedirect: '/',
                                    failureFlash: false }),
     function(req, res) {
       console.log(req)
@@ -220,16 +234,8 @@ app.post('/settings', function(req, res) {
   update_user(knex, data, user_id, res)
 });
 
-app.post('/login',
-  passport.authenticate('local',  { successRedirect: '/',
-                                   failureRedirect: '/test/login',
-                                   failureFlash: false }),
-    function(req, res) {
-      console.log(req)
-      console.log('post to login')
-      res.json({ success: false, message: 'success'})
-    }
-);
+
+
 
 
 // redirection routes 
@@ -252,6 +258,7 @@ app.get('/games', function(req, res) {
 
 
 app.use('/test/login', loginRoutes(knex, passport));
+
 app.get('/games/data', function(req, res) {
   if (!req.user) {
     res.redirect('/#/login');
@@ -278,7 +285,7 @@ app.get('/settings/data', function(req, res) {
 
 app.get('/landing/check', function(req, res) {
   // console.log(req.session.passport.user);
-  if (!req.user) {
+  if (!req.session.passport) {
     res.send('not logged in');
   } else {
     // console.log('no user');

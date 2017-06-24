@@ -20,6 +20,7 @@ import Login from './components/Login.jsx'
 import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
 import Manage from './components/Manage.jsx';
+import ManageTeam from './components/ManageTeam.jsx';
 import { Menu, Loader, Segment } from 'semantic-ui-react'
 import Settings from './components/Settings.jsx';
 
@@ -29,7 +30,7 @@ import Settings from './components/Settings.jsx';
 class App extends Component {
   constructor (props) {
     super(props);
-    this.state = { 
+    this.state = {
       userid: false
     }
 
@@ -65,16 +66,21 @@ class App extends Component {
       },
       { path: '/games',
         sidebar: () => <Games/>,
-        main: () => <Games/> 
+        main: () => <Games/>
       },
       { path: '/login',
-        sidebar: () => <Login/>,
-        main: () => <Login/>
+        sidebar: () => <Login user={this.state.userid}/>,
+        main: () => <Login user={this.state.userid}/>
       },
       {
         path: '/manage',
         sidebar: () => <Manage/>,
         main: () => <Manage/>
+      },
+      {
+        path: '/manageteam/:teamid',
+        sidebar: () => <ManageTeam/>,
+        main: ManageTeam
       },
       {
         path: '/settings',
@@ -91,23 +97,36 @@ class App extends Component {
     const styles = {
       ulitem: {
         fontSize: 24,
-        listStyleType: 'none', 
-        padding: 0, 
+        listStyleType: 'none',
+        padding: 0,
         position: 'fixed'
-      }, 
+      },
       liitem: {
         padding: 10
       }
     };
-     let signupLogin = []; 
+
+    let checkLogin;
+    if (this.state.userid === 'not logged in') {
+      checkLogin = '/'
+    } else {
+      checkLogin = '/'
+    }
+
+
+     let signupLogin = [];
      if (this.state.userid === false) {
       signupLogin = [];
     } else if (this.state.userid === 'not logged in') {
       signupLogin.push(<ul><li style={styles.liitem}><Link to="/signup">Signup</Link></li>
-          <li style={styles.liitem}><Link to="/login">Login</Link></li></ul>)
+          <li style={styles.liitem}><Link to="{checkLogin}">Login</Link></li></ul>)
     } else {
       signupLogin = [];
     }
+
+
+
+
 
     let gamesLink; 
     if (this.state.userid === 'not logged in') {
@@ -115,6 +134,7 @@ class App extends Component {
     } else {
       gamesLink = '/games';
     }
+
   return (
 
 <Router>

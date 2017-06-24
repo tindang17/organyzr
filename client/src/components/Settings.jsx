@@ -72,6 +72,7 @@ class Settings extends React.Component {
         console.log(body.message);
         self.setState({message: body.message});
         console.log('self msg', self.state.message)
+        window.location.reload()
       });
   }
   render() {
