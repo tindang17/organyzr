@@ -20,6 +20,7 @@ import Logout from './components/Logout.jsx';
 
 import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
+import MyTeams from './components/MyTeams.jsx';
 import Manage from './components/Manage.jsx';
 import ManageTeam from './components/ManageTeam.jsx';
 import { Menu, Loader, Segment } from 'semantic-ui-react'
@@ -68,6 +69,10 @@ class App extends Component {
       { path: '/games',
         sidebar: () => <Games/>,
         main: () => <Games/>
+      },
+      { path: '/myteams',
+        sidebar: () => <MyTeams/>,
+        main: () => <MyTeams/>
       },
       {
         path: '/manage',
@@ -134,6 +139,7 @@ console.log('login check', checkLogin)
       manageGames = [];
     } else {
       manageGames.push(<div><br/><li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
+          <li style={styles.liitem}><Link to="/MyTeams">My Teams</Link></li>
           <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
           <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
           <br/> <li style={styles.liitem}><Link to="/logout">Logout</Link></li></div>)
@@ -170,7 +176,15 @@ console.log('login check', checkLogin)
           />
         ))}
 
-
+      <div className="footer" style={{width: '100%', bottom: '0%', position: 'fixed',
+      left: '20%'}}>
+        <Menu>
+          <Menu.Item header>Our Company</Menu.Item>
+          <Menu.Item name='aboutUs'  />
+          <Menu.Item name='jobs'  />
+          <Menu.Item name='locations' />
+        </Menu>
+      </div>
       <Route path='/login' render = { () =>
       (checkLogin === 'not logged in') ?
       (<Login/>) : (<Redirect to='/'/>)}/>
@@ -179,8 +193,9 @@ console.log('login check', checkLogin)
       (checkLogin === 'not logged in') ?
       (<Redirect to='/'/>) : (<Logout/>)}/>
 
-    </div>
+    </div>  
   </div>
+  
   </div>
 </Router>
 
