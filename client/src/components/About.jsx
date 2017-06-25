@@ -70,7 +70,7 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
               </Grid.Column>
             </Grid.Row>
           </Grid>
-          </div>
+        </div>
       )
     }
   } 

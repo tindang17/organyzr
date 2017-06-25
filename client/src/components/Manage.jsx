@@ -12,7 +12,7 @@ class Manage extends Component {
       teams: [],
       edit: null
     }
-      }
+  }
 
 
   componentDidMount() {
@@ -30,38 +30,24 @@ class Manage extends Component {
 
 
   render () {
-
-
-let self = this
+    let self = this
 
     console.log('first in render', this.state.teams);
     let teamCards = this.state.teams;
 
-  let htmlTeams = [];
+    let htmlTeams = [];
     if (teamCards.length !=  null) {
       for (let i = 0; i < teamCards.length; i++) {
         htmlTeams.push(
-
-
-            <Table.Row>
-
-              <Table.Cell>
-
-<div >{teamCards[i].name}</div>
-
-
-
-</Table.Cell>
-
-
-              <Table.Cell><Button >Manage</Button><LinkButton uuid={teamCards[i].uuid}></LinkButton></Table.Cell>
-            </Table.Row>
-)
+          <Table.Row>
+            <Table.Cell>
+              <div >{teamCards[i].name}</div>
+            </Table.Cell>
+            <Table.Cell><Button >Manage</Button><LinkButton uuid={teamCards[i].uuid}></LinkButton></Table.Cell>
+          </Table.Row>
+        )
       }
     }
-
-
-
 
     return (
       <div>
@@ -90,7 +76,6 @@ let self = this
       </div>
     );
   }
-
 }
 
 export default Manage;

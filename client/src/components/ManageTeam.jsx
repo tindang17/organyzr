@@ -18,7 +18,6 @@ class ManageTeam extends Component {
 
   }
 
-
   componentDidMount() {
     let teams;
     var self = this;
@@ -31,48 +30,28 @@ class ManageTeam extends Component {
     console.log('props in comp did mout ', self.props)
   }
 
-
-
-
   render () {
-
-
-let self = this
-
+    let self = this
     console.log('first in render', this.state.games);
-let team = self.state.team
+    let team = self.state.team
     let gameCards = this.state.games;
-  let htmlGames = [];
+    let htmlGames = [];
     if (gameCards.length !=  null) {
       for (let i = 0; i < gameCards.length; i++) {
         htmlGames.push(
-
-
-            <Table.Row>
-
-              <Table.Cell>
-
-<div >{gameCards[i].name}</div>
-
-
-
-</Table.Cell>
-
-
-              <Table.Cell><Button >Manage</Button><LinkButton uuid={teamCards[i].uuid}></LinkButton></Table.Cell>
-            </Table.Row>
-)
+          <Table.Row>
+            <Table.Cell>
+              <div >{gameCards[i].name}</div>
+            </Table.Cell>
+            <Table.Cell><Button >Manage</Button><LinkButton uuid={teamCards[i].uuid}></LinkButton></Table.Cell>
+          </Table.Row>
+        )
       }
     }
-
-
-
-
+    
     return (
       <div>
         <h3> Hello Manager </h3>
-
-
 
         <Table celled>
           <Table.Header>
@@ -97,7 +76,6 @@ let team = self.state.team
       </div>
     );
   }
-
 }
 
 export default ManageTeam;

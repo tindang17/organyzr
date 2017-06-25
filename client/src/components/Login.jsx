@@ -78,9 +78,6 @@ class Login extends React.Component {
         } else {
           self.setState({errorMessage: 'Incorrect Credentials'})
         }
-          
-        
-        // 
       })
   }
   render() {
@@ -91,24 +88,22 @@ class Login extends React.Component {
       window.location.reload()
     }
     return (
-
-        <div>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Field>
-              <label>Email</label>
-              <input name="email"  type="email" placeholder='Email Name' value={this.state.formInputs.email} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Form.Field>
-              <label>Password</label>
-              <input name="password" type="password" value={this.state.formInputs.password} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
-          </Form>
-          <span><font color="red">{this.state.errorMessage}</font></span>
-            <Message content={this.state.message} header='error msg'>
-            </Message>
-            <a href="/auth/facebook">Login with Facebook</a>
-        </div>
+      <div>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field>
+            <label>Email</label>
+            <input name="email"  type="email" placeholder='Email Name' value={this.state.formInputs.email} onChange={this.handleInputChange}/>
+          </Form.Field>
+          <Form.Field>
+            <label>Password</label>
+            <input name="password" type="password" value={this.state.formInputs.password} onChange={this.handleInputChange}/>
+          </Form.Field>
+          <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
+        </Form>
+        <span><font color="red">{this.state.errorMessage}</font></span>
+          <Message content={this.state.message} header='error msg'></Message>
+          <a href="/auth/facebook">Login with Facebook</a>
+      </div>
     );
   }
 }

@@ -75,9 +75,9 @@ passport.use(new LocalStrategy(
   function(email, password, done) {
     console.log('local passport', email, password)
       knex
-          .select()
-          .where({email: email})
-          .from("users").first().then(user => {
+        .select()
+        .where({email: email})
+        .from("users").first().then(user => {
       if (!user) {
         console.log('user not found')
         return done(null, false, { message: 'Incorrect email.' });
@@ -87,36 +87,32 @@ passport.use(new LocalStrategy(
         return done(null, false, { message: 'Incorrect password.' });
       }
       return done(null, user);
-          }).catch(function(err) {
-            return done(err);
-          });
-
+      }).catch(function(err) {
+        return done(err);
+      });
   }
 ));
 
 //CHANGE CALLBACK URL TO WHAT WE USE
 passport.use(new FacebookStrategy({
-    clientID: '891703524347118',
-    clientSecret: '98717a1f70a79ad745206c6a7e6323f9',
-    callbackURL: "http://localhost:8080/auth/facebook/callback",
-    profileFields: ['id', 'email', 'name']
+  clientID: '891703524347118',
+  clientSecret: '98717a1f70a79ad745206c6a7e6323f9',
+  callbackURL: "http://localhost:8080/auth/facebook/callback",
+  profileFields: ['id', 'email', 'name']
   },
   function(accessToken, refreshToken, profile, done) {
-          knex
-          .select()
-          .where({email: profile.emails[0].value})
-          .from("users").first().then(user => {
+    knex
+    .select()
+    .where({email: profile.emails[0].value})
+    .from("users").first().then(user => {
       if (!user) {
         console.log('user not found')
         return done(null, false, { message: 'Incorrect email.' });
       }
-
       return done(null, user);
-          }).catch(function(err) {
-return done(err);
-});
-
-
+      }).catch(function(err) {
+      return done(err);
+    });
   }
 ));
 

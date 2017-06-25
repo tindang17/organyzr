@@ -31,7 +31,6 @@ class Landing extends Component {
   }
 
   render() {
-
     let landing = [];
     if (this.state.userid === false) {
       landing.push(<Loader active inline='centered' />) 
@@ -70,14 +69,14 @@ class Landing extends Component {
     
       <div>
         <Image src={require('../images/organyzr.png')} size='large' centered/>
-            <Message>
-              <p>
-                Welcome to Organyzr. A manager-based dashboard system to manage sport teams.
-              </p>
-            </Message>
+          <Message>
+            <p>
+              Welcome to Organyzr. A manager-based dashboard system to manage sport teams.
+            </p>
+          </Message>
         {landing}
       </div>
-      )}
+    )}
 }
 
 
