@@ -5,8 +5,7 @@ import Moment from 'react-moment';
 
 import axios from 'axios';
 import Calendar from './teams/Calendar.jsx';
-import NewGame from './NewGame.jsx';
-import LinkButton from './LinkButton.jsx';
+import ScheduleGameCard from './ScheduleGameCard.jsx';
 class Schedule extends Component {
   constructor (props) {
     super(props);
@@ -15,7 +14,6 @@ class Schedule extends Component {
       team: this.props.location.pathname.split('/')[2],
       games: []
     }
-
   }
 
 
@@ -46,33 +44,13 @@ let team = self.state.team
   console.log('games', gameCards)
     if (gameCards.length !=  null) {
       for (let i = 0; i < gameCards.length; i++) {
-        htmlGames.push(<Grid.Column>
-              <Card fluid color='violet'>
-                <Card.Content>
-                  <Card.Header>
-                  <Moment date={gameCards[i].date}/>
-                  </Card.Header>
-                  <Card.Meta>
-                    <span className="time">
-                      {gameCards[i].time}
-                    </span>
-                    <span className="rink">
-                      {gameCards[i].location}
-                    </span>
-                  </Card.Meta>
-                  <Card.Description>
-                      {gameCards[i].description}
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <div className='ui two buttons'>
-                    <Button basic class='toggle' color='green' active>Going</Button>
-                    <Button basic toggle color='red'>Fuck This</Button>
-                  </div>
-                </Card.Content>
-              </Card>
-              <br/>
-        </Grid.Column>)
+        htmlGames.push(
+
+
+
+
+
+        <ScheduleGameCard game={gameCards[i]} />)
       }
     }
 
