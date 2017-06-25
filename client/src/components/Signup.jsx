@@ -37,32 +37,26 @@ class Signup extends React.Component {
     this.setState({
       formInputs: newFormInputs
     });
-    console.log('give me your first_name', this.state.formInputs.first_name);
     let allGood = true;
     // looping through the all the field to check 
     // for the form input.
+    let {phone} = this.state.formInputs;
     for (let input in this.state.formInputs) {
       var inputValue = this.state.formInputs[input];
       console.log('where is the input',inputValue);
-      allGood = allGood && (inputValue.length > 0);
+      allGood = allGood && (inputValue.length > 0 && phone.length === 10);
     }
     this.setState({isEnabled:allGood});
    
     console.log('true or false', this.state.isEnabled) 
   }
 
-  handleFormValidation(event) {
+  handleFormValidation() {
     let {password, password_confirmation, phone} = this.state.formInputs;
-    let errorMessages = {password: [],
-                        phone: [],
-                        email: []};
-    if(this.state.formInputs.phone.length !== 10) {
-      errorMessages['phone'].push('Phone number must be 10 digits');
-    };
+    let errorMessages = {password: [], phone: []};
     if(this.state.formInputs.password !== this.state.formInputs.password_confirmation) {
       errorMessages['password'].push('Passwords do not match');
-    };
-  
+    } 
     this.setState({
       errorMessages: errorMessages
     });
@@ -73,7 +67,7 @@ class Signup extends React.Component {
   handleSubmit(e) {
     console.log("Submit clicked");
     e.preventDefault();
-    this.handleFormValidation()
+    this.handleFormValidation();
     let errorMessages = {email: [], phone: []};
     var self = this;
     // On submit of the form, send a POST request with the data to the server.
@@ -100,14 +94,16 @@ class Signup extends React.Component {
       })
       .then(function(body) {
         console.log('what is in the body', body)
-        self.setState({message: body.message});
+        // self.setState({message: body.message});
+        self.setState({message: body.message})
         if(self.state.message === 'Success!') {
-          self.setState({redirect: true})
+          self.setState({redirect: false})
+        } else if(self.state.message === 'users_email_unique') {
+          errorMessages['email'].push('Email already exists');
+        } else if(self.state.message === 'users_phone_unique') {
+          errorMessages['phone'].push('Phone already exists');
         }
-        if(self.state.message === 'users_email_unique') {
-          errorMessages['email'].push('Email is already existed');
-          self.setState({errorMessages: errorMessages});
-        }
+        self.setState({errorMessages: errorMessages});
       });
   }
   render() {
@@ -176,7 +172,7 @@ class Signup extends React.Component {
                   <input name="phone" placeholder='10 digits' value={this.state.formInputs.phone} onChange={this.handleInputChange}/>
                   <div className='error'>
                     <font color="red">{this.state.errorMessages.phone}</font>
-                  </div>      
+                  </div>          
                 </Form.Field >
                 <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
               </Form>
@@ -189,8 +185,7 @@ class Signup extends React.Component {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <Message content={this.state.message} header='Message'>
-        </Message>
+        <Message content={this.state.message} header='Message'></Message>
       </div>
     )
   }
