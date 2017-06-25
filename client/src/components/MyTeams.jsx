@@ -54,7 +54,7 @@ let self = this
 </Table.Cell>
 
 
-              <Table.Cell><Button >Manage</Button><LinkButton uuid={teamCards[i].uuid}></LinkButton></Table.Cell>
+              <Table.Cell><Button>View Schedule</Button><Button>Leave Team</Button></Table.Cell>
             </Table.Row>
 )
       }
@@ -65,7 +65,7 @@ let self = this
 
     return (
       <div>
-        <h3> Hello Manager </h3>
+        <h3> Hello Player </h3>
 
         <Table celled>
           <Table.Header>

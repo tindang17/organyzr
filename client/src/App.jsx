@@ -22,6 +22,7 @@ import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
 import MyTeams from './components/MyTeams.jsx';
 import Manage from './components/Manage.jsx';
+import Schedule from './components/Schedule.jsx';
 import ManageTeam from './components/ManageTeam.jsx';
 import { Menu, Loader, Segment } from 'semantic-ui-react'
 import Settings from './components/Settings.jsx';
@@ -83,6 +84,11 @@ class App extends Component {
         path: '/manageteam/:teamid',
         sidebar: () => <ManageTeam/>,
         main: ManageTeam
+      },
+      {
+        path: '/schedule/:teamid',
+        sidebar: () => <Schedule/>,
+        main: Schedule
       },
       {
         path: '/settings',
