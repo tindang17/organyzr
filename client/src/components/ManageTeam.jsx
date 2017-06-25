@@ -7,6 +7,7 @@ import axios from 'axios';
 import Calendar from './teams/Calendar.jsx';
 import NewGame from './NewGame.jsx';
 import LinkButton from './LinkButton.jsx';
+
 class ManageTeam extends Component {
   constructor (props) {
     super(props);
@@ -52,11 +53,11 @@ class ManageTeam extends Component {
 
 
   render () {
-let self = this
+  let self = this
 
     console.log('first in render', this.state.games);
-let team = self.state.team
-    let gameCards = this.state.games;
+  let team = self.state.team
+  let gameCards = this.state.games;
   let htmlGames = [];
   console.log('games', gameCards)
     if (gameCards.length !=  null) {
@@ -89,7 +90,6 @@ let team = self.state.team
                   <Dropdown text='See Roster' onClick= {() => this.getRoster(gameID)}>
                       <Dropdown.Menu>
                          <Dropdown.Header content='Players Attending' />
-                        {console.log(this.state.viewRoster)}
                         {this.state.viewRoster.map((item)=> <Dropdown.Item text={item} />)}
                       </Dropdown.Menu>
                     </Dropdown>
@@ -109,31 +109,24 @@ let team = self.state.team
       }
     }
 
-
-
-
     return (
       <div>
         <h3> Hello Manager </h3>
-
-
-
-      <Grid columns={3} style={styles.grid}>
-      <Grid.Row>
-      {htmlGames}
-      </Grid.Row>
-      </Grid>
+        <Grid columns={3} style={styles.grid}>
+          <Grid.Row>
+          {htmlGames}
+          </Grid.Row>
+        </Grid>
 
         <div>
-          <NewGame className='new-team' uuid={team}/>
+            <NewGame className='new-team' uuid={team}/>
         </div>
         <div>
-          <Calendar className='team-calendar'/>
+            <Calendar className='team-calendar'/>
         </div>
       </div>
     );
   }
-
 }
 
 export default ManageTeam;
