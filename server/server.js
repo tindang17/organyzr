@@ -47,13 +47,18 @@ const add_user_local = require("./functions/add_user_local.js");
 const add_user_facebook = require("./functions/add_user_facebook.js");
 const add_team = require("./functions/add_team.js");
 const add_game = require("./functions/add_game.js");
+const update_availablility = require("./functions/update_availablility.js");
 
 const add_my_team = require("./functions/add_my_team.js");
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
+
+const getMyGames = require("./functions/get_my_games.js")
+
 const get_my_teams =  require("./functions/get_my_teams.js");
 const getTeamGames = require("./functions/get_team_games.js");
 const getRosterData = require("./functions/get_roster.js");
+
 
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
@@ -234,6 +239,13 @@ app.post('/test/login',
     }
 );
 
+app.post('/schedule/:game_id',
+    function(req, res) {
+      update_availablility(knex, req.params.game_id, req.session.passport.user, res)
+    }
+);
+
+
 // Listen to POST requests to /users.
 app.post('/settings', function(req, res) {
   // Get sent data.
@@ -278,13 +290,18 @@ app.get('/myteams', function(req, res) {
 app.use('/test/login', loginRoutes(knex, passport));
 
 
-
+app.get('/mygames/data/:team_uuid', function(req, res) {
+    console.log('server side');
+    console.log(req.params.team_uuid)
+    console.log(req.session.passport.user)
+    getMyGames(knex, res, req.session.passport.user, req.params.team_uuid);
+})
 
 app.get('/games/data/:team_uuid', function(req, res) {
     console.log('server side');
     console.log(req.params.team_uuid)
-    console.log(req.session.passport.id)
-    getTeamGames(knex, res, req.session.passport.id, req.params.team_uuid);
+    console.log(req.session.passport.user)
+    getTeamGames(knex, res, req.session.passport.user, req.params.team_uuid);
 })
 
 app.get('/myteams/data', function(req, res) {

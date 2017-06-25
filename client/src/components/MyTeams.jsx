@@ -54,6 +54,7 @@ class Manage extends Component {
                   <Route path={teamPath} component={<Games name={teamCards[i].name}/>}/>
                 </div>
                 </Router>
+                  <Button>View Schedule</Button><Button>Leave Team</Button>
               </Table.Cell>
             </Table.Row>
         )
