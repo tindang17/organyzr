@@ -176,7 +176,15 @@ console.log('login check', checkLogin)
           />
         ))}
 
-
+      <div className="footer" style={{width: '100%', bottom: '0%', position: 'fixed',
+      left: '20%'}}>
+        <Menu>
+          <Menu.Item header>Our Company</Menu.Item>
+          <Menu.Item name='aboutUs'  />
+          <Menu.Item name='jobs'  />
+          <Menu.Item name='locations' />
+        </Menu>
+      </div>
       <Route path='/login' render = { () =>
       (checkLogin === 'not logged in') ?
       (<Login/>) : (<Redirect to='/'/>)}/>
@@ -185,8 +193,9 @@ console.log('login check', checkLogin)
       (checkLogin === 'not logged in') ?
       (<Redirect to='/'/>) : (<Logout/>)}/>
 
-    </div>
+    </div>  
   </div>
+  
   </div>
 </Router>
 
