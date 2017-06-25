@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Message, Dropdown, Card, Icon, Label, Menu, Table, Button, Segment, Image, Grid, Form } from 'semantic-ui-react'
+import { Card, Icon, Label, Menu, Table, Button, Segment, Image, Grid, Form } from 'semantic-ui-react'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory, withRouter } from 'react-router';
 import Moment from 'react-moment';
 
@@ -7,17 +7,17 @@ import axios from 'axios';
 import Calendar from './teams/Calendar.jsx';
 import NewGame from './NewGame.jsx';
 import LinkButton from './LinkButton.jsx';
-class ManageTeam extends Component {
+
+
+class UserGames extends Component {
   constructor (props) {
     super(props);
     console.log('super props', this.props.location.pathname.split('/')[1])
     this.state = {
       team: this.props.location.pathname.split('/')[2],
-      games: [], 
-      viewRoster: []
+      games: []
     }
     this.getRoster = this.getRoster.bind(this);
-  
   }
 
 
@@ -33,25 +33,20 @@ class ManageTeam extends Component {
 
   }
 
-  getRoster (gameid) {
+  getRoster () {
     var self = this;
     console.log('getroster');
-    axios.get(`/player/data/` + self.state.team + '/' + gameid.toString())
+    axios.get(`/player/data/` + self.state.team)
     .then(res => {
-      let gameRoster = []
-      console.log('resssss',res);
-      res.data.forEach((item) => {
-        gameRoster.push(item.first_name);
-      })
-      self.setState({viewRoster: gameRoster})
-       
+      console.log('resssss',res); 
     })
   }
 
-  
 
 
   render () {
+
+
 let self = this
 
     console.log('first in render', this.state.games);
@@ -84,15 +79,10 @@ let team = self.state.team
                   <div className='ui buttons'>
                     <Button basic color='green' active>Edit</Button>
                     <Button basic color='red'>Delete</Button>
-                    <Button basic color='red'>Send Notification</Button>    
+                    <Button basic color='red'>Send Notification</Button>  
+                    <Button basic color='purple'
+                    onClick={this.getRoster}>See Roster</Button>
                   </div>
-                  <Dropdown text='See Roster' onClick= {() => this.getRoster(gameID)}>
-                      <Dropdown.Menu>
-                         <Dropdown.Header content='Players Attending' />
-                        {console.log(this.state.viewRoster)}
-                        {this.state.viewRoster.map((item)=> <Dropdown.Item text={item} />)}
-                      </Dropdown.Menu>
-                    </Dropdown>
                   <div>
                    </div> 
                 </Card.Content>
@@ -136,4 +126,4 @@ let team = self.state.team
 
 }
 
-export default ManageTeam;
+export default UserGames;

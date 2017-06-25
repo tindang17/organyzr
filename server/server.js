@@ -301,11 +301,11 @@ app.get('/settings/data', function(req, res) {
     settings_data(knex, res, req.session.passport.user);
 })
 
-app.get('/player/data/:team_uuid', function(req, res) {
+app.get('/player/data/:team_uuid/:game_id', function(req, res) {
   console.log('passport',req);
-  console.log('uuid',req.params.team_uuid);
+  console.log('params',req.params);
   // res.send(req.session.passport.user.toString());
-  getRosterData(knex, res, req.session.passport.user, req.params.team_uuid);
+  getRosterData(knex, res, req.session.passport.user, req.params.team_uuid, req.params.game_id);
 })
 
 
