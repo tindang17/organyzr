@@ -41,7 +41,7 @@ class Manage extends Component {
   let htmlTeams = [];
     if (teamCards.length !=  null) {
       for (let i = 0; i < teamCards.length; i++) {
-        let teamPath = '/' + teamCards[i].name + 'games'
+        let teamPath = '/schedule/' + teamCards[i].uuid;
         htmlTeams.push(
             <Table.Row>
               <Table.Cell>
@@ -50,11 +50,10 @@ class Manage extends Component {
               <Table.Cell>
                 <Router>
                 <div>
-                  <Button ><Link to={teamPath}>See Games</Link></Button>
+                  <Button ><Link to={teamPath}>View Schedule</Link></Button>
                   <Route path={teamPath} component={<Games name={teamCards[i].name}/>}/>
                 </div>
                 </Router>
-                  <Button>View Schedule</Button><Button>Leave Team</Button>
               </Table.Cell>
             </Table.Row>
         )
