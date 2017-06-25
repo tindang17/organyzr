@@ -25,7 +25,7 @@ class Landing extends Component {
   let self = this;
    axios.get(`/landing/check`)
     .then(res => {
-      console.log(res);
+      console.log('in landing', res);
       self.setState({userid: res.data})
     })
   }
@@ -56,7 +56,7 @@ class Landing extends Component {
        </Router>)
     } else {
       landing.push(<Segment>
-        <div> Hello </div>
+        <div> Hello {this.state.userid.first_name} </div>
         </Segment>)
     }
     const styles = {
