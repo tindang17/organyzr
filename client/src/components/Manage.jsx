@@ -56,7 +56,7 @@ class Manage extends Component {
                   <Router>
                     <div>
                   <Button ><Link to={teamPath}>Manage</Link></Button><LinkButton uuid={teamCards[i].uuid}></LinkButton>
-                  <Route path={teamPath} component={<ManageTeam/>}/>
+                  <Route path={teamPath} component={<ManageTeam uuid={teamCards[i].uuid}/>}/>
                     </div>
                   </Router>
                 </Table.Cell>

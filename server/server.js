@@ -51,8 +51,9 @@ const add_game = require("./functions/add_game.js");
 const add_my_team = require("./functions/add_my_team.js");
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
-const get_my_teams =  require("./functions/get_my_teams.js")
-const getTeamGames = require("./functions/get_team_games.js")
+const get_my_teams =  require("./functions/get_my_teams.js");
+const getTeamGames = require("./functions/get_team_games.js");
+const getRosterData = require("./functions/get_roster.js");
 
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
@@ -300,6 +301,12 @@ app.get('/settings/data', function(req, res) {
     settings_data(knex, res, req.session.passport.user);
 })
 
+app.get('/player/data/:team_uuid', function(req, res) {
+  console.log('passport',req);
+  console.log('uuid',req.params.team_uuid);
+  // res.send(req.session.passport.user.toString());
+  getRosterData(knex, res, req.session.passport.user, req.params.team_uuid);
+})
 
 
 app.get('/landing/check', function(req, res) {

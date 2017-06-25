@@ -15,22 +15,30 @@ class ManageTeam extends Component {
       team: this.props.location.pathname.split('/')[2],
       games: []
     }
-
+    this.getRoster = this.getRoster.bind(this);
   }
 
 
   componentDidMount() {
     let teams;
     var self = this;
-    console.log('before axios request');
     axios.get(`/games/data/`+self.state.team)
     .then(res => {
       self.setState({games: self.state.games.concat(res.data)})
-      console.log(self.state.games);
+      console.log('self.state.games', self.state.games);
     })
-    console.log('props in comp did mout ', self.props)
+
+
   }
 
+  getRoster () {
+    var self = this;
+    console.log('getroster');
+    axios.get(`/player/data/` + self.state.team)
+    .then(res => {
+      console.log('resssss',res); 
+    })
+  }
 
 
 
@@ -46,6 +54,7 @@ let team = self.state.team
   console.log('games', gameCards)
     if (gameCards.length !=  null) {
       for (let i = 0; i < gameCards.length; i++) {
+        let gameID = gameCards[i].id
         htmlGames.push(<Grid.Column>
               <Card fluid color='violet'>
                 <Card.Content>
@@ -65,11 +74,15 @@ let team = self.state.team
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
-                  <div className='ui three buttons'>
+                  <div className='ui buttons'>
                     <Button basic color='green' active>Edit</Button>
                     <Button basic color='red'>Delete</Button>
-                    <Button basic color='red'>Send Notification</Button>
+                    <Button basic color='red'>Send Notification</Button>  
+                    <Button basic color='purple'
+                    onClick={this.getRoster}>See Roster</Button>
                   </div>
+                  <div>
+                   </div> 
                 </Card.Content>
               </Card>
               <br/>
