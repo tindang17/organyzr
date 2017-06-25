@@ -314,9 +314,13 @@ app.get('/landing/check', function(req, res) {
   if (!req.session.passport) {
     res.send('not logged in');
   } else {
-    // console.log('no user');
-    res.send(req.session.passport.user.toString())
+    knex.select("*").from("users").where({
+      id: req.session.passport.user
+    }).then(function(results){
+      console.log(results);
+      res.send(results);
   }
+)}
 })
 
 
