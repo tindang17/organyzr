@@ -11,6 +11,7 @@ import {
   Link
 } from 'react-router-dom';
 import ManageTeam from './ManageTeam.jsx';
+
 class Manage extends Component {
   constructor (props) {
     super(props);
@@ -18,60 +19,48 @@ class Manage extends Component {
       teams: [],
       edit: null
     }
-      }
+  }
 
 
   componentDidMount() {
     let teams;
     var self = this;
-    console.log('before axios request');
     axios.get(`/teams/data`)
     .then(res => {
       self.setState({teams: self.state.teams.concat(res.data)})
-      console.log(self.state.teams);
     })
-
-  // console.log('last thing in comp did mount');
   }
-
 
   render () {
 
-
   let self = this
+  let teamCards = this.state.teams;
+  let htmlTeams = [];
 
-      console.log('first in render', this.state.teams);
-      let teamCards = this.state.teams;
-
-    let htmlTeams = [];
-      if (teamCards.length !=  null) {
-        for (let i = 0; i < teamCards.length; i++) {
-          let teamPath = '/manageteam/' + teamCards[i].uuid;
-          htmlTeams.push(
-              <Table.Row>
-                <Table.Cell>
-                <div >{teamCards[i].name}</div>
-              </Table.Cell>
-                <Table.Cell>
-                  <Router>
-                    <div>
-                  <Button ><Link to={teamPath}>Manage</Link></Button><LinkButton uuid={teamCards[i].uuid}></LinkButton>
-                  <Route path={teamPath} component={<ManageTeam/>}/>
-                    </div>
-                  </Router>
-                </Table.Cell>
-                </Table.Row>
+  if (teamCards.length !=  null) {
+    for (let i = 0; i < teamCards.length; i++) {
+      let teamPath = '/manageteam/' + teamCards[i].uuid;
+      htmlTeams.push(
+          <Table.Row>
+            <Table.Cell>
+            <div >{teamCards[i].name}</div>
+          </Table.Cell>
+            <Table.Cell>
+              <Router>
+                <div>
+              <Button ><Link to={teamPath}>Manage</Link></Button><LinkButton uuid={teamCards[i].uuid}></LinkButton>
+              <Route path={teamPath} component={<ManageTeam uuid={teamCards[i].uuid}/>}/>
+                </div>
+              </Router>
+            </Table.Cell>
+            </Table.Row>
         )
       }
     }
 
-
-
-
     return (
       <div>
-        <h3> Hello Manager </h3>
-
+        <h3> Hello Manager. These are the teams you're managing. </h3>
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -79,11 +68,8 @@ class Manage extends Component {
               <Table.HeaderCell>Options</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-
           <Table.Body>
-
           {htmlTeams}
-
           </Table.Body>
         </Table>
         <div>
@@ -95,7 +81,6 @@ class Manage extends Component {
       </div>
     );
   }
-
 }
 
 export default Manage;

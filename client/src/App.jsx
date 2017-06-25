@@ -17,7 +17,6 @@ import Nav from './components/Nav.jsx';
 
 import Login from './components/Login.jsx';
 import Logout from './components/Logout.jsx';
-
 import Landing from './components/Landing.jsx';
 import Games from './components/Games.jsx';
 import MyTeams from './components/MyTeams.jsx';
@@ -67,13 +66,9 @@ class App extends Component {
         sidebar: () => <Signup/>,
         main: () => <Signup/>
       },
-      { path: '/games',
-        sidebar: () => <Games/>,
-        main: () => <Games/>
-      },
       { path: '/myteams',
-        sidebar: () => <MyTeams/>,
-        main: () => <MyTeams/>
+        sidebar: () => <MyTeams user={this.state.userid}/>,
+        main: () => <MyTeams user={this.state.userid}/>
       },
       {
         path: '/manage',
@@ -135,7 +130,7 @@ console.log('login check', checkLogin)
     if (this.state.userid === 'not logged in') {
       gamesLink = '/login';
     } else {
-      gamesLink = '/games';
+      gamesLink = '/myteams';
     }
 
     let manageGames = [];
@@ -144,8 +139,8 @@ console.log('login check', checkLogin)
     } else if (this.state.userid === 'not logged in') {
       manageGames = [];
     } else {
-      manageGames.push(<div><br/><li style={styles.liitem}><Link to={gamesLink}>Games</Link></li>
-          <li style={styles.liitem}><Link to="/MyTeams">My Teams</Link></li>
+      manageGames.push(<div><br/>
+          <li style={styles.liitem}><Link to={gamesLink}>My Teams</Link></li>
           <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
           <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
           <br/> <li style={styles.liitem}><Link to="/logout">Logout</Link></li></div>)
@@ -182,7 +177,15 @@ console.log('login check', checkLogin)
           />
         ))}
 
-
+      <div className="footer" style={{width: '100%', bottom: '0%', position: 'fixed',
+      left: '20%'}}>
+        <Menu>
+          <Menu.Item header>Our Company</Menu.Item>
+          <Menu.Item name='aboutUs'  />
+          <Menu.Item name='jobs'  />
+          <Menu.Item name='locations' />
+        </Menu>
+      </div>
       <Route path='/login' render = { () =>
       (checkLogin === 'not logged in') ?
       (<Login/>) : (<Redirect to='/'/>)}/>
@@ -191,8 +194,9 @@ console.log('login check', checkLogin)
       (checkLogin === 'not logged in') ?
       (<Redirect to='/'/>) : (<Logout/>)}/>
 
-    </div>
+    </div>  
   </div>
+  
   </div>
 </Router>
 

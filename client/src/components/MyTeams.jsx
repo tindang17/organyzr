@@ -5,12 +5,19 @@ import axios from 'axios';
 import Calendar from './teams/Calendar.jsx';
 import AddTeam from './AddTeam.jsx';
 import LinkButton from './LinkButton.jsx';
+import Games from './Games.jsx';
+import {
+  HashRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 class Manage extends Component {
   constructor (props) {
     super(props);
     this.state = {
       teams: [],
-      edit: null
+      edit: null,
+      user: this.props.user
     }
       }
 
@@ -18,54 +25,46 @@ class Manage extends Component {
   componentDidMount() {
     let teams;
     var self = this;
-    console.log('before axios request');
     axios.get(`/myteams/data`)
     .then(res => {
       self.setState({teams: self.state.teams.concat(res.data)})
-      console.log(self.state.teams);
     })
-
-  // console.log('last thing in comp did mount');
   }
 
 
   render () {
 
 
-let self = this
-
-    console.log('first in render', this.state.teams);
-    let teamCards = this.state.teams;
+  let self = this
+  let teamCards = this.state.teams;
 
   let htmlTeams = [];
     if (teamCards.length !=  null) {
       for (let i = 0; i < teamCards.length; i++) {
+        let teamPath = '/' + teamCards[i].name + 'games'
         htmlTeams.push(
-
-
             <Table.Row>
-
               <Table.Cell>
-
-<div >{teamCards[i].name}</div>
-
-
-
-</Table.Cell>
-
-
-              <Table.Cell><Button>View Schedule</Button><Button>Leave Team</Button></Table.Cell>
+                <div >{teamCards[i].name}</div>
+              </Table.Cell>
+              <Table.Cell>
+                <Router>
+                <div>
+                  <Button ><Link to={teamPath}>See Games</Link></Button>
+                  <Route path={teamPath} component={<Games name={teamCards[i].name}/>}/>
+                </div>
+                </Router>
+                  <Button>View Schedule</Button><Button>Leave Team</Button>
+              </Table.Cell>
             </Table.Row>
-)
+        )
       }
     }
 
-
-
-
     return (
       <div>
-        <h3> Hello Player </h3>
+        <h2> Hello </h2>
+        <h3> These are the teams you are playing for. </h3>
 
         <Table celled>
           <Table.Header>
@@ -74,11 +73,8 @@ let self = this
               <Table.HeaderCell>Options</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
-
           <Table.Body>
-
           {htmlTeams}
-
           </Table.Body>
         </Table>
         <div>

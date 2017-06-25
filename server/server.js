@@ -52,9 +52,13 @@ const update_availablility = require("./functions/update_availablility.js");
 const add_my_team = require("./functions/add_my_team.js");
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
-const get_my_teams =  require("./functions/get_my_teams.js")
-const getTeamGames = require("./functions/get_team_games.js")
+
 const getMyGames = require("./functions/get_my_games.js")
+
+const get_my_teams =  require("./functions/get_my_teams.js");
+const getTeamGames = require("./functions/get_team_games.js");
+const getRosterData = require("./functions/get_roster.js");
+
 
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
@@ -275,6 +279,13 @@ app.get('/games', function(req, res) {
   }
 })
 
+app.get('/myteams', function(req, res) { 
+  if (!req.user) {
+    res.redirect('/#/login');
+  } else {
+    res.redirect('/#/myteams');
+  }
+})
 
 app.use('/test/login', loginRoutes(knex, passport));
 
@@ -314,6 +325,12 @@ app.get('/settings/data', function(req, res) {
     settings_data(knex, res, req.session.passport.user);
 })
 
+app.get('/player/data/:team_uuid/:game_id', function(req, res) {
+  console.log('passport',req);
+  console.log('params',req.params);
+  // res.send(req.session.passport.user.toString());
+  getRosterData(knex, res, req.session.passport.user, req.params.team_uuid, req.params.game_id);
+})
 
 
 app.get('/landing/check', function(req, res) {
@@ -321,9 +338,13 @@ app.get('/landing/check', function(req, res) {
   if (!req.session.passport) {
     res.send('not logged in');
   } else {
-    // console.log('no user');
-    res.send(req.session.passport.user.toString())
+    knex.select("*").from("users").where({
+      id: req.session.passport.user
+    }).then(function(results){
+      console.log(results);
+      res.send(results);
   }
+)}
 })
 
 
