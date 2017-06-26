@@ -80,7 +80,7 @@ class Manage extends Component {
         <h2> Hello {this.props.user}</h2>
         <h3> These are the teams you are playing for. </h3>
 
-        <Table celled>
+        <Table celled style={{fontSize: '20px'}}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Team Name</Table.HeaderCell>

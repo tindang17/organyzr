@@ -68,7 +68,7 @@ class Manage extends Component {
     return (
       <div style={styles.div}>
         <h3> Hello Manager. These are the teams you're managing. </h3>
-        <Table celled>
+        <Table celled style={{fontSize: '20px'}}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Team Name</Table.HeaderCell>
