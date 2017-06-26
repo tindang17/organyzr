@@ -16,11 +16,10 @@ const knexLogger  = require('knex-logger');
 
 
 //Routes
-const gamesRoutes = require('./routes/games')
-
-
-const teamsRoutes = require('./routes/teams')
+const gamesRoutes = require('./routes/games');
+const teamsRoutes = require('./routes/teams');
 const loginRoutes = require('./routes/test/login');
+const twilioRoutes = require('./routes/twilio');
 
 const webpack = {
   core: require('webpack'),
@@ -146,7 +145,7 @@ app.post('/logout', function(req, res){
   // res.redirect('/#/login');
 });
 
-
+app.use('/manage', twilioRoutes());
 
 
 app.use(webpack.middleware(compiler, {
