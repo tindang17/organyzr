@@ -44,7 +44,7 @@ let gameID = self.props.game.id
 
 
 <Grid.Column>
-              <Card fluid color='violet'>
+              <Card fluid color='violet' >
                 <Card.Content>
                   <Card.Header>
                   <Moment date={game.date}/>
@@ -63,9 +63,11 @@ let gameID = self.props.game.id
                 </Card.Content>
                 <Card.Content extra>
                   <div className='ui buttons'>
+                    <span style={{textOverflow: 'ellipsis'}}>
                     <Button basic color='green' active>Edit</Button>
                     <Button onClick= {() => this.deleteGame(gameID)} basic color='red'>Delete</Button>
-                    <Button basic color='red'>Send Notification</Button>
+                    <Button basic color='red'>Send Reminder to Attending Players</Button>
+                    </span>
                   </div>
                   <Dropdown text='See Roster' onClick= {() => this.getRoster(gameID)}>
                       <Dropdown.Menu>

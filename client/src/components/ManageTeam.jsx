@@ -77,8 +77,8 @@ this.deleteGame = this.deleteGame.bind(this);
         paddingRight: 50
       },
       div: {
-        paddingLeft: 250,
-        paddingRight: 250
+        paddingLeft: 200,
+        paddingRight: 200
       }
     }
     
