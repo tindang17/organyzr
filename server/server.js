@@ -46,14 +46,23 @@ const add_user_local = require("./functions/add_user_local.js");
 const add_user_facebook = require("./functions/add_user_facebook.js");
 const add_team = require("./functions/add_team.js");
 const add_game = require("./functions/add_game.js");
+const update_availablility = require("./functions/update_availablility.js");
 
+const add_my_team = require("./functions/add_my_team.js");
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
+const delete_game = require("./functions/delete_game.js");
+
+const getMyGames = require("./functions/get_my_games.js")
+
+const get_my_teams =  require("./functions/get_my_teams.js");
+const getTeamGames = require("./functions/get_team_games.js");
+const getRosterData = require("./functions/get_roster.js");
+
 
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
  , FacebookStrategy = require('passport-facebook').Strategy;
-// FacebookStrategy = require('passport-facebook').Strategy;
 
 app.use(knexLogger(knex));
 
@@ -140,7 +149,7 @@ app.get('/auth/facebook/callback',
 
 app.post('/logout', function(req, res){
   // req.logout();
-  req.session = null; 
+  req.session = null;
   res.redirect('/');
   // res.redirect('/#/login');
 });
@@ -185,6 +194,17 @@ app.post('/new_team', function(req, res) {
   add_team(knex, user_id, req.body.name, req.body.logo)
 });
 
+app.post('/add_team', function(req, res) {
+  // Get sent data.
+    let user_id = req.session.passport.user
+  console.log('req', req.body)
+  console.log('adding a team for', user_id)
+
+  // Do a MySQL query.
+
+  add_my_team(knex, user_id, req.body.uuid);
+  res.sendStatus(200);
+});
 
 
 // Listen to POST requests to /users.
@@ -217,6 +237,20 @@ app.post('/test/login',
     }
 );
 
+app.post('/schedule/:game_id',
+    function(req, res) {
+      update_availablility(knex, req.params.game_id, req.session.passport.user, res)
+    }
+);
+
+app.post('/deletegame/:game_id',
+    function(req, res) {
+      delete_game(knex, req.params.game_id, req.session.passport.user, res)
+    }
+);
+
+
+
 // Listen to POST requests to /users.
 app.post('/settings', function(req, res) {
   // Get sent data.
@@ -232,7 +266,7 @@ app.post('/settings', function(req, res) {
 });
 
 
-// redirection routes 
+// redirection routes
 
 app.get('/about', function(req, res) {
   res.redirect('/#/about');
@@ -250,17 +284,36 @@ app.get('/games', function(req, res) {
   }
 })
 
+app.get('/myteams', function(req, res) {
+  if (!req.user) {
+    res.redirect('/#/login');
+  } else {
+    res.redirect('/#/myteams');
+  }
+})
 
 app.use('/test/login', loginRoutes(knex, passport));
 
 
+app.get('/mygames/data/:team_uuid', function(req, res) {
+    console.log('server side');
+    console.log(req.params.team_uuid)
+    console.log(req.session.passport.user)
+    getMyGames(knex, res, req.session.passport.user, req.params.team_uuid);
+})
 
-app.get('/games/data', function(req, res) {
-  if (!req.user) {
-    res.redirect('/#/login');
-  } else {
-    gamesRoutes(knex, res, req.session.passport.user);
-  }
+app.get('/games/data/:team_uuid', function(req, res) {
+    console.log('server side');
+    console.log(req.params.team_uuid)
+    console.log(req.session.passport.user)
+    getTeamGames(knex, res, req.session.passport.user, req.params.team_uuid);
+})
+
+app.get('/myteams/data', function(req, res) {
+    console.log('server side');
+    console.log(req.session.passport)
+    console.log(req.session.passport.user)
+    get_my_teams(knex, res, req.session.passport.user);
 })
 
 app.get('/teams/data', function(req, res) {
@@ -277,6 +330,12 @@ app.get('/settings/data', function(req, res) {
     settings_data(knex, res, req.session.passport.user);
 })
 
+app.get('/player/data/:team_uuid/:game_id', function(req, res) {
+  console.log('passport',req);
+  console.log('params',req.params);
+  // res.send(req.session.passport.user.toString());
+  getRosterData(knex, res, req.session.passport.user, req.params.team_uuid, req.params.game_id);
+})
 
 
 app.get('/landing/check', function(req, res) {
@@ -284,9 +343,13 @@ app.get('/landing/check', function(req, res) {
   if (!req.session.passport) {
     res.send('not logged in');
   } else {
-    // console.log('no user');
-    res.send(req.session.passport.user.toString())
+    knex.select("*").from("users").where({
+      id: req.session.passport.user
+    }).then(function(results){
+      console.log(results);
+      res.send(results);
   }
+)}
 })
 
 

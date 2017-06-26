@@ -25,12 +25,24 @@ class Landing extends Component {
   let self = this;
    axios.get(`/landing/check`)
     .then(res => {
-      console.log(res);
+      console.log('in landing', res);
       self.setState({userid: res.data})
     })
   }
 
   render() {
+    const styles = {
+      div: {
+        paddingLeft: 200, 
+        paddingRight: 200
+      }, 
+      font: {
+        fontSize: 20
+      }, 
+      textfont: {
+        fontSize: 16
+      }
+    }
     let landing = [];
     if (this.state.userid === false) {
       landing.push(<Loader active inline='centered' />) 
@@ -55,27 +67,19 @@ class Landing extends Component {
         </Router>)
     } else {
       landing.push(<Segment>
-        <div> Hello </div>
+        <div style={styles.textfont}> Hello {this.state.userid[0].first_name}</div>
         </Segment>)
     }
-    const styles = {
-      div: {
-        paddingLeft: 100, 
-        paddingRight: 100
-      }
-    }
-
     return(
-    
-      <div>
-        <Image src={require('../images/organyzr.png')} size='large' centered/>
-          <Message>
-            <p>
-              Welcome to Organyzr. A manager-based dashboard system to manage sport teams.
-            </p>
-          </Message>
-        {landing}
-      </div>
+    <div style={styles.div}>
+    <Image src={require('../images/organyzr.png')} size='large' centered/>
+        <Message>
+          <p style={styles.font}>
+            Welcome to Organyzr. A manager-based dashboard system to manage sport teams.
+          </p>
+        </Message>
+     {landing}
+    </div>
     )}
 }
 

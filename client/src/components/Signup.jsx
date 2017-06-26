@@ -88,8 +88,9 @@ class Signup extends React.Component {
         })
       })
       .then(function(response) {
-        if (response.status === 200) {
-        }
+        if (response.message === 'Success!') {
+        console.log('sucess');
+      }
         return response.json()
       })
       .then(function(body) {
@@ -97,7 +98,7 @@ class Signup extends React.Component {
         // self.setState({message: body.message});
         self.setState({message: body.message})
         if(self.state.message === 'Success!') {
-          self.setState({redirect: false})
+          self.setState({redirect: true})
         } else if(self.state.message === 'users_email_unique') {
           errorMessages['email'].push('Email already exists');
         } else if(self.state.message === 'users_phone_unique') {

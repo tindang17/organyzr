@@ -3,20 +3,17 @@ import { Icon, Form, Accordion, Segment, Button, Checkbox, Message, Grid, Header
 
 import { Route, Redirect} from 'react-router-dom'
 
-
-
-class NewGame extends React.Component {
+class NewTeam extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {location: '',
-                  date: '',
-                  time: '',
-                  description: '',
+    this.state = {uuid: '',
                   message: 'no message',
-                  redirect: false};
+                  redirect: false,
+                  clearForm: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetField = this.resetField.bind(this);
   }
 
   handleInputChange(event) {
@@ -33,32 +30,37 @@ class NewGame extends React.Component {
     e.preventDefault();
     var self = this;
     // On submit of the form, send a POST request with the data to the server.
-    fetch('/new_game', {
+    fetch('/add_team', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         credentials: 'include',
         body: JSON.stringify({
-          location: this.state.location,
-          date: this.state.date,
-          time: this.state.time,
-          description: this.state.description,
-          team_uuid: this.props.uuid
+          uuid: this.state.uuid
         })
       })
       .then(function(response) {
         if (response.status === 200) {
+          console.log();
+          self.props.updateTeam();
+          self.state.uuid = '';
+          // self.setState({clearForm: true});
         }
-        return response.json()
+        
       })
-      .then(function(body) {
-        self.setState({message: body.message});
-      });
+  }
+
+  resetField () {
+    // window.location.reload()
+    this.refs.input.value = '';
   }
 
 
   render () {
+    if (this.state.clearForm) {
+      this.refs.input.value = '';
+    }
 
       const styles = {
       form: {
@@ -74,32 +76,20 @@ class NewGame extends React.Component {
       <Accordion name="ui accordion">
         <Accordion.Title>
           <Icon name='dropdown' />
-          New Game
+          Add Team
         </Accordion.Title>
         <Accordion.Content>
           <Segment padded size='tiny'>
 
 
-<div>{this.props.uuid}</div>
+
 
           <Form onSubmit={this.handleSubmit} style={styles.form}>
             <Form.Field width='12'>
-              <label>Location</label>
-              <input name="location" placeholder='Location' value={this.state.location} onChange={this.handleInputChange}/>
+              <label>Team Code</label>
+              <input ref='input' name="uuid" placeholder='Unique Code' value={this.state.uuid} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Form.Field width='12'>
-              <label>date</label>
-              <input type="date" name= "date" placeholder='Date' value={this.state.date} onChange={this.handleInputChange}/>
-            </Form.Field>
-                        <Form.Field width='12'>
-              <label>time</label>
-              <input type="time" name= "time" placeholder='Time' value={this.state.time} onChange={this.handleInputChange}/>
-            </Form.Field>
-                        <Form.Field width='12'>
-              <label>description</label>
-              <input name= "description" placeholder='Description' value={this.state.description} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Button type='submit'>Submit</Button>
+            <Button onClick={this.resetField} type='submit'>Add</Button>
           </Form>
 
 
@@ -111,7 +101,8 @@ class NewGame extends React.Component {
       </Accordion>
     )
   }
+  // TODO
 
 }
 
-export default NewGame;
+export default NewTeam;
