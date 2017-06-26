@@ -37,14 +37,14 @@ class Faq extends React.Component {
           <Image src={require('../images/sang.png')}/>
         </Grid.Column>
         <Grid.Column width={9}>
-          <Message style={styles.message}>
+          <Message style={styles.message} color='blue'>
             <Message.Header>Who is Organyzr for?</Message.Header>
             <Message.List items={items} />
           </Message>
         </Grid.Column>
 
         <Grid.Column width={9}>
-          <Message style={styles.message}>
+          <Message style={styles.message} color='blue'>
             <Message.Header>What are the features of Organyzr?</Message.Header>
             <Message.List items={items2} />
           </Message>

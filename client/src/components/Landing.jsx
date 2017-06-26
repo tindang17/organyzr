@@ -34,8 +34,8 @@ class Landing extends Component {
 
     const styles = {
       div: {
-        paddingLeft: 100, 
-        paddingRight: 100
+        paddingLeft: 200, 
+        paddingRight: 200
       }, 
       font: {
         fontSize: 20
@@ -77,7 +77,7 @@ class Landing extends Component {
 
     return(
     
-    <div>
+    <div style={styles.div}>
     <Image src={require('../images/organyzr.png')} size='large' centered/>
         <Message>
           <p style={styles.font}>

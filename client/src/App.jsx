@@ -95,12 +95,17 @@ class App extends Component {
     const styles = {
       ulitem: {
         fontSize: 24,
+        fontFamily: 'helvetica',
         listStyleType: 'none',
         padding: 0,
         position: 'fixed'
       },
       liitem: {
         padding: 10
+      },
+      linkItems: {
+        color: 'white',
+        font: 'helvetica'
       }
     };
 
@@ -118,8 +123,8 @@ console.log('login check', checkLogin)
      if (this.state.userid === false) {
       signupLogin = [];
     } else if (this.state.userid === 'not logged in') {
-      signupLogin.push(<ul><li style={styles.liitem}><Link to="/signup">Signup</Link></li>
-          <li style={styles.liitem}><Link to="{checkLogin}">Login</Link></li></ul>)
+      signupLogin.push(<ul><li style={styles.liitem}><Link style={styles.linkItems} to="/signup">Signup</Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="{checkLogin}">Login</Link></li></ul>)
     } else {
       signupLogin = [];
 
@@ -140,10 +145,10 @@ console.log('login check', checkLogin)
       manageGames = [];
     } else {
       manageGames.push(<div><br/>
-          <li style={styles.liitem}><Link to={gamesLink}>My Teams</Link></li>
-          <li style={styles.liitem}><Link to="/manage">Manage</Link></li>
-          <li style={styles.liitem}><Link to="/settings">Settings</Link></li>
-          <br/> <li style={styles.liitem}><Link to="/logout">Logout</Link></li></div>)
+          <li style={styles.liitem}><Link style={styles.linkItems} to={gamesLink}>My Teams</Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="/manage">Manage</Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="/settings">Settings</Link></li>
+          <br/> <li  style={styles.liitem}><Link style={styles.linkItems} to="/logout">Logout</Link></li></div>)
     }
   return (
 
@@ -153,13 +158,13 @@ console.log('login check', checkLogin)
     <div style={{
       padding: '10px',
       width: '20%',
-      background: '#AAD097',
+      background: '#143153',
       height: '100vh'
       }}>
         <ul style={styles.ulitem}>
-          <li style={styles.liitem}><Link to="/">Home</Link></li>
-          <li style={styles.liitem}><Link to="/about">About</Link></li>
-          <li style={styles.liitem}><Link to="/faq">FAQ</Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="/">Home</Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="/about">About</Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="/faq">FAQ</Link></li>
           <br/>
           {manageGames}
           <br/>
@@ -177,7 +182,7 @@ console.log('login check', checkLogin)
           />
         ))}
 
-      <div className="footer" style={{width: '100%', bottom: '0%', position: 'fixed',
+      <div className="footer" style={{width: '100%', backgroundColor: '748BA7', bottom: '0%', position: 'fixed',
       left: '20%'}}>
         <Menu>
           <Menu.Item header>Our Company</Menu.Item>

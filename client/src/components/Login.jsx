@@ -84,6 +84,12 @@ class Login extends React.Component {
       })
   }
   render() {
+    const styles = {
+      div: {
+        paddingLeft: 200, 
+        paddingRight: 200
+      }
+    }
     const {redirect} = this.state;
 
     if (redirect) {
@@ -92,7 +98,11 @@ class Login extends React.Component {
     }
     return (
 
-        <div>
+        <div style={styles.div}>
+          <h2> Login </h2> 
+          <Message content="Login to manage your teams and access schedules for team's you're a part of." 
+          color='blue'>
+          </Message>
           <Form onSubmit={this.handleSubmit}>
             <Form.Field>
               <label>Email</label>
@@ -105,9 +115,10 @@ class Login extends React.Component {
             <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
           </Form>
           <span><font color="red">{this.state.errorMessage}</font></span>
-            <Message content={this.state.message} header='error msg'>
-            </Message>
-            <a href="/auth/facebook">Login with Facebook</a>
+            <br/>
+            <Button color='blue'>
+            <a style={{fontSize: '20px', color: 'white'}} href="/auth/facebook">Login with Facebook</a>
+            </Button>
         </div>
     );
   }
