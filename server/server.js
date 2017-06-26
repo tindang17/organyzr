@@ -52,6 +52,7 @@ const update_availablility = require("./functions/update_availablility.js");
 const add_my_team = require("./functions/add_my_team.js");
 const settings_data = require("./functions/settings_data.js");
 const update_user = require("./functions/update_user.js");
+const delete_game = require("./functions/delete_game.js");
 
 const getMyGames = require("./functions/get_my_games.js")
 
@@ -245,6 +246,13 @@ app.post('/schedule/:game_id',
     }
 );
 
+app.post('/deletegame/:game_id',
+    function(req, res) {
+      delete_game(knex, req.params.game_id, req.session.passport.user, res)
+    }
+);
+
+
 
 // Listen to POST requests to /users.
 app.post('/settings', function(req, res) {
@@ -279,7 +287,7 @@ app.get('/games', function(req, res) {
   }
 })
 
-app.get('/myteams', function(req, res) { 
+app.get('/myteams', function(req, res) {
   if (!req.user) {
     res.redirect('/#/login');
   } else {
