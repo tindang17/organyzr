@@ -30,10 +30,10 @@ class Manage extends Component {
       self.setState({teams: self.state.teams.concat(res.data)})
     })
     // testing for twilio
-    axios.post(`/manage/message`)
-    .then(res => {
-      self.setState({redirect: true})
-    })
+    // axios.post(`/manage/message`)
+    // .then(res => {
+    //   self.setState({redirect: true})
+    // })
   // console.log('last thing in comp did mount');
   }
 

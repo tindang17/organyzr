@@ -14,6 +14,8 @@ const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
 
+const bcrypt = require('bcrypt');
+const {compareSync} = require("bcrypt");
 
 //Routes
 const gamesRoutes = require('./routes/games');
@@ -79,6 +81,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 passport.use(new LocalStrategy(
   function(email, password, done) {
     console.log('local passport', email, password)
@@ -86,18 +89,21 @@ passport.use(new LocalStrategy(
         .select()
         .where({email: email})
         .from("users").first().then(user => {
-      if (!user) {
-        console.log('user not found')
-        return done(null, false, { message: 'Incorrect email.' });
-      }
-      if (!(user.password === password)) {
-        console.log('incoorrect password')
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-      }).catch(function(err) {
-        return done(err);
-      });
+          console.log('bcrypt, bcrypt', bcrypt.compareSync(password, user.password))
+          if (!user) {
+            console.log('user not found')
+            return done(null, false, { message: 'Incorrect email.' });
+          }
+          if (bcrypt.compareSync(password, user.password)) {
+            return done(null, user);
+          }
+          if (!(user.password === password)) {
+            console.log('incoorrect password')
+            return done(null, false, { message: 'Incorrect password.' });
+          }
+          }).catch(function(err) {
+            return done(err);
+          });
   }
 ));
 
@@ -178,8 +184,8 @@ app.use(webpack.hot(compiler));
 app.post('/signup', function(req, res) {
   let user = req.body;
   // Do a MySQL query.
-
   add_user_local(knex, user, res)
+  // req.session.user_id = req.session.passport.user;
 });
 
 
@@ -196,7 +202,7 @@ app.post('/new_team', function(req, res) {
 
 app.post('/add_team', function(req, res) {
   // Get sent data.
-    let user_id = req.session.passport.user
+  let user_id = req.session.passport.user
   console.log('req', req.body)
   console.log('adding a team for', user_id)
 

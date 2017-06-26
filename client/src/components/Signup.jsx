@@ -43,12 +43,9 @@ class Signup extends React.Component {
     let {phone} = this.state.formInputs;
     for (let input in this.state.formInputs) {
       var inputValue = this.state.formInputs[input];
-      console.log('where is the input',inputValue);
       allGood = allGood && (inputValue.length > 0 && phone.length === 10);
     }
     this.setState({isEnabled:allGood});
-   
-    console.log('true or false', this.state.isEnabled) 
   }
 
   handleFormValidation() {
@@ -170,7 +167,7 @@ class Signup extends React.Component {
                 </Form.Field>
                 <Form.Field width='12'>
                   <label>Phone Number</label>
-                  <input name="phone" placeholder='10 digits' value={this.state.formInputs.phone} onChange={this.handleInputChange}/>
+                  <input type="number" name="phone" placeholder='10 digits' value={this.state.formInputs.phone} onChange={this.handleInputChange}/>
                   <div className='error'>
                     <font color="red">{this.state.errorMessages.phone}</font>
                   </div>          
