@@ -16,7 +16,9 @@ class Signup extends React.Component {
                               phone: ''
                   },
                   message: 'no message',
-                  errorMessages: {password: []},
+                  errorMessages: {email: [],
+                                  password: [],
+                                  phone: []},
                   isEnabled: false,
                   redirect: false};
 
@@ -35,33 +37,29 @@ class Signup extends React.Component {
     this.setState({
       formInputs: newFormInputs
     });
-    console.log('give me your first_name', this.state.formInputs.first_name);
     let allGood = true;
     // looping through the all the field to check 
     // for the form input.
+    let {phone} = this.state.formInputs;
     for (let input in this.state.formInputs) {
       var inputValue = this.state.formInputs[input];
       console.log('where is the input',inputValue);
-      allGood = allGood && (inputValue.length > 0);
+      allGood = allGood && (inputValue.length > 0 && phone.length === 10);
     }
     this.setState({isEnabled:allGood});
    
     console.log('true or false', this.state.isEnabled) 
   }
 
-  handleFormValidation(event) {
-    let valid = true;
-    let {password, password_confirmation} = this.state;
-    let errorMessages = {password: []};
+  handleFormValidation() {
+    let {password, password_confirmation, phone} = this.state.formInputs;
+    let errorMessages = {password: [], phone: []};
     if(this.state.formInputs.password !== this.state.formInputs.password_confirmation) {
       errorMessages['password'].push('Passwords do not match');
-    }
-    console.log(this.state);
-    console.log(errorMessages);
-  
+    } 
     this.setState({
       errorMessages: errorMessages
-    })
+    });
   }
 
 
@@ -69,8 +67,8 @@ class Signup extends React.Component {
   handleSubmit(e) {
     console.log("Submit clicked");
     e.preventDefault();
-    this.handleFormValidation()
-    
+    this.handleFormValidation();
+    let errorMessages = {email: [], phone: []};
     var self = this;
     // On submit of the form, send a POST request with the data to the server.
     fetch('/signup', {
@@ -90,12 +88,23 @@ class Signup extends React.Component {
         })
       })
       .then(function(response) {
-        if (response.status === 200) {
-        }
+        if (response.message === 'Success!') {
+        console.log('sucess');
+      }
         return response.json()
       })
       .then(function(body) {
-        self.setState({message: body.message, redirect: false});
+        console.log('what is in the body', body)
+        // self.setState({message: body.message});
+        self.setState({message: body.message})
+        if(self.state.message === 'Success!') {
+          self.setState({redirect: true})
+        } else if(self.state.message === 'users_email_unique') {
+          errorMessages['email'].push('Email already exists');
+        } else if(self.state.message === 'users_phone_unique') {
+          errorMessages['phone'].push('Phone already exists');
+        }
+        self.setState({errorMessages: errorMessages});
       });
   }
   render() {
@@ -120,61 +129,67 @@ class Signup extends React.Component {
       }
     }
     return (
-     <div>
-      <Header as='h2' textAlign='centered'> Hi Signup With Us!! Hi </Header> 
-      <Grid divided padded >
-        <Grid.Row columns={2}>
-          <Grid.Column width={5}>
-            <Form onSubmit={this.handleSubmit} style={styles.form}>
-              <Form.Field width='12'>
-                <label>First Name</label>
-                <input name="first_name" placeholder='First Name' value={this.state.formInputs.first_name} onChange={this.handleInputChange}/>
-              </Form.Field>
-              <Form.Field width='12'>
-                <label>Last Name</label>
-                <input name= "last_name" placeholder='Last Name' value={this.state.formInputs.last_name} onChange={this.handleInputChange}/>
-              </Form.Field>
-              <Form.Field width='12'>
-                <label>Team Name</label>
-                <input name="team_name" placeholder='Team Name' value={this.state.formInputs.team_name} onChange={this.handleInputChange}/>
-              </Form.Field>
-              <Form.Field width='12'>
-                <label>Email</label>
-                <input name="email" type="email"placeholder='Email Name' value={this.state.formInputs.email} onChange={this.handleInputChange}/>
-              </Form.Field>
-              <Form.Field width='12'>
-                <label>Password</label>
-                <input name="password" type="password" value={this.state.formInputs.password} onChange={this.handleInputChange}/>
-                <div className='error'>
-                  <font color="red">{this.state.errorMessages.password}</font>
-                </div>
-              </Form.Field>
-              <Form.Field width='12'>
-                <label>Password Confirmation</label>
-                <input name="password_confirmation" type="password" value={this.state.formInputs.password_confirmation} onChange={this.handleInputChange}/>
-                <div className='error'>
-                  <font color="red">{this.state.errorMessages.password}</font>
-                </div>
-              </Form.Field>
-              <Form.Field width='12'>
-                <label>Phone Number</label>
-                <input name="phone" placeholder='10 digits' value={this.state.formInputs.phone} onChange={this.handleInputChange}/>
-              </Form.Field >
-              <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
-            </Form>
-          </Grid.Column>
-          <Grid.Column width={8}>
-              <Message style={styles.message}>
-                <Message.Header>What can you do with Organyzr?</Message.Header>
-                <Message.List items={items} />
-              </Message>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-      <Message content={this.state.message} header='error msg'>
-      </Message>
-    </div>
-    )}
+      <div>
+        <Header as='h2' textAlign='centered'> Hi Signup With Us!! Hi </Header> 
+        <Grid divided padded >
+          <Grid.Row columns={2}>
+            <Grid.Column width={5}>
+              <Form onSubmit={this.handleSubmit} style={styles.form}>
+                <Form.Field width='12'>
+                  <label>First Name</label>
+                  <input name="first_name" placeholder='First Name' value={this.state.formInputs.first_name} onChange={this.handleInputChange}/>
+                </Form.Field>
+                <Form.Field width='12'>
+                  <label>Last Name</label>
+                  <input name= "last_name" placeholder='Last Name' value={this.state.formInputs.last_name} onChange={this.handleInputChange}/>
+                </Form.Field>
+                <Form.Field width='12'>
+                  <label>Team Name</label>
+                  <input name="team_name" placeholder='Team Name' value={this.state.formInputs.team_name} onChange={this.handleInputChange}/>
+                </Form.Field>
+                <Form.Field width='12'>
+                  <label>Email</label>
+                  <input name="email" type="email"placeholder='Email Name' value={this.state.formInputs.email} onChange={this.handleInputChange}/>
+                  <div className='error'>
+                    <font color="red">{this.state.errorMessages.email}</font>
+                  </div>
+                </Form.Field>
+                <Form.Field width='12'>
+                  <label>Password</label>
+                  <input name="password" type="password" value={this.state.formInputs.password} onChange={this.handleInputChange}/>
+                  <div className='error'>
+                    <font color="red">{this.state.errorMessages.password}</font>
+                  </div>
+                </Form.Field>
+                <Form.Field width='12'>
+                  <label>Password Confirmation</label>
+                  <input name="password_confirmation" type="password" value={this.state.formInputs.password_confirmation} onChange={this.handleInputChange}/>
+                  <div className='error'>
+                    <font color="red">{this.state.errorMessages.password}</font>
+                  </div>
+                </Form.Field>
+                <Form.Field width='12'>
+                  <label>Phone Number</label>
+                  <input name="phone" placeholder='10 digits' value={this.state.formInputs.phone} onChange={this.handleInputChange}/>
+                  <div className='error'>
+                    <font color="red">{this.state.errorMessages.phone}</font>
+                  </div>          
+                </Form.Field >
+                <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
+              </Form>
+            </Grid.Column>
+            <Grid.Column width={8}>
+                <Message style={styles.message}>
+                  <Message.Header>What can you do with Organyzr?</Message.Header>
+                  <Message.List items={items} />
+                </Message>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+        <Message content={this.state.message} header='Message'></Message>
+      </div>
+    )
+  }
 }
 
 export default Signup;
