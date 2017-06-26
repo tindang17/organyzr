@@ -10,9 +10,24 @@ class ManageGameCard extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      viewRoster: []
+      viewRoster: [],
+      active: false,
+      location: this.props.game.location,
+      description: this.props.game.description,
+      notification: 'Send Reminder to Attending Players'
     }
     this.getRoster = this.getRoster.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
   }
 
 
@@ -31,15 +46,63 @@ class ManageGameCard extends Component {
     })
   }
 
-
-  deleteGame (gameid) {
-  this.props.delete(gameid)
+  editGame (gameid) {
+    this.setState({active: !this.state.active})
+    if (this.state.active) {this.props.edit(gameid, this.state.location, this.state.description)}
   }
 
+  sendNotification (gameid) {
+  let self = this
+    if (this.state.notification === 'Send Reminder to Attending Players') {
+      this.setState({notification: 'Are you sure?'})
+    } else if (this.state.notification === 'Are you sure?') {
+    self.setState({notification: 'Sending...'})
+      axios.post('/notification/' + gameid.toString())
+      .then(res => {
+      console.log(res)
+      self.setState({notification: 'Sent to ' + res.data + ' players!'})
+    })
+    }
+  }
+
+  deleteGame (gameid) {
+    this.props.delete(gameid)
+  }
+
+  handleClick () {
+
+  }
   render() {
 let self = this
 let game = self.props.game
 let gameID = self.props.game.id
+let active = this.state.active
+let editorsave = active ?  'Save' : 'Edit'
+
+    let description               = function(){      if (active) {
+            return (<input name="description" type="text" value={self.state.description} onChange={self.handleInputChange}/>);
+  } else {
+    return (
+<span>
+        {self.state.description}
+</span>
+        )
+}}
+
+
+    let location               = function(){      if (active) {
+            return (<input name="location" type="text" value={self.state.location} onChange={self.handleInputChange}/>);
+  } else {
+    return (
+<span>
+        {self.state.location}
+</span>
+        )
+}}
+
+
+
+
     return (
 
 
@@ -54,19 +117,19 @@ let gameID = self.props.game.id
                       {game.time}
                     </span>
                     <span className="rink">
-                      {game.location}
+                      {location()}
                     </span>
                   </Card.Meta>
                   <Card.Description>
-                      {game.description}
+                  {description()}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
                   <div className='ui buttons'>
                     <span style={{textOverflow: 'ellipsis'}}>
-                    <Button basic color='green' active>Edit</Button>
+                    <Button onClick= {() => this.editGame(gameID)} basic color='green' active>{editorsave}</Button>
                     <Button onClick= {() => this.deleteGame(gameID)} basic color='red'>Delete</Button>
-                    <Button basic color='red'>Send Reminder to Attending Players</Button>
+                    <Button onClick= {() => this.sendNotification(gameID)} basic color='red'>{self.state.notification}</Button>
                     </span>
                   </div>
                   <Dropdown text='See Roster' onClick= {() => this.getRoster(gameID)}>

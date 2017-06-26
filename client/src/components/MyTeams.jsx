@@ -46,7 +46,7 @@ class Manage extends Component {
 
   const styles = {
       div: {
-        paddingLeft: 250, 
+        paddingLeft: 250,
         paddingRight: 250
       }
   }
@@ -65,7 +65,7 @@ class Manage extends Component {
               <Table.Cell>
                 <Router>
                 <div>
-                  <Button ><Link to={teamPath}>View Schedule</Link></Button>
+                  <Link to={teamPath}><Button >View Schedule</Button></Link>
                   <Route path={teamPath} component={<Games name={teamCards[i].name}/>}/>
                 </div>
                 </Router>
