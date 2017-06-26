@@ -6,7 +6,7 @@ import Moment from 'react-moment';
 import axios from 'axios';
 import Calendar from './teams/Calendar.jsx';
 import NewGame from './NewGame.jsx';
-import LinkButton from './LinkButton.jsx';
+import ManageGameCard from './ManageGameCard.jsx';
 
 class ManageTeam extends Component {
   constructor (props) {
@@ -14,17 +14,16 @@ class ManageTeam extends Component {
     console.log('super props', this.props.location.pathname.split('/')[1])
     this.state = {
       team: this.props.location.pathname.split('/')[2],
-      games: [], 
-      viewRoster: []
+      games: [],
     }
-    this.getRoster = this.getRoster.bind(this);
-  
+this.deleteGame = this.deleteGame.bind(this);
+
   }
 
 
   componentDidMount() {
     let teams;
-    var self = this;
+    let self = this;
     axios.get(`/games/data/`+self.state.team)
     .then(res => {
       self.setState({games: self.state.games.concat(res.data)})
@@ -34,23 +33,23 @@ class ManageTeam extends Component {
 
   }
 
-  getRoster (gameid) {
-    var self = this;
-    console.log('getroster');
-    axios.get(`/player/data/` + self.state.team + '/' + gameid.toString())
-    .then(res => {
-      let gameRoster = []
-      console.log('resssss',res);
-      res.data.forEach((item) => {
-        gameRoster.push(item.first_name);
-      })
-      self.setState({viewRoster: gameRoster})
-       
-    })
+
+  deleteGame (gameid) {
+  let self = this
+  console.log(gameid)
+  axios.post('/deletegame/' + gameid.toString())
+  .then(res => {
+  console.log('res.body', res.body)
+  self.setState({games: self.state.games.filter(function(game){
+
+  return !(game.id === gameid)})})
+
+
+
+  })
+
+
   }
-
-  
-
 
   render () {
   let self = this
@@ -62,43 +61,13 @@ class ManageTeam extends Component {
   console.log('games', gameCards)
     if (gameCards.length !=  null) {
       for (let i = 0; i < gameCards.length; i++) {
-        let gameID = gameCards[i].id
-        htmlGames.push(<Grid.Column>
-              <Card fluid color='violet'>
-                <Card.Content>
-                  <Card.Header>
-                  <Moment date={gameCards[i].date}/>
-                  </Card.Header>
-                  <Card.Meta>
-                    <span className="time">
-                      {gameCards[i].time}
-                    </span>
-                    <span className="rink">
-                      {gameCards[i].location}
-                    </span>
-                  </Card.Meta>
-                  <Card.Description>
-                      {gameCards[i].description}
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <div className='ui buttons'>
-                    <Button basic color='green' active>Edit</Button>
-                    <Button basic color='red'>Delete</Button>
-                    <Button basic color='red'>Send Notification</Button>    
-                  </div>
-                  <Dropdown text='See Roster' onClick= {() => this.getRoster(gameID)}>
-                      <Dropdown.Menu>
-                         <Dropdown.Header content='Players Attending' />
-                        {this.state.viewRoster.map((item)=> <Dropdown.Item text={item} />)}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  <div>
-                   </div> 
-                </Card.Content>
-              </Card>
-              <br/>
-        </Grid.Column>)
+
+        htmlGames.push(
+
+        <ManageGameCard game={gameCards[i]} delete={self.deleteGame}/>
+
+
+        )
       }
     }
 
