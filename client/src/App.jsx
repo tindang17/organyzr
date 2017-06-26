@@ -154,12 +154,12 @@ console.log('login check', checkLogin)
 
 <Router>
   <div>
-  <div style={{ display: 'flex' }}>
+  <div style={{ display: 'flex'}}>
     <div style={{
       padding: '10px',
       width: '10%',
       background: '#143153',
-      height: '100vh'
+      minHeight: '100vh'
       }}>
         <ul style={styles.ulitem}>
           <li style={styles.liitem}><Link style={styles.linkItems} to="/">Home</Link></li>
@@ -182,15 +182,6 @@ console.log('login check', checkLogin)
           />
         ))}
 
-      <div className="footer" style={{width: '100%', backgroundColor: 'blue', bottom: '0%', position: 'fixed',
-      left: '10%'}}>
-        <Menu>
-          <Menu.Item header>Our Company</Menu.Item>
-          <Menu.Item name='aboutUs'  />
-          <Menu.Item name='jobs'  />
-          <Menu.Item name='locations' />
-        </Menu>
-      </div>
       <Route path='/login' render = { () =>
       (checkLogin === 'not logged in') ?
       (<Login/>) : (<Redirect to='/'/>)}/>

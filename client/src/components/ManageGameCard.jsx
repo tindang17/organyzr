@@ -107,7 +107,7 @@ let editorsave = active ?  'Save' : 'Edit'
 
 
 <Grid.Column>
-              <Card fluid color='violet'>
+              <Card fluid color='violet' >
                 <Card.Content>
                   <Card.Header>
                   <Moment date={game.date}/>
@@ -126,9 +126,11 @@ let editorsave = active ?  'Save' : 'Edit'
                 </Card.Content>
                 <Card.Content extra>
                   <div className='ui buttons'>
+                    <span style={{textOverflow: 'ellipsis'}}>
                     <Button onClick= {() => this.editGame(gameID)} basic color='green' active>{editorsave}</Button>
                     <Button onClick= {() => this.deleteGame(gameID)} basic color='red'>Delete</Button>
                     <Button onClick= {() => this.sendNotification(gameID)} basic color='red'>{self.state.notification}</Button>
+                    </span>
                   </div>
                   <Dropdown text='See Roster' onClick= {() => this.getRoster(gameID)}>
                       <Dropdown.Menu>
