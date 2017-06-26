@@ -19,6 +19,7 @@ class Manage extends Component {
       edit: null,
       user: this.props.user
     }
+    this.updateTeam = this.updateTeam.bind(this);
       }
 
 
@@ -31,6 +32,14 @@ class Manage extends Component {
     })
   }
 
+  updateTeam() {
+    var self = this;
+    axios.get(`/myteams/data`)
+    .then(res => {
+      self.setState({teams: res.data})
+    })
+
+  }
 
   render () {
 
@@ -77,7 +86,7 @@ class Manage extends Component {
           </Table.Body>
         </Table>
         <div>
-          <AddTeam className='add-team'/>
+          <AddTeam className='add-team' updateTeam={this.updateTeam}/>
         </div>
         <div>
           <Calendar className='team-calendar'/>

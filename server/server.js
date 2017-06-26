@@ -205,7 +205,8 @@ app.post('/add_team', function(req, res) {
 
   // Do a MySQL query.
 
-  add_my_team(knex, user_id, req.body.uuid)
+  add_my_team(knex, user_id, req.body.uuid);
+  res.sendStatus(200);
 });
 
 

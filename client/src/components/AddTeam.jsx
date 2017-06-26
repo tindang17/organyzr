@@ -8,10 +8,12 @@ class NewTeam extends React.Component {
     super(props);
     this.state = {uuid: '',
                   message: 'no message',
-                  redirect: false};
+                  redirect: false,
+                  clearForm: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetField = this.resetField.bind(this);
   }
 
   handleInputChange(event) {
@@ -40,16 +42,25 @@ class NewTeam extends React.Component {
       })
       .then(function(response) {
         if (response.status === 200) {
+          console.log();
+          self.props.updateTeam();
+          self.state.uuid = '';
+          // self.setState({clearForm: true});
         }
-        return response.json()
+        
       })
-      .then(function(body) {
-        self.setState({message: body.message, redirect: true});
-      });
+  }
+
+  resetField () {
+    // window.location.reload()
+    this.refs.input.value = '';
   }
 
 
   render () {
+    if (this.state.clearForm) {
+      this.refs.input.value = '';
+    }
 
       const styles = {
       form: {
@@ -76,9 +87,9 @@ class NewTeam extends React.Component {
           <Form onSubmit={this.handleSubmit} style={styles.form}>
             <Form.Field width='12'>
               <label>Team Code</label>
-              <input name="uuid" placeholder='Unique Code' value={this.state.uuid} onChange={this.handleInputChange}/>
+              <input ref='input' name="uuid" placeholder='Unique Code' value={this.state.uuid} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Button type='submit'>Add</Button>
+            <Button onClick={this.resetField} type='submit'>Add</Button>
           </Form>
 
 

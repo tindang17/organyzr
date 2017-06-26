@@ -13,7 +13,8 @@ module.exports = (knex, user_id, team_uuid) => {
             let id = game.id
             console.log('for each add team game', game)
             knex('games_users').insert({user_id: user_id, game_id: id})
-            .then(function(){})})
+            .then(function(){
+            })})
         })
         .catch(function(err) {console.log(err)})
       console.log('data', data)})
