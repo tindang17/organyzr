@@ -30,7 +30,7 @@ class Calendar extends React.Component {
       <Accordion name="ui accordion">
         <Accordion.Title>
           <Icon name='dropdown' />
-          Calendar
+          <span style={{fontSize: '18px'}}>Calendar</span>
         </Accordion.Title>
         <Accordion.Content>
           <Segment padded size='tiny'>

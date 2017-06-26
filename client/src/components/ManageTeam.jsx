@@ -75,12 +75,19 @@ this.deleteGame = this.deleteGame.bind(this);
       grid: {
         paddingLeft: 50,
         paddingRight: 50
+      },
+      div: {
+        paddingLeft: 250,
+        paddingRight: 250
       }
     }
-
+    
     return (
-      <div>
+      <div style={styles.div}>
         <h3> Hello Manager </h3>
+        <Message content="Current Schedule for players on "  
+          color='blue'>
+          </Message>
         <Grid columns={3} style={styles.grid}>
           <Grid.Row>
           {htmlGames}

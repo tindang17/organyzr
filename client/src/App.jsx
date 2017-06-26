@@ -68,7 +68,7 @@ class App extends Component {
       },
       { path: '/myteams',
         sidebar: () => <MyTeams user={this.state.userid}/>,
-        main: () => <MyTeams user={this.state.userid}/>
+        main: MyTeams
       },
       {
         path: '/manage',
@@ -157,7 +157,7 @@ console.log('login check', checkLogin)
   <div style={{ display: 'flex' }}>
     <div style={{
       padding: '10px',
-      width: '20%',
+      width: '10%',
       background: '#143153',
       height: '100vh'
       }}>
@@ -182,8 +182,8 @@ console.log('login check', checkLogin)
           />
         ))}
 
-      <div className="footer" style={{width: '100%', backgroundColor: '748BA7', bottom: '0%', position: 'fixed',
-      left: '20%'}}>
+      <div className="footer" style={{width: '100%', backgroundColor: 'blue', bottom: '0%', position: 'fixed',
+      left: '10%'}}>
         <Menu>
           <Menu.Item header>Our Company</Menu.Item>
           <Menu.Item name='aboutUs'  />

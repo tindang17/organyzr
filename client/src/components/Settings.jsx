@@ -75,9 +75,24 @@ class Settings extends React.Component {
       });
   }
   render() {
+
+    const styles = {
+        text: {
+          fontSize: 16
+        }, 
+        messagesColor: {
+          color: 'black'
+        },
+        div: {
+        paddingLeft: 200, 
+        paddingRight: 200
+      }
+      }
+
     return (
-        <div>
-          <h2> Signup for an account with Organyzr!!! </h2>
+        <div style={styles.div}>
+          <h2> Settings </h2>
+          <h4> Change your contact information here </h4>
           <Form onSubmit={this.handleSubmit}>
             <Form.Field width='5'>
               <label>First Name</label>

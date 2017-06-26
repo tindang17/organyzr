@@ -33,6 +33,13 @@ class Manage extends Component {
 
   render () {
 
+  const styles = {
+      div: {
+        paddingLeft: 250, 
+        paddingRight: 250
+      }
+  }
+
   let self = this
   let teamCards = this.state.teams;
   let htmlTeams = [];
@@ -49,7 +56,7 @@ class Manage extends Component {
               <Router>
                 <div>
               <Button ><Link to={teamPath}>Manage</Link></Button><LinkButton uuid={teamCards[i].uuid}></LinkButton>
-              <Route path={teamPath} component={<ManageTeam uuid={teamCards[i].uuid}/>}/>
+              <Route path={teamPath} component={<ManageTeam user={teamCards[i].name} uuid={teamCards[i].uuid}/>} />
                 </div>
               </Router>
             </Table.Cell>
@@ -59,7 +66,7 @@ class Manage extends Component {
     }
 
     return (
-      <div>
+      <div style={styles.div}>
         <h3> Hello Manager. These are the teams you're managing. </h3>
         <Table celled>
           <Table.Header>

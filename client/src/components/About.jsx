@@ -25,8 +25,9 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
       }
       }
       return (
-        <div>
-        <Header as='h2' textAlign='center'> About Us! HELLO </Header>
+        <div style={styles.div}>
+        <Image src={require('../images/organyzr_aboutus_banner_resized.jpg')}  fluid centered/>
+        <Header as='h1' textAlign='center'> About Us! </Header>
         <br/>
           <Grid divided centered style={styles.text}>
             <Grid.Row>
@@ -35,7 +36,7 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
               </Grid.Column>
               <Grid.Column width={10}>
                 <Message color='blue'>
-                  <Message.Header>
+                  <Message.Header style={styles.messagesColor}>
                     Grant Tran
                   </Message.Header>
                   <p style={styles.messagesColor}>
@@ -48,7 +49,7 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
             <Grid.Row>
               <Grid.Column width={10}>
                 <Message color='blue'>
-                  <Message.Header>
+                  <Message.Header style={styles.messagesColor}>
                     Tin Dang
                   </Message.Header>
                   <p style={styles.messagesColor}>
@@ -67,7 +68,7 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
               </Grid.Column>
               <Grid.Column width={10}>
                 <Message color='blue'>
-                  <Message.Header>
+                  <Message.Header style={styles.messagesColor}>
                     Spencer Ang
                   </Message.Header>
                   <p style={styles.messagesColor}>

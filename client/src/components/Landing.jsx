@@ -78,7 +78,7 @@ class Landing extends Component {
     return(
     
     <div style={styles.div}>
-    <Image src={require('../images/organyzr.png')} size='large' centered/>
+    <Image src={require('../images/banner.png')}  size='huge' centered/>
         <Message>
           <p style={styles.font}>
             Welcome to Organyzr. A manager-based dashboard system to manage sport teams.

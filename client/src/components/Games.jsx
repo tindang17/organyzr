@@ -65,18 +65,26 @@ class Games extends Component {
     }
 
     const styles = {
-      grid: {
-        paddingLeft: 50,
-        paddingRight: 50
+        text: {
+          fontSize: 16
+        }, 
+        messagesColor: {
+          color: 'black'
+        },
+        div: {
+        paddingLeft: 200, 
+        paddingRight: 200
       }
     }
+    
     return (
-
-      <Grid columns={3} style={styles.grid}>
+      <div style={styles.div}>
+      <Grid columns={3} style={styles.div}>
       <Grid.Row>
       {htmlGames}
       </Grid.Row>
       </Grid>
+      </div>
       
     )
   }

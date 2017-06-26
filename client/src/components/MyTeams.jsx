@@ -28,6 +28,7 @@ class Manage extends Component {
     var self = this;
     axios.get(`/myteams/data`)
     .then(res => {
+      console.log(res.data);
       self.setState({teams: self.state.teams.concat(res.data)})
     })
   }
@@ -43,7 +44,12 @@ class Manage extends Component {
 
   render () {
 
-
+  const styles = {
+      div: {
+        paddingLeft: 250, 
+        paddingRight: 250
+      }
+  }
   let self = this
   let teamCards = this.state.teams;
 
@@ -70,8 +76,8 @@ class Manage extends Component {
     }
 
     return (
-      <div>
-        <h2> Hello </h2>
+      <div style={styles.div}>
+        <h2> Hello {this.props.user}</h2>
         <h3> These are the teams you are playing for. </h3>
 
         <Table celled>
