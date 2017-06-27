@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Card, Icon, Label, Menu, Table, Button, Segment, Image, Grid, Form } from 'semantic-ui-react'
+import { Message, Card, Icon, Label, Menu, Table, Button, Segment, Image, Grid, Form } from 'semantic-ui-react'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory, withRouter } from 'react-router';
 import Moment from 'react-moment';
 
@@ -36,24 +36,23 @@ class Schedule extends Component {
 
 
 let self = this
-
+let noGamesMessage;
     console.log('first in render', this.state.games);
 let team = self.state.team
     let gameCards = this.state.games;
   let htmlGames = [];
   console.log('games', gameCards)
-    if (gameCards.length !=  null) {
-      for (let i = 0; i < gameCards.length; i++) {
-        htmlGames.push(
+if (gameCards.length !=  null) {
+  for (let i = 0; i < gameCards.length; i++) {
+    htmlGames.push(
+    <ScheduleGameCard game={gameCards[i]} />)
+  }
+} 
 
-
-
-
-
-        <ScheduleGameCard game={gameCards[i]} />)
-      }
-    }
-
+if (gameCards.length === 0) {
+  noGamesMessage = <Message>No games are currently scheduled. Please contact your manager.</Message>
+}
+  console.log('no games', noGamesMessage);
     const styles = {
       div: {
         paddingLeft: 250,
@@ -61,13 +60,14 @@ let team = self.state.team
       }
     }
 
-
-
-
     return (
       <div style={styles.div}>
         <h3> Hello Player </h3>
-
+        <div>
+        
+        {noGamesMessage}
+        
+        </div>
 
 
       <Grid columns={3} style={styles.grid}>

@@ -40,7 +40,7 @@ class LinkButton extends Component {
               <Card fluid color='violet'>
                 <Card.Content>
                   <Card.Header>
-                  <Moment date={game.date}/>
+                  <Moment format='LL' date={game.date}/>
                   </Card.Header>
                   <Card.Meta>
                     <span className="time">
@@ -51,7 +51,7 @@ class LinkButton extends Component {
                     </span>
                   </Card.Meta>
                   <Card.Description>
-                      {game.description}{game.game_id}
+                      {game.description}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
