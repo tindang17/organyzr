@@ -31,7 +31,6 @@ class Landing extends Component {
   }
 
   render() {
-
     const styles = {
       div: {
         paddingLeft: 200, 
@@ -44,39 +43,34 @@ class Landing extends Component {
         fontSize: 16
       }
     }
-
     let landing = [];
     if (this.state.userid === false) {
       landing.push(<Loader active inline='centered' />) 
     } else if (this.state.userid === 'not logged in') {
-      landing.push(<Router>
-        <div>
-      <Segment padded size='tiny'>
-        <Link to='/login'>
-          <Button primary fluid>Login</Button>
-        </Link>
-        
-        <Divider horizontal>Or</Divider>
-        
-        <Link to='/signup'>
-          <Button secondary fluid>Sign Up Now</Button>
-        </Link>
-      </Segment>
-    
-      <Route path='/login' component={Login}/>
-      <Route path='/signup' component={Signup}/>
-      </div>
-       </Router>)
+      landing.push(
+        <Router>
+          <div>
+            <Segment padded size='tiny'>
+              <Link to='/login'>
+                <Button primary fluid>Login</Button>
+              </Link>
+              
+              <Divider horizontal>Or</Divider>
+              
+              <Link to='/signup'>
+                <Button secondary fluid>Sign Up Now</Button>
+              </Link>
+            </Segment>
+            <Route path='/login' component={Login}/>
+            <Route path='/signup' component={Signup}/>
+          </div>
+        </Router>)
     } else {
       landing.push(<Segment>
         <div style={styles.textfont}> Hello {this.state.userid[0].first_name}</div>
-
         </Segment>)
     }
-    
-
     return(
-    
     <div style={styles.div}>
     <Image src={require('../images/banner.png')}  size='huge' centered/>
         <Message>
@@ -86,7 +80,6 @@ class Landing extends Component {
         </Message>
      {landing}
     </div>
-
     )}
 }
 

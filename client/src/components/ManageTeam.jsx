@@ -20,7 +20,6 @@ this.deleteGame = this.deleteGame.bind(this);
 
   }
 
-
   componentDidMount() {
     let teams;
     let self = this;
@@ -29,8 +28,6 @@ this.deleteGame = this.deleteGame.bind(this);
       self.setState({games: self.state.games.concat(res.data)})
       console.log('self.state.games', self.state.games);
     })
-
-
   }
 
   editGame(game_id, location, description) {
@@ -52,6 +49,7 @@ this.deleteGame = this.deleteGame.bind(this);
     .then(res => {
     console.log('res.body', res.body)
     self.setState({games: self.state.games.filter(function(game){
+
     return !(game.id === gameid)})})
     })
   }
@@ -59,7 +57,7 @@ this.deleteGame = this.deleteGame.bind(this);
   render () {
   let self = this
 
-    console.log('first in render', this.state.games);
+  console.log('first in render', this.state.games);
   let team = self.state.team
   let gameCards = this.state.games;
   let htmlGames = [];

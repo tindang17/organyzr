@@ -34,33 +34,35 @@ class Games extends Component {
     let htmlGames = [];
     if (gameCards.length !=  null) {
       for (let i = 0; i < gameCards.length; i++) {
-        htmlGames.push(<Grid.Column>
-              <Card fluid color='violet'>
-                <Card.Content>
-                  <Card.Header>
-                  <Moment date={gameCards[i].date}/>
-                  </Card.Header>
-                  <Card.Meta>
-                    <span className="time">
-                      Time
-                    </span>
-                    <span className="rink">
-                      Rink 
-                    </span>
-                  </Card.Meta>
-                  <Card.Description>
-                      General game info 
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                  <div className='ui two buttons'>
-                    <Button basic color='green' active>Available</Button>
-                    <Button basic color='red'>Unavailable</Button>
-                  </div>
-                </Card.Content>
-              </Card>
-              <br/>
-        </Grid.Column>)
+        htmlGames.push(
+          <Grid.Column>
+            <Card fluid color='violet'>
+              <Card.Content>
+                <Card.Header>
+                <Moment date={gameCards[i].date}/>
+                </Card.Header>
+                <Card.Meta>
+                  <span className="time">
+                    Time
+                  </span>
+                  <span className="rink">
+                    Rink 
+                  </span>
+                </Card.Meta>
+                <Card.Description>
+                    General game info 
+                </Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <div className='ui two buttons'>
+                  <Button basic color='green' active>Available</Button>
+                  <Button basic color='red'>Unavailable</Button>
+                </div>
+              </Card.Content>
+            </Card>
+            <br/>
+          </Grid.Column>
+        )
       }
     }
 
@@ -78,6 +80,7 @@ class Games extends Component {
     }
     
     return (
+
       <div style={styles.div}>
       <Grid columns={3} style={styles.div}>
       <Grid.Row>
@@ -85,7 +88,6 @@ class Games extends Component {
       </Grid.Row>
       </Grid>
       </div>
-      
     )
   }
 }

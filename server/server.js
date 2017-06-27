@@ -14,13 +14,14 @@ const knexConfig  = require("../knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
 
+const bcrypt = require('bcrypt');
+const {compareSync} = require("bcrypt");
 
 //Routes
-const gamesRoutes = require('./routes/games')
-
-
-const teamsRoutes = require('./routes/teams')
+const gamesRoutes = require('./routes/games');
+const teamsRoutes = require('./routes/teams');
 const loginRoutes = require('./routes/test/login');
+const twilioRoutes = require('./routes/twilio');
 
 const webpack = {
   core: require('webpack'),
@@ -81,66 +82,67 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+
 passport.use(new LocalStrategy(
   function(email, password, done) {
     console.log('local passport', email, password)
       knex
-          .select()
-          .where({email: email})
-          .from("users").first().then(user => {
-      if (!user) {
-        console.log('user not found')
-        return done(null, false, { message: 'Incorrect email.' });
-      }
-      if (!(user.password === password)) {
-        console.log('incoorrect password')
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
+        .select()
+        .where({email: email})
+        .from("users").first().then(user => {
+          console.log('bcrypt, bcrypt', bcrypt.compareSync(password, user.password))
+          if (!user) {
+            console.log('user not found')
+            return done(null, false, { message: 'Incorrect email.' });
+          }
+          if (bcrypt.compareSync(password, user.password)) {
+            return done(null, user);
+          }
+          if (!(user.password === password)) {
+            console.log('incoorrect password')
+            return done(null, false, { message: 'Incorrect password.' });
+          }
           }).catch(function(err) {
             return done(err);
           });
-
   }
 ));
 
 //CHANGE CALLBACK URL TO WHAT WE USE
 passport.use(new FacebookStrategy({
-    clientID: '891703524347118',
-    clientSecret: '98717a1f70a79ad745206c6a7e6323f9',
-    callbackURL: "http://localhost:8080/auth/facebook/callback",
-    profileFields: ['id', 'email', 'name']
+  clientID: '891703524347118',
+  clientSecret: '98717a1f70a79ad745206c6a7e6323f9',
+  callbackURL: "http://localhost:8080/auth/facebook/callback",
+  profileFields: ['id', 'email', 'name']
   },
   function(accessToken, refreshToken, profile, done) {
-          knex
-          .select()
-          .where({email: profile.emails[0].value})
-          .from("users").first().then(user => {
+    knex
+    .select()
+    .where({email: profile.emails[0].value})
+    .from("users").first().then(user => {
       if (!user) {
         console.log('user not found')
         return done(null, false, { message: 'Incorrect email.' });
       }
       return done(null, user);
-          }).catch(function(err) {
-return done(err);
-});
-
-
+      }).catch(function(err) {
+      return done(err);
+    });
   }
 ));
 
 
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-    console.log("serialize", user.id)
-  });
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+  console.log("serialize", user.id)
+});
 
-  passport.deserializeUser((id, done) => {
-    console.log("deserialize", id)
-    knex('users').where({id: id}).first()
-    .then((user) => { done(null, user); })
-    .catch((err) => { done(err,null); });
-  });
+passport.deserializeUser((id, done) => {
+  console.log("deserialize", id)
+  knex('users').where({id: id}).first()
+  .then((user) => { done(null, user); })
+  .catch((err) => { done(err,null); });
+});
 
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email']}));
@@ -159,6 +161,7 @@ app.post('/logout', function(req, res){
   // res.redirect('/#/login');
 });
 
+app.use('/manage', twilioRoutes());
 
 app.post('/updategame/:game_id', function(req, res) {
   console.log(req.body)
@@ -188,7 +191,6 @@ app.use(webpack.hot(compiler));
 app.post('/signup', function(req, res) {
   let user = req.body;
   // Do a MySQL query.
-
   add_user_local(knex, user, res)
 });
 
@@ -199,14 +201,13 @@ app.post('/new_team', function(req, res) {
   console.log('req', req.body)
   console.log('new_team')
   let user_id = req.session.passport.user
-  // Do a MySQL query.
-
+  // Do a MySQL query
   add_team(knex, user_id, req.body.name, req.body.logo)
 });
 
 app.post('/add_team', function(req, res) {
   // Get sent data.
-    let user_id = req.session.passport.user
+  let user_id = req.session.passport.user
   console.log('req', req.body)
   console.log('adding a team for', user_id)
 
@@ -239,13 +240,13 @@ app.post('/login',
 
 
 
-app.post('/test/login',
-  passport.authenticate('local'),
-    function(req, res) {
-      console.log('this is res', res)
-      res.json({message: 'success'})
-    }
-);
+// app.post('/test/login',
+//   passport.authenticate('local'),
+//     function(req, res) {
+//       console.log('this is res', res)
+//       res.json({message: 'success'})
+//     }
+// );
 
 app.post('/schedule/:game_id',
     function(req, res) {
