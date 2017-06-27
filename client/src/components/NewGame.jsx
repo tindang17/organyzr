@@ -13,10 +13,12 @@ class NewGame extends React.Component {
                   time: '',
                   description: '',
                   message: 'no message',
-                  redirect: false};
+                  redirect: false,
+                  clearForm: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    
   }
 
   handleInputChange(event) {
@@ -28,6 +30,7 @@ class NewGame extends React.Component {
       [name]: value
     });
   }
+
 
   handleSubmit(e) {
     e.preventDefault();
@@ -49,12 +52,20 @@ class NewGame extends React.Component {
       })
       .then(function(response) {
         if (response.status === 200) {
-          self.props.updateTeam();
+          self.props.updateGame();
+          self.state.location = '';
+          self.state.date = ''; 
+          self.state.time = '';
+          self.state.description = '';
         }
 
       })
   }
 
+  resetField () {
+    // window.location.reload()
+    this.refs.input.value = '';
+  }
 
   render () {
 
@@ -79,21 +90,21 @@ class NewGame extends React.Component {
           <Form onSubmit={this.handleSubmit} style={styles.form}>
             <Form.Field width='12'>
               <label>Location</label>
-              <input name="location" placeholder='Location' value={this.state.location} onChange={this.handleInputChange}/>
+              <input ref='input' name="location" placeholder='Location' value={this.state.location} onChange={this.handleInputChange}/>
             </Form.Field>
             <Form.Field width='12'>
-              <label>date</label>
-              <input type="date" name= "date" placeholder='Date' value={this.state.date} onChange={this.handleInputChange}/>
+              <label>Date</label>
+              <input ref='input' type="date" name= "date" placeholder='Date' value={this.state.date} onChange={this.handleInputChange}/>
             </Form.Field>
                         <Form.Field width='12'>
-              <label>time</label>
-              <input type="time" name= "time" placeholder='Time' value={this.state.time} onChange={this.handleInputChange}/>
+              <label>Time</label>
+              <input ref='input' type="time" name= "time" placeholder='Time' value={this.state.time} onChange={this.handleInputChange}/>
             </Form.Field>
                         <Form.Field width='12'>
-              <label>description</label>
-              <input name= "description" placeholder='Description' value={this.state.description} onChange={this.handleInputChange}/>
+              <label>Description</label>
+              <input ref='input' name= "description" placeholder='Description' value={this.state.description} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Button type='submit'>Submit</Button>
+            <Button onClick={this.resetField} type='submit'>Submit</Button>
           </Form>
 
 

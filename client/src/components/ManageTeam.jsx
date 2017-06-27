@@ -16,7 +16,8 @@ class ManageTeam extends Component {
       team: this.props.location.pathname.split('/')[2],
       games: [],
     }
-this.deleteGame = this.deleteGame.bind(this);
+    this.deleteGame = this.deleteGame.bind(this);
+    this.updateGame = this.updateGame.bind(this);
 
   }
 
@@ -55,6 +56,15 @@ this.deleteGame = this.deleteGame.bind(this);
     })
   }
 
+  updateGame() {
+    var self = this;
+    axios.get(`/games/data/` + self.state.team)
+    .then(res => {
+      self.setState({games: res.data})
+    })
+
+  }
+
   render () {
   let self = this
 
@@ -65,12 +75,10 @@ this.deleteGame = this.deleteGame.bind(this);
   console.log('games', gameCards)
     if (gameCards.length !=  null) {
       for (let i = 0; i < gameCards.length; i++) {
-
         htmlGames.push(
-
-        <ManageGameCard game={gameCards[i]} edit={self.editGame} delete={self.deleteGame}/>
-
-
+        <ManageGameCard game={gameCards[i]} 
+          edit={self.editGame}
+          delete={self.deleteGame}/>
         )
       }
     }
@@ -89,8 +97,9 @@ this.deleteGame = this.deleteGame.bind(this);
     return (
       <div style={styles.div}>
         <h3> Hello Manager </h3>
-        <Message content="These are games currently scheduled."
-          color='blue'>
+        <Message color='red'>
+          <Message.List color='black' style={{fontSize: 18}}>
+            These are games currently scheduled for your players. </Message.List>
           </Message>
         <Grid columns={3} style={styles.grid}>
           <Grid.Row>
@@ -99,7 +108,7 @@ this.deleteGame = this.deleteGame.bind(this);
         </Grid>
 
         <div>
-            <NewGame className='new-team' uuid={team}/>
+            <NewGame className='new-team' updateGame={this.updateGame} uuid={team}/>
         </div>
         <div>
             <Calendar games={gameCards} className='team-calendar'/>

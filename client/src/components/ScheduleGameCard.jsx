@@ -37,7 +37,7 @@ class LinkButton extends Component {
             return (
 
         <Grid.Column>
-              <Card fluid color='violet'>
+              <Card fluid color='green'>
                 <Card.Content>
                   <Card.Header>
                   <Moment format='LL' date={game.date}/>

@@ -72,72 +72,86 @@ class ManageGameCard extends Component {
   handleClick () {
 
   }
-  render() {
+render() {
 let self = this
 let game = self.props.game
 let gameID = self.props.game.id
 let active = this.state.active
 let editorsave = active ?  'Save' : 'Edit'
-
-    let description               = function(){      if (active) {
-            return (<input name="description" type="text" value={self.state.description} onChange={self.handleInputChange}/>);
+let description = function(){if (active) {
+  return (<input name="description" type="text" 
+    value={self.state.description} onChange={self.handleInputChange}/>);
   } else {
     return (
-<span>
+      <span>
         {self.state.description}
-</span>
-        )
+      </span>
+    )
 }}
 
 
-    let location               = function(){      if (active) {
-            return (<input name="location" type="text" value={self.state.location} onChange={self.handleInputChange}/>);
+let location= function(){ 
+  if (active) {
+    return (<input name="location" type="text" value={self.state.location} onChange={self.handleInputChange}/>);
   } else {
     return (
-<span>
+      <span>
         {self.state.location}
-</span>
-        )
+      </span>
+    )
 }}
 
+const styles = {
+  header: {
+    fontSize: 20
+  },
+  time: {
+    fontSize: 18,
+    color: 'black',
+    fontWeight: 'bold'
+  },
+  desc: {
+    fontSize: 16
+  }
+}
 
-
-
-    return (
-
-
-<Grid.Column>
-              <Card fluid color='violet' >
+  return (
+      <Grid.Column>
+              <Card fluid color='red' >
                 <Card.Content>
-                  <Card.Header>
-                  <Moment date={game.date}/>
+                  <Card.Header style={styles.header}>
+                  <Moment format='LL' date={game.date}/>
                   </Card.Header>
-                  <Card.Meta>
+                  <Card.Meta style={styles.time}>
                     <span className="time">
-                      {game.time}
+                      {game.time} - 
                     </span>
                     <span className="rink">
                       {location()}
                     </span>
                   </Card.Meta>
-                  <Card.Description>
+                  <Card.Description style={styles.desc}>
                   {description()}
                   </Card.Description>
                 </Card.Content>
                 <Card.Content extra>
                   <div className='ui buttons'>
                     <span style={{textOverflow: 'ellipsis'}}>
-                    <Button onClick= {() => this.editGame(gameID)} basic color='green' active>{editorsave}</Button>
-                    <Button onClick= {() => this.deleteGame(gameID)} basic color='red'>Delete</Button>
-                    <Button onClick= {() => this.sendNotification(gameID)} basic color='red'>{self.state.notification}</Button>
+                    <Button onClick= {() => this.editGame(gameID)} basic floated='right' color='green' fluid active>{editorsave}</Button>
+                    <Button onClick= {() => this.sendNotification(gameID)} floated='right' fluid basic color='purple'>{self.state.notification}</Button>
+                    <br/>
+                    <Button onClick= {() => this.deleteGame(gameID)} floated='right' size='small' fluid basic color='red'>Delete</Button>
                     </span>
+                    <br/>
                   </div>
-                  <Dropdown text='See Roster' onClick= {() => this.getRoster(gameID)}>
+                  <Dropdown button basic text='See Roster' onClick= {() => this.getRoster(gameID)}>
                       <Dropdown.Menu>
                          <Dropdown.Header content='Players Attending' />
                         {this.state.viewRoster.map((item)=> <Dropdown.Item text={item} />)}
                       </Dropdown.Menu>
                     </Dropdown>
+                    <br/>
+                    
                   <div>
                    </div>
                 </Card.Content>
