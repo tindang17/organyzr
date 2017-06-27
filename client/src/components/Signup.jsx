@@ -122,12 +122,13 @@ class Signup extends React.Component {
         paddingLeft: 100
       },
       message: {
-        fontSize: 16
+        fontSize: 16,
+        color: 'black'
       }
     }
     return (
       <div>
-        <Header as='h2' textAlign='centered'> Hi Signup With Us!! Hi </Header> 
+        <Header as='h2' textAlign='centered'> Signup With Us! </Header> 
         <Grid divided padded >
           <Grid.Row columns={2}>
             <Grid.Column width={5}>
@@ -176,15 +177,14 @@ class Signup extends React.Component {
               </Form>
             </Grid.Column>
             <Grid.Column width={8}>
-                <Message style={styles.message}>
-                  <Message.Header>What can you do with Organyzr?</Message.Header>
+                <Message color= 'blue' style={styles.message}>
+                  <Message.Header style={styles.message}>What can you do with Organyzr?</Message.Header>
                   <Message.List items={items} />
                 </Message>
               <Image src={require('../images/vball.jpg')} size='big' centered/>
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <Message content={this.state.message} header='Message'></Message>
       </div>
     )
   }
