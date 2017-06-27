@@ -131,17 +131,17 @@ passport.use(new FacebookStrategy({
 ));
 
 
-  passport.serializeUser((user, done) => {
-    done(null, user.id);
-    console.log("serialize", user.id)
-  });
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+  console.log("serialize", user.id)
+});
 
-  passport.deserializeUser((id, done) => {
-    console.log("deserialize", id)
-    knex('users').where({id: id}).first()
-    .then((user) => { done(null, user); })
-    .catch((err) => { done(err,null); });
-  });
+passport.deserializeUser((id, done) => {
+  console.log("deserialize", id)
+  knex('users').where({id: id}).first()
+  .then((user) => { done(null, user); })
+  .catch((err) => { done(err,null); });
+});
 
 
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email']}));
@@ -185,7 +185,6 @@ app.post('/signup', function(req, res) {
   let user = req.body;
   // Do a MySQL query.
   add_user_local(knex, user, res)
-  // req.session.user_id = req.session.passport.user;
 });
 
 
@@ -195,8 +194,7 @@ app.post('/new_team', function(req, res) {
   console.log('req', req.body)
   console.log('new_team')
   let user_id = req.session.passport.user
-  // Do a MySQL query.
-
+  // Do a MySQL query
   add_team(knex, user_id, req.body.name, req.body.logo)
 });
 
@@ -235,13 +233,13 @@ app.post('/login',
 
 
 
-app.post('/test/login',
-  passport.authenticate('local'),
-    function(req, res) {
-      console.log('this is res', res)
-      res.json({message: 'success'})
-    }
-);
+// app.post('/test/login',
+//   passport.authenticate('local'),
+//     function(req, res) {
+//       console.log('this is res', res)
+//       res.json({message: 'success'})
+//     }
+// );
 
 app.post('/schedule/:game_id',
     function(req, res) {
