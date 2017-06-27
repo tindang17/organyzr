@@ -30,26 +30,15 @@ class Manage extends Component {
     .then(res => {
       self.setState({teams: self.state.teams.concat(res.data)})
     })
+    // testing for twilio
+    // axios.post(`/manage/message`)
+    // .then(res => {
+    //   self.setState({redirect: true})
+    // })
+  // console.log('last thing in comp did mount');
   }
 
   render () {
-
-  const styles = {
-      div: {
-        paddingLeft: 250,
-        paddingRight: 250
-      }
-  }
-
-  const WrappedLink = () => {
-  return (
-    <Button>
-      <Link />
-    </Button>
-  )
-}
-
-
   let self = this
   let teamCards = this.state.teams;
   let htmlTeams = [];

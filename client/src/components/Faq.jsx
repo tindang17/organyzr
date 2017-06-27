@@ -59,8 +59,6 @@ class Faq extends React.Component {
       </div>
     )
   }
-  
-
 }
 
 

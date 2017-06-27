@@ -78,9 +78,6 @@ class Login extends React.Component {
         } else {
           self.setState({errorMessage: 'Incorrect Credentials'})
         }
-          
-        
-        // 
       })
   }
   render() {
@@ -97,29 +94,28 @@ class Login extends React.Component {
       window.location.reload()
     }
     return (
-
-        <div style={styles.div}>
-          <h2> Login </h2> 
-          <Message content="Login to manage your teams and access schedules for team's you're a part of." 
-          color='blue'>
-          </Message>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Field>
-              <label>Email</label>
-              <input name="email"  type="email" placeholder='Email Name' value={this.state.formInputs.email} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Form.Field>
-              <label>Password</label>
-              <input name="password" type="password" value={this.state.formInputs.password} onChange={this.handleInputChange}/>
-            </Form.Field>
-            <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
-          </Form>
-          <span><font color="red">{this.state.errorMessage}</font></span>
-            <br/>
-            <Button color='blue'>
-            <a style={{fontSize: '20px', color: 'white'}} href="/auth/facebook">Login with Facebook</a>
-            </Button>
-        </div>
+      <div style={styles.div}>
+        <h2> Login </h2> 
+        <Message content="Login to manage your teams and access schedules for team's you're a part of." 
+        color='blue'>
+        </Message>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field>
+            <label>Email</label>
+            <input name="email"  type="email" placeholder='Email Name' value={this.state.formInputs.email} onChange={this.handleInputChange}/>
+          </Form.Field>
+          <Form.Field>
+            <label>Password</label>
+            <input name="password" type="password" value={this.state.formInputs.password} onChange={this.handleInputChange}/>
+          </Form.Field>
+          <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
+        </Form>
+        <span><font color="red">{this.state.errorMessage}</font></span>
+          <br/>
+          <Button color='blue'>
+          <a style={{fontSize: '20px', color: 'white'}} href="/auth/facebook">Login with Facebook</a>
+          </Button>
+      </div>
     );
   }
 }

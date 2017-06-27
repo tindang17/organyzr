@@ -117,7 +117,7 @@ class App extends Component {
 
     }
 
-console.log('login check', checkLogin)
+
 
      let signupLogin = [];
      if (this.state.userid === false) {
