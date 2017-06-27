@@ -14,7 +14,7 @@ class Login extends React.Component {
                     password: ''
                   },
                   message: 'no message',
-                  erroMessage: '',
+                  errorMessage: '',
                   isEnabled: false,
                   redirect: false};
 

@@ -214,7 +214,7 @@ app.post('/add_team', function(req, res) {
 
   // Do a MySQL query.
 
-  add_my_team(knex, user_id, req.body.uuid);
+  add_my_team(knex, user_id, req.body.uuid, res);
   res.sendStatus(200);
 });
 
@@ -228,6 +228,7 @@ app.post('/new_game', function(req, res) {
   // Do a MySQL query.
 
   add_game(knex, user_id, req.body)
+  res.sendStatus(200);
 });
 
 
