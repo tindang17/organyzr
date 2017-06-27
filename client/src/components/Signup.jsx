@@ -68,10 +68,12 @@ class Signup extends React.Component {
     let errorMessages = {email: [], phone: []};
     var self = this;
     // On submit of the form, send a POST request with the data to the server.
+    console.log('start fetching')
     fetch('/signup', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
         credentials: 'same-origin',
         body: JSON.stringify({
