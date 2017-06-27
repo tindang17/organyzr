@@ -60,7 +60,8 @@ const getMyGames = require("./functions/get_my_games.js")
 const get_my_teams =  require("./functions/get_my_teams.js");
 const getTeamGames = require("./functions/get_team_games.js");
 const getRosterData = require("./functions/get_roster.js");
-
+const update_game = require("./functions/update_game.js");
+const send_notification = require("./functions/send_notification.js");
 
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
@@ -162,6 +163,12 @@ app.post('/logout', function(req, res){
 
 app.use('/manage', twilioRoutes());
 
+app.post('/updategame/:game_id', function(req, res) {
+  console.log(req.body)
+  console.log(req.params.game_id)
+  console.log(req.session.passport.user)
+  update_game(knex, req.body, req.params.game_id, req.session.passport.user, res)
+})
 
 app.use(webpack.middleware(compiler, {
   publicPath: webpack.config.output.publicPath,
@@ -251,6 +258,12 @@ app.post('/schedule/:game_id',
 app.post('/deletegame/:game_id',
     function(req, res) {
       delete_game(knex, req.params.game_id, req.session.passport.user, res)
+    }
+);
+
+app.post('/notification/:game_id',
+    function(req, res) {
+      send_notification(knex, req.params.game_id, req.session.passport.user, res)
     }
 );
 

@@ -75,47 +75,62 @@ class Settings extends React.Component {
       });
   }
   render() {
+
+    const styles = {
+        text: {
+          fontSize: 16
+        }, 
+        messagesColor: {
+          color: 'black'
+        },
+        div: {
+        paddingLeft: 200, 
+        paddingRight: 200
+      }
+      }
+
     return (
-      <div>
-        <h2> Signup for an account with Organyzr!!! </h2>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Field width='5'>
-            <label>First Name</label>
-            <input name="first_name" placeholder='First Name' value={this.state.first_name} onChange={this.handleInputChange}/>
-          </Form.Field>
-          <Form.Field width='5'>
-            <label>Last Name</label>
-            <input name= "last_name" placeholder='Last Name' value={this.state.last_name} onChange={this.handleInputChange}/>
-          </Form.Field>
-          <Form.Field width='5'>
-           <label>
-              Text Notifications:
-              <input
-                name="text_notification"
-                type="checkbox"
-                checked={this.state.text_notification}
-                onChange={this.handleInputChange} />
-            </label>
-          </Form.Field>
-          <Form.Field width='5'>
-            <label>Phone Number</label>
-            <input name="phone" placeholder='10 digits' value={this.state.phone} onChange={this.handleInputChange}/>
-          </Form.Field >
-          <Form.Field width='5'>
-            <label>
-              Email Notifications:
-              <input
-                name="email_notification"
-                type="checkbox"
-                checked={this.state.email_notification}
-                onChange={this.handleInputChange} />
-            </label>
-          </Form.Field>
-          <Button type='submit'>Save</Button>
-        </Form>
-        <Message content={this.state.message} header='error msg'>
-        </Message>
-      </div>
+        <div style={styles.div}>
+          <h2> Settings </h2>
+          <h4> Change your contact information here </h4>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Field width='5'>
+              <label>First Name</label>
+              <input name="first_name" placeholder='First Name' value={this.state.first_name} onChange={this.handleInputChange}/>
+            </Form.Field>
+            <Form.Field width='5'>
+              <label>Last Name</label>
+              <input name= "last_name" placeholder='Last Name' value={this.state.last_name} onChange={this.handleInputChange}/>
+            </Form.Field>
+            <Form.Field width='5'>
+                    <label>
+          Text Notifications:
+          <input
+            name="text_notification"
+            type="checkbox"
+            checked={this.state.text_notification}
+            onChange={this.handleInputChange} />
+        </label>
+        </Form.Field>
+            <Form.Field width='5'>
+              <label>Phone Number</label>
+              <input name="phone" placeholder='10 digits' value={this.state.phone} onChange={this.handleInputChange}/>
+            </Form.Field >
+                        <Form.Field width='5'>
+                    <label>
+          Email Notifications:
+          <input
+            name="email_notification"
+            type="checkbox"
+            checked={this.state.email_notification}
+            onChange={this.handleInputChange} />
+        </label>
+        </Form.Field>
+            <Button type='submit'>Save</Button>
+          </Form>
+            <Message content={this.state.message} header='error msg'>
+            </Message>
+        </div>
     );
   }
 }

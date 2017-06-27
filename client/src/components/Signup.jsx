@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 // import Password from './Password.jsx';
-import { Button, Checkbox, Form, Message, Grid, Header } from 'semantic-ui-react'
+import { Image, Button, Checkbox, Form, Message, Grid, Header } from 'semantic-ui-react'
 import { Route, Redirect} from 'react-router-dom'
 
 class Signup extends React.Component {
@@ -182,6 +182,7 @@ class Signup extends React.Component {
                   <Message.Header>What can you do with Organyzr?</Message.Header>
                   <Message.List items={items} />
                 </Message>
+              <Image src={require('../images/vball.jpg')} size='big' centered/>
             </Grid.Column>
           </Grid.Row>
         </Grid>

@@ -22,7 +22,10 @@ class Faq extends React.Component {
     const styles = {
       message: {
         fontSize: 16
-      }, 
+      },
+      messagesColor: {
+          color: 'black'
+        }, 
       grid: {
         paddingLeft: 75, 
         paddingRight: 75
@@ -34,23 +37,23 @@ class Faq extends React.Component {
     <br/>
       <Grid divided centered style={styles.grid}>
         <Grid.Column width={4}>
-          <Image src={require('../images/sang.png')}/>
+          <Image src={require('../images/outside_rink_net.png')}/>
         </Grid.Column>
         <Grid.Column width={9}>
           <Message style={styles.message} color='blue'>
-            <Message.Header>Who is Organyzr for?</Message.Header>
-            <Message.List items={items} />
+            <Message.Header style={styles.messagesColor}>Who is Organyzr for?</Message.Header>
+            <Message.List style={styles.messagesColor} items={items} />
           </Message>
         </Grid.Column>
 
         <Grid.Column width={9}>
           <Message style={styles.message} color='blue'>
-            <Message.Header>What are the features of Organyzr?</Message.Header>
-            <Message.List items={items2} />
+            <Message.Header style={styles.messagesColor}>What are the features of Organyzr?</Message.Header>
+            <Message.List style={styles.messagesColor} items={items2} />
           </Message>
         </Grid.Column>
         <Grid.Column width={4}>
-          <Image src={require('../images/sang.png')}/>
+          <Image src={require('../images/tennis.jpg')}/>
         </Grid.Column>
       </Grid>
       </div>

@@ -30,14 +30,25 @@ this.deleteGame = this.deleteGame.bind(this);
     })
   }
 
+  editGame(game_id, location, description) {
+    let self = this
+    axios.post('/updategame/' + game_id.toString(), {
+    location: location,
+    description: description
+    })
+    .then(res => {
+    console.log('updated game!')
+    console.log(res.body)
+    self.setState({notification: res.body})
+    })
 
+  }
   deleteGame (gameid) {
     let self = this
-    console.log(gameid)
     axios.post('/deletegame/' + gameid.toString())
-      .then(res => {
-      console.log('res.body', res.body)
-      self.setState({games: self.state.games.filter(function(game){
+    .then(res => {
+    console.log('res.body', res.body)
+    self.setState({games: self.state.games.filter(function(game){
 
     return !(game.id === gameid)})})
     })
@@ -56,7 +67,7 @@ this.deleteGame = this.deleteGame.bind(this);
 
         htmlGames.push(
 
-        <ManageGameCard game={gameCards[i]} delete={self.deleteGame}/>
+        <ManageGameCard game={gameCards[i]} edit={self.editGame} delete={self.deleteGame}/>
 
 
         )
@@ -67,12 +78,19 @@ this.deleteGame = this.deleteGame.bind(this);
       grid: {
         paddingLeft: 50,
         paddingRight: 50
+      },
+      div: {
+        paddingLeft: 200,
+        paddingRight: 200
       }
     }
 
     return (
-      <div>
+      <div style={styles.div}>
         <h3> Hello Manager </h3>
+        <Message content="Current Schedule for players on "
+          color='blue'>
+          </Message>
         <Grid columns={3} style={styles.grid}>
           <Grid.Row>
           {htmlGames}

@@ -22,6 +22,7 @@ class Manage extends Component {
   }
 
 
+
   componentDidMount() {
     let teams;
     var self = this;
@@ -53,8 +54,9 @@ class Manage extends Component {
             <Table.Cell>
               <Router>
                 <div>
-              <Button ><Link to={teamPath}>Manage</Link></Button><LinkButton uuid={teamCards[i].uuid}></LinkButton>
-              <Route path={teamPath} component={<ManageTeam uuid={teamCards[i].uuid}/>}/>
+              <Link to={teamPath}><Button>Manage</Button></Link>
+              <LinkButton uuid={teamCards[i].uuid}></LinkButton>
+              <Route path={teamPath} component={<ManageTeam user={teamCards[i].name} uuid={teamCards[i].uuid}/>} />
                 </div>
               </Router>
             </Table.Cell>
@@ -64,9 +66,9 @@ class Manage extends Component {
     }
 
     return (
-      <div>
+      <div style={styles.div}>
         <h3> Hello Manager. These are the teams you're managing. </h3>
-        <Table celled>
+        <Table celled style={{fontSize: '20px'}}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Team Name</Table.HeaderCell>

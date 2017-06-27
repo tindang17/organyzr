@@ -3,7 +3,7 @@
     
     // knex.select("*").from("teams").where('uuid', team_uuid)
     knex('games_users').join('users', 'games_users.user_id', '=', 'users.id')
-    .select("*").where('game_id', game_id).then(function(result) {
+    .select("*").where('game_id', game_id).andWhere('going', true).then(function(result) {
       res.send(result);
     })
 

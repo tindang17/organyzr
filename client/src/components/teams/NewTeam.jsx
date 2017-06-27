@@ -67,7 +67,7 @@ class NewTeam extends React.Component {
       <Accordion name="ui accordion">
         <Accordion.Title>
           <Icon name='dropdown' />
-          New Team
+          <span style={{fontSize: '18px'}}>New Team</span>
         </Accordion.Title>
         <Accordion.Content>
           <Segment padded size='tiny'>

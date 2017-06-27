@@ -74,7 +74,7 @@ class NewGame extends React.Component {
       <Accordion name="ui accordion">
         <Accordion.Title>
           <Icon name='dropdown' />
-          New Game
+          <span style={{fontSize: '18px'}}>New Game</span>
         </Accordion.Title>
         <Accordion.Content>
           <Segment padded size='tiny'>
