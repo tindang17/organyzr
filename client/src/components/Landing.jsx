@@ -9,7 +9,7 @@ import { Segment, Button, Divider, Image } from 'semantic-ui-react'
 import Signup from './Signup.jsx';
 import Login from './Login.jsx';
 import axios from 'axios';
-import { Message, Loader } from 'semantic-ui-react'
+import { Message, Loader, Grid } from 'semantic-ui-react'
 
 
 class Landing extends Component {
@@ -37,10 +37,12 @@ class Landing extends Component {
         paddingRight: 200
       }, 
       font: {
-        fontSize: 20
+        fontSize: 24,
+        color: 'black'
       }, 
       textfont: {
-        fontSize: 16
+        fontSize: 20,
+        color: 'black'
       }
     }
     let landing = [];
@@ -52,13 +54,13 @@ class Landing extends Component {
           <div>
             <Segment padded size='tiny'>
               <Link to='/login'>
-                <Button primary fluid>Login</Button>
+                <Button color='blue' fluid>Login</Button>
               </Link>
               
               <Divider horizontal>Or</Divider>
               
               <Link to='/signup'>
-                <Button secondary fluid>Sign Up Now</Button>
+                <Button color='red' fluid>Sign Up Now</Button>
               </Link>
             </Segment>
             <Route path='/login' component={Login}/>
@@ -66,19 +68,38 @@ class Landing extends Component {
           </div>
         </Router>)
     } else {
-      landing.push(<Segment>
-        <div style={styles.textfont}> Hello {this.state.userid[0].first_name}</div>
-        </Segment>)
+      landing.push(<Message color='green'>
+        <Message.Header style={styles.font}> Hello {this.state.userid[0].first_name}</Message.Header>
+        <Message.List style={styles.textfont}> You can now manage your teams or check-in with teams you play on. </Message.List>
+        </Message>)
     }
     return(
     <div style={styles.div}>
     <Image src={require('../images/banner.png')}  size='huge' centered/>
-        <Message>
-          <p style={styles.font}>
-            Welcome to Organyzr. A manager-based dashboard system to manage sport teams.
-          </p>
-        </Message>
-     {landing}
+    <br/>
+    <Grid divided centered style={styles.text}>
+            <Grid.Row>
+              <Grid.Column width={7}>
+                {landing}
+                {/*<Image src={require('../images/gtran.jpg')}/>*/}
+              </Grid.Column>
+              <Grid.Column width={8}>
+                <Message color='blue'>
+                  <Message.Header style={styles.font}>
+                    Welcome to Organyzr
+                  </Message.Header>
+                  <Message.List style={styles.textfont}>
+                    A manager-based dashboard system to manage sport teams.
+                  </Message.List>
+                  <br/>
+            </Message>
+              </Grid.Column>
+            </Grid.Row>
+      </Grid>
+      
+
+
+    
     </div>
     )}
 }

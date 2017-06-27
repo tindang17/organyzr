@@ -50,7 +50,7 @@ if (gameCards.length !=  null) {
 } 
 
 if (gameCards.length === 0) {
-  noGamesMessage = <Message>No games are currently scheduled. Please contact your manager.</Message>
+  noGamesMessage = <Message color='blue'>No games are currently scheduled. Please contact your manager.</Message>
 }
   console.log('no games', noGamesMessage);
     const styles = {

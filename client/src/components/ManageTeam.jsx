@@ -89,7 +89,7 @@ this.deleteGame = this.deleteGame.bind(this);
     return (
       <div style={styles.div}>
         <h3> Hello Manager </h3>
-        <Message content=" "
+        <Message content="These are games currently scheduled."
           color='blue'>
           </Message>
         <Grid columns={3} style={styles.grid}>

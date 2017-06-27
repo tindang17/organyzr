@@ -105,7 +105,8 @@ class App extends Component {
       },
       linkItems: {
         color: 'white',
-        font: 'helvetica'
+        font: 'helvetica',
+        fontSize: 24
       }
     };
 
