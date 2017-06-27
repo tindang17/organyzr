@@ -203,6 +203,7 @@ app.post('/new_team', function(req, res) {
   let user_id = req.session.passport.user
   // Do a MySQL query
   add_team(knex, user_id, req.body.name, req.body.logo)
+  res.sendStatus(200);
 });
 
 app.post('/add_team', function(req, res) {

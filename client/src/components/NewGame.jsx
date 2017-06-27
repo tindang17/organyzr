@@ -49,12 +49,10 @@ class NewGame extends React.Component {
       })
       .then(function(response) {
         if (response.status === 200) {
+          self.props.updateTeam();
         }
-        return response.json()
+
       })
-      .then(function(body) {
-        self.setState({message: body.message});
-      });
   }
 
 

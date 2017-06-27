@@ -9,10 +9,12 @@ class NewTeam extends React.Component {
     this.state = {name: '',
                   logo: '',
                   message: 'no message',
-                  redirect: false};
+                  redirect: false,
+                  clearFOrm: false};
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.resetField = this.resetField.bind(this);
   }
 
   handleInputChange(event) {
@@ -43,6 +45,9 @@ class NewTeam extends React.Component {
       })
       .then(function(response) {
         if (response.status === 200) {
+          self.props.updateTeam();
+          self.state.name = '';
+          self.state.logo = '';
         }
         return response.json()
       })
@@ -51,6 +56,10 @@ class NewTeam extends React.Component {
       });
   }
 
+  resetField () {
+    // window.location.reload()
+    this.refs.input.value = '';
+  }
 
   render () {
 
@@ -79,13 +88,13 @@ class NewTeam extends React.Component {
           <Form onSubmit={this.handleSubmit} style={styles.form}>
             <Form.Field width='12'>
               <label>Name</label>
-              <input name="name" placeholder='Name' value={this.state.name} onChange={this.handleInputChange}/>
+              <input ref='input' name="name" placeholder='Name' value={this.state.name} onChange={this.handleInputChange}/>
             </Form.Field>
             <Form.Field width='12'>
               <label>Logo</label>
-              <input name= "logo" placeholder='URL to desired Image' value={this.state.logo} onChange={this.handleInputChange}/>
+              <input ref='input' name= "logo" placeholder='URL to desired Image' value={this.state.logo} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Button type='submit'>Submit</Button>
+            <Button onClick={this.resetField} type='submit'>Submit</Button>
           </Form>
 
 

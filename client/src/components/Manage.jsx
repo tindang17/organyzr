@@ -19,6 +19,7 @@ class Manage extends Component {
       teams: [],
       edit: null
     }
+    this.updateTeam = this.updateTeam.bind(this);
   }
 
 

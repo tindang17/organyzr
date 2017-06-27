@@ -42,7 +42,6 @@ class NewTeam extends React.Component {
       })
       .then(function(response) {
         if (response.status === 200) {
-          console.log();
           self.props.updateTeam();
           self.state.uuid = '';
           // self.setState({clearForm: true});
