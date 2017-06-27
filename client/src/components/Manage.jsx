@@ -32,6 +32,15 @@ class Manage extends Component {
     })
   }
 
+  updateTeam() {
+    var self = this;
+    axios.get(`/teams/data`)
+    .then(res => {
+      self.setState({teams: res.data})
+    })
+
+  }
+
   render () {
 
   const styles = {
@@ -40,14 +49,6 @@ class Manage extends Component {
         paddingRight: 250
       }
   }
-
-  const WrappedLink = () => {
-  return (
-    <Button>
-      <Link />
-    </Button>
-  )
-}
 
 
   let self = this
@@ -91,7 +92,7 @@ class Manage extends Component {
           </Table.Body>
         </Table>
         <div>
-          <NewTeam className='new-team'/>
+          <NewTeam className='new-team' updateTeam={this.updateTeam}/>
         </div>
         <div>
           <Calendar className='team-calendar'/>

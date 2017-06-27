@@ -25,6 +25,7 @@ class NewTeam extends React.Component {
     });
   }
 
+
   handleSubmit(e) {
     e.preventDefault();
     var self = this;
