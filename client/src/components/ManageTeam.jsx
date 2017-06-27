@@ -23,10 +23,11 @@ this.deleteGame = this.deleteGame.bind(this);
   componentDidMount() {
     let teams;
     let self = this;
+    console.log('self.props.', self.props);
     axios.get(`/games/data/`+self.state.team)
     .then(res => {
       self.setState({games: self.state.games.concat(res.data)})
-      console.log('self.state.games', self.state.games);
+      
     })
   }
 
@@ -88,7 +89,7 @@ this.deleteGame = this.deleteGame.bind(this);
     return (
       <div style={styles.div}>
         <h3> Hello Manager </h3>
-        <Message content="Current Schedule for players on "
+        <Message content=" "
           color='blue'>
           </Message>
         <Grid columns={3} style={styles.grid}>

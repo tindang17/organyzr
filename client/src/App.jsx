@@ -23,7 +23,7 @@ import MyTeams from './components/MyTeams.jsx';
 import Manage from './components/Manage.jsx';
 import Schedule from './components/Schedule.jsx';
 import ManageTeam from './components/ManageTeam.jsx';
-import { Menu, Loader, Segment } from 'semantic-ui-react'
+import { Button, Menu, Loader, Segment } from 'semantic-ui-react'
 import Settings from './components/Settings.jsx';
 
 
@@ -145,10 +145,10 @@ class App extends Component {
       manageGames = [];
     } else {
       manageGames.push(<div><br/>
-          <li style={styles.liitem}><Link style={styles.linkItems} to={gamesLink}>My Teams</Link></li>
-          <li style={styles.liitem}><Link style={styles.linkItems} to="/manage">Manage</Link></li>
-          <li style={styles.liitem}><Link style={styles.linkItems} to="/settings">Settings</Link></li>
-          <br/> <li  style={styles.liitem}><Link style={styles.linkItems} to="/logout">Logout</Link></li></div>)
+          <li style={styles.liitem}><Link style={styles.linkItems} to={gamesLink}><Button color='blue' fluid >My Teams</Button></Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="/manage"><Button color='blue' fluid >Manage</Button></Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="/settings"><Button color='blue' fluid >Settings</Button></Link></li>
+          <br/> <li  style={styles.liitem}><Link style={styles.linkItems} to="/logout"><Button color='blue' basic fluid>Logout</Button></Link></li></div>)
     }
   return (
 
@@ -162,9 +162,9 @@ class App extends Component {
       minHeight: '100vh'
       }}>
         <ul style={styles.ulitem}>
-          <li style={styles.liitem}><Link style={styles.linkItems} to="/">Home</Link></li>
-          <li style={styles.liitem}><Link style={styles.linkItems} to="/about">About</Link></li>
-          <li style={styles.liitem}><Link style={styles.linkItems} to="/faq">FAQ</Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="/"><Button color='blue' fluid>Home</Button></Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="/about"><Button color='blue' fluid>About</Button></Link></li>
+          <li style={styles.liitem}><Link style={styles.linkItems} to="/faq"><Button color='blue' fluid>FAQ</Button></Link></li>
           <br/>
           {manageGames}
           <br/>
