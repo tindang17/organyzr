@@ -68,7 +68,7 @@ class App extends Component {
       },
       { path: '/myteams',
         sidebar: () => <MyTeams user={this.state.userid}/>,
-        main: () => <MyTeams user={this.state.userid}/>
+        main: MyTeams
       },
       {
         path: '/manage',
@@ -154,12 +154,12 @@ class App extends Component {
 
 <Router>
   <div>
-  <div style={{ display: 'flex' }}>
+  <div style={{ display: 'flex'}}>
     <div style={{
       padding: '10px',
-      width: '20%',
+      width: '10%',
       background: '#143153',
-      height: '100vh'
+      minHeight: '100vh'
       }}>
         <ul style={styles.ulitem}>
           <li style={styles.liitem}><Link style={styles.linkItems} to="/">Home</Link></li>
@@ -182,15 +182,6 @@ class App extends Component {
           />
         ))}
 
-      <div className="footer" style={{width: '100%', backgroundColor: '748BA7', bottom: '0%', position: 'fixed',
-      left: '20%'}}>
-        <Menu>
-          <Menu.Item header>Our Company</Menu.Item>
-          <Menu.Item name='aboutUs'  />
-          <Menu.Item name='jobs'  />
-          <Menu.Item name='locations' />
-        </Menu>
-      </div>
       <Route path='/login' render = { () =>
       (checkLogin === 'not logged in') ?
       (<Login/>) : (<Redirect to='/'/>)}/>

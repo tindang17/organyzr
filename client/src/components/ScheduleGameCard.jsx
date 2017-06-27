@@ -56,10 +56,12 @@ class LinkButton extends Component {
                 </Card.Content>
                 <Card.Content extra>
                   <div className='ui two buttons'>
+                    <span style={{textOverflow: 'ellipsis'}}>
                     <Button toggle  active={active} onClick={this.handleClickGoing}>Going</Button>
                     <Button   active={!active}
   compact
   color={!active ? 'red' : null}onClick={this.handleClickNotGoing}>Fuck This</Button>
+                  </span>
                   </div>
                 </Card.Content>
               </Card>

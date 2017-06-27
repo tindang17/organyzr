@@ -20,30 +20,40 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 BigCalendar.momentLocalizer(moment);
 
+
+
+
 class Calendar extends React.Component {
   constructor (props) {
     super (props);
   };
   render () {
+  event =   {
+    'title': 'All Day Event',
+    'allDay': true,
+    'start': new Date(2017, 6, 0),
+    'end': new Date(2017, 6, 1)
+  }
+
     return (
       // React Components in JSX look like HTML tags
       <Accordion name="ui accordion">
         <Accordion.Title>
           <Icon name='dropdown' />
-          Calendar
+          <span style={{fontSize: '18px'}}>Calendar</span>
         </Accordion.Title>
         <Accordion.Content>
           <Segment padded size='tiny'>
             <BigCalendar
               style={{height: '420px'}}
-              events={[]}
+              events={[event]}
             />
           </Segment>
         </Accordion.Content>
       </Accordion>
     )
   }
-  // TODO 
+  // TODO
 
 }
 

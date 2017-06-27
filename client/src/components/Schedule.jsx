@@ -55,9 +55,9 @@ let team = self.state.team
     }
 
     const styles = {
-      grid: {
-        paddingLeft: 50,
-        paddingRight: 50
+      div: {
+        paddingLeft: 250,
+        paddingRight: 250
       }
     }
 
@@ -65,7 +65,7 @@ let team = self.state.team
 
 
     return (
-      <div>
+      <div style={styles.div}>
         <h3> Hello Player </h3>
 
 
