@@ -21,7 +21,7 @@ const {compareSync} = require("bcrypt");
 const gamesRoutes = require('./routes/games');
 const teamsRoutes = require('./routes/teams');
 const loginRoutes = require('./routes/test/login');
-const twilioRoutes = require('./routes/twilio');
+// const twilioRoutes = require('./routes/twilio');
 
 const webpack = {
   core: require('webpack'),
@@ -161,7 +161,7 @@ app.post('/logout', function(req, res){
   // res.redirect('/#/login');
 });
 
-app.use('/manage', twilioRoutes());
+// app.use('/manage', twilioRoutes());
 
 app.post('/updategame/:game_id', function(req, res) {
   console.log(req.body)
