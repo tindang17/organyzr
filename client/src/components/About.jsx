@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import { Grid, Image, Message, Header } from 'semantic-ui-react'
-  
+
   class About extends Component {
     constructor(props){
       super(props);
     }
     // sending request to the server
-    
+
     componentDidMount() {
     }
 
@@ -15,12 +15,12 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
       const styles = {
         text: {
           fontSize: 16
-        }, 
+        },
         messagesColor: {
           color: 'black'
         },
         div: {
-        paddingLeft: 200, 
+        paddingLeft: 200,
         paddingRight: 200
       }
       }
@@ -40,8 +40,8 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
                     Grant Tran
                   </Message.Header>
                   <p style={styles.messagesColor}>
-                    This is a bio about myself. 
-                  </p>  
+                    This is a bio about myself.
+                  </p>
                 </Message>
               </Grid.Column>
             </Grid.Row>
@@ -53,8 +53,8 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
                     Tin Dang
                   </Message.Header>
                   <p style={styles.messagesColor}>
-                    Fucken G 
-                  </p>  
+                    Fucken G
+                  </p>
                 </Message>
               </Grid.Column>
               <Grid.Column width={3}>
@@ -72,8 +72,8 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
                     Spencer Ang
                   </Message.Header>
                   <p style={styles.messagesColor}>
-                    Upload a picture you fucken feeder  
-                  </p>  
+                    A UBC commerce student who loves food, Spencer chose to pursue the dev life because when he was younger his parent told him he shouldn't stare at a computer all day. However, he told them he would do it for the rest of his life at his <b>job</b>.
+                  </p>
                 </Message>
               </Grid.Column>
             </Grid.Row>
@@ -81,7 +81,7 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
         </div>
       )
     }
-  } 
+  }
 
 
 export default About;

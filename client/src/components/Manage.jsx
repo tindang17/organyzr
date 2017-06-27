@@ -101,9 +101,6 @@ class Manage extends Component {
         <div>
           <NewTeam className='new-team' updateTeam={this.updateTeam}/>
         </div>
-        <div>
-          <Calendar className='team-calendar'/>
-        </div>
       </div>
     );
   }

@@ -101,7 +101,7 @@ this.deleteGame = this.deleteGame.bind(this);
             <NewGame className='new-team' uuid={team}/>
         </div>
         <div>
-            <Calendar className='team-calendar'/>
+            <Calendar games={gameCards} className='team-calendar'/>
         </div>
       </div>
     );

@@ -76,10 +76,6 @@ class NewGame extends React.Component {
         </Accordion.Title>
         <Accordion.Content>
           <Segment padded size='tiny'>
-
-
-<div>{this.props.uuid}</div>
-
           <Form onSubmit={this.handleSubmit} style={styles.form}>
             <Form.Field width='12'>
               <label>Location</label>

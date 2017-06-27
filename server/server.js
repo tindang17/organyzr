@@ -71,7 +71,7 @@ app.use(knexLogger(knex));
 
 app.use(cookieSession({
   name: 'session',
-  keys: ['kfpoier0tu5g0rejgre', 'erljfo34if0jwfdkepf']
+  keys: [process.env.COOKIE_KEY]
 }));
 
 app.use(bodyParser.json());
@@ -110,8 +110,8 @@ passport.use(new LocalStrategy(
 
 //CHANGE CALLBACK URL TO WHAT WE USE
 passport.use(new FacebookStrategy({
-  clientID: '891703524347118',
-  clientSecret: '98717a1f70a79ad745206c6a7e6323f9',
+  clientID: process.env.FACEBOOK_ID,
+  clientSecret: process.env.FACEBOOK_SECRET,
   callbackURL: "http://localhost:8080/auth/facebook/callback",
   profileFields: ['id', 'email', 'name']
   },
