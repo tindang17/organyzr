@@ -95,7 +95,7 @@ class Manage extends Component {
           <AddTeam className='add-team' updateTeam={this.updateTeam}/>
         </div>
         <div>
-          <Calendar className='team-calendar'/>
+          <Calendar games={[]} className='team-calendar'/>
         </div>
       </div>
     );

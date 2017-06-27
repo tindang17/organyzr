@@ -78,7 +78,7 @@ let team = self.state.team
 
 
         <div>
-          <Calendar className='team-calendar'/>
+          <Calendar games={gameCards}className='team-calendar'/>
         </div>
       </div>
     );
