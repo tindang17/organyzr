@@ -11,6 +11,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+
 class Manage extends Component {
   constructor (props) {
     super(props);
@@ -28,7 +29,7 @@ class Manage extends Component {
     var self = this;
     axios.get(`/myteams/data`)
     .then(res => {
-      console.log(res.data);
+      console.log('this is thor', res.data);
       self.setState({teams: self.state.teams.concat(res.data)})
     })
   }
