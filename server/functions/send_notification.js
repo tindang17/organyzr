@@ -1,6 +1,8 @@
 require('dotenv').config();
 // const sendNotification = require('../functions/send_notification');
 // console.log('send notification', sendNotification)
+const CronJob = require('cron').CronJob;
+const moment = require('moment');
 const twilio = require ('twilio');
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken  = process.env.TWILIO_AUTH_TOKEN;
@@ -8,9 +10,9 @@ const twilioNum = process.env.TWILIO_NUM;
 // const playerNum = process.env.PLAYER_NUM;
 const client = twilio(accountSid, authToken);
 const express = require('express');
+const scheduler = require('./scheduler')
 module.exports = (knex, game_id, user_id, res) => {
-
-
+    
     const emails = knex('games_users').join('users', 'games_users.user_id', '=', 'users.id')
     .select("email").where('game_id', game_id).andWhere('going', true).andWhere('email_notification', true)
 
@@ -39,18 +41,18 @@ module.exports = (knex, game_id, user_id, res) => {
               console.log('player number', playerNum)
             //twiliostuff: (niceData.phoneNumbers(array) + format niceData.gameinfo(object with game info) -> send)
             // loop niceData.phoneNumbers
-            // client.messages.create({
-            //   to: `+1${playerNum}`,
-            //   from: twilioNum,
-            //   body: `You have a game today at ${game.location} at ${game.time}`
-            // }, (err, message) => {
-            //   if(err) {
-            //     console.log(err)
-            //     res.status(500)
-            //   } else {
-            //     console.log(message.sid)
-            //   }
-            // })
+            client.messages.create({
+              to: `+1${playerNum}`,
+              from: twilioNum,
+              body: `You have a game today at ${game.location} at ${game.time}`
+            }, (err, message) => {
+              if(err) {
+                console.log(err)
+                res.status(500)
+              } else {
+                console.log(message.sid)
+              }
+            })
           }
         }  
 
@@ -59,5 +61,4 @@ module.exports = (knex, game_id, user_id, res) => {
         //send when all done
         res.send('phone ' + niceData.phoneNumbers.length.toString())
       })
-
-}
+  }

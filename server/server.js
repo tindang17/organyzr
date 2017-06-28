@@ -61,7 +61,7 @@ const get_my_teams =  require("./functions/get_my_teams.js");
 const getTeamGames = require("./functions/get_team_games.js");
 const getRosterData = require("./functions/get_roster.js");
 const update_game = require("./functions/update_game.js");
-const twilioRoute = require("./functions/send_notification.js");
+const sendNotification = require("./functions/send_notification.js");
 
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
@@ -264,7 +264,7 @@ app.post('/deletegame/:game_id',
 
 app.post('/notification/:game_id',
     function(req, res) {
-      twilioRoute(knex, req.params.game_id, req.session.passport.user, res)
+      sendNotification(knex, req.params.game_id, req.session.passport.user, res)
     }
 );
 
