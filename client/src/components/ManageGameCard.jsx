@@ -140,6 +140,7 @@ const styles = {
               <Card fluid color='red' >
                 <Card.Content>
                   <Card.Header style={styles.header}>
+                  {game.date}
                   <Moment format='LL' date={game.date}/>
                   </Card.Header>
                   <Card.Meta style={styles.time}>

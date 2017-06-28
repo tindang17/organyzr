@@ -149,8 +149,9 @@ passport.use(new FacebookStrategy({
       if (!user) {
         console.log('user not found, creating new user')
         add_user_facebook(knex, profile, done)
-      }
+      } else {
       return done(null, user);
+    }
       }).catch(function(err) {
       return done(err);
     });
@@ -159,8 +160,8 @@ passport.use(new FacebookStrategy({
 
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
   console.log("serialize", user.id)
+  done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
