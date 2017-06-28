@@ -1,4 +1,4 @@
-import moment from 'moment';
+// import moment from 'moment';
 
 module.exports = (knex, user_id, game_data) => {
 
