@@ -64,9 +64,19 @@ class Manage extends Component {
   // }
 
   let htmlTeams = [];
+  let defaultImage = <Image src={require('../images/default_image.png')}  size='tiny' centered/> 
+  let teamLogo = '';
+  let logoURL = '';
     if (teamCards.length !=  null) {
       for (let i = 0; i < teamCards.length; i++) {
         let teamPath = '/schedule/' + teamCards[i].uuid;
+
+        if (teamCards[i].logo === null || teamCards[i].logo === '') {
+          teamLogo = defaultImage;
+        } else {
+          logoURL = teamCards[i].logo
+          teamLogo = <Image src={logoURL} size='small' centered/>
+        }
         
         htmlTeams.push(
             <Table.Row>
@@ -80,6 +90,9 @@ class Manage extends Component {
                   <Route path={teamPath} component={<Games name={teamCards[i].name}/>}/>
                 </div>
                 </Router>
+              </Table.Cell>
+              <Table.Cell>
+                {teamLogo}
               </Table.Cell>
             </Table.Row>
         )
@@ -96,6 +109,7 @@ class Manage extends Component {
             <Table.Row>
               <Table.HeaderCell>Team Name</Table.HeaderCell>
               <Table.HeaderCell>Options</Table.HeaderCell>
+              <Table.HeaderCell>Logo</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -104,9 +118,6 @@ class Manage extends Component {
         </Table>
         <div>
           <AddTeam className='add-team' updateTeam={this.updateTeam}/>
-        </div>
-        <div>
-          <Calendar games={[]} className='team-calendar'/>
         </div>
       </div>
     );
