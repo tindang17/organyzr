@@ -21,7 +21,7 @@ const {compareSync} = require("bcrypt");
 const gamesRoutes = require('./routes/games');
 const teamsRoutes = require('./routes/teams');
 const loginRoutes = require('./routes/test/login');
-// const twilioRoutes = require('./routes/twilio');
+// const twilioRoutes = require('./functions/twilio');
 
 const webpack = {
   core: require('webpack'),
@@ -61,7 +61,7 @@ const get_my_teams =  require("./functions/get_my_teams.js");
 const getTeamGames = require("./functions/get_team_games.js");
 const getRosterData = require("./functions/get_roster.js");
 const update_game = require("./functions/update_game.js");
-const send_notification = require("./functions/send_notification.js");
+const sendNotification = require("./functions/send_notification.js");
 
 let nodemailer = require('nodemailer');
 
@@ -187,7 +187,6 @@ app.post('/logout', function(req, res){
   // res.redirect('/#/login');
 });
 
-// app.use('/manage', twilioRoutes());
 
 app.post('/updategame/:game_id', function(req, res) {
   console.log(req.body)
@@ -288,9 +287,10 @@ app.post('/deletegame/:game_id',
     }
 );
 
+
 app.post('/notification/:game_id',
     function(req, res) {
-      send_notification(knex, req.params.game_id, req.session.passport.user, res)
+      sendNotification(knex, req.params.game_id, req.session.passport.user, res)
     }
 );
 
