@@ -76,7 +76,7 @@ class Landing extends Component {
 
     return(
     <div style={styles.div}>
-        <Image src={require('../images/banner2.png')}  size='massive' centered/>
+        <Image src={require('../images/banner4.png')}  size='massive' centered/>
     <br/>
     <Grid divided centered style={styles.text}>
             <Grid.Row>
