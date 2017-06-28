@@ -8,12 +8,16 @@ import axios from 'axios';
 class Settings extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {first_name: '',
+    this.state = {
+                  first_name: '',
                   last_name: '',
                   phone: '',
                   text_notification: false,
                   email_notification: false,
-                  message: ''};
+
+                  message: 'no message',
+                  errorMessage: ''};
+                  
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,6 +46,7 @@ class Settings extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    let {errorMessage} = this.state;
     var self = this;
     // On submit of the form, send a POST request with the data to the server.
     fetch('/settings', {
@@ -71,6 +76,9 @@ class Settings extends React.Component {
         console.log('body', body);
         console.log(body.message);
         self.setState({message: body.message});
+        if(self.state.message === 'users_phone_unique') {
+          self.setState({errorMessage: 'Phone already exists'})
+        }
         console.log('self msg', self.state.message)
       });
   }
@@ -117,20 +125,14 @@ class Settings extends React.Component {
             onChange={this.handleInputChange} />
         </label>
         </Form.Field>
-            <Form.Field>
-              <label>Phone Number</label>
-              <input name="phone" placeholder='10 digits' value={this.state.phone} onChange={this.handleInputChange}/>
-            </Form.Field >
-                        <Form.Field>
-                    <label>
-          Email Notifications:
-          <input
-            name="email_notification"
-            type="checkbox"
-            checked={this.state.email_notification}
-            onChange={this.handleInputChange} />
-        </label>
-        </Form.Field>
+        <Form.Field width='5'>
+          <label>Phone Number</label>
+          <input name="phone" placeholder='10 digits' value={this.state.phone} onChange={this.handleInputChange}/>
+            <div className='error'>
+              <font color="red">{this.state.errorMessage}</font>
+            </div>
+        </Form.Field >
+        
             <Button type='submit'>Save</Button>
           </Form>
             <Message content={this.state.message} header='Change Something!'>
