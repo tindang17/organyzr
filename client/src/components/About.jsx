@@ -40,7 +40,9 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
                     Grant Tran
                   </Message.Header>
                   <p style={styles.messagesColor}>
-                    This is a bio about myself.
+                    A life science researcher gone developer, I'm a huge sports fan and love organizing teams.
+                    The idea of Organyzer originated from wanting a systematic application that helps me organize my hockey team,
+                    yet at the same time require my (lazy) teammates to do very little. 
                   </p>
                 </Message>
               </Grid.Column>

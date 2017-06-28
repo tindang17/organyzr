@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import { Button, Checkbox, Form, Message } from 'semantic-ui-react'
+import { Button, Checkbox, Form, Message, Grid, Header } from 'semantic-ui-react'
 
 import axios from 'axios';
 
@@ -14,8 +14,10 @@ class Settings extends React.Component {
                   phone: '',
                   text_notification: false,
                   email_notification: false,
+
                   message: 'no message',
                   errorMessage: ''};
+                  
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -83,32 +85,37 @@ class Settings extends React.Component {
   render() {
 
     const styles = {
-        text: {
-          fontSize: 16
-        }, 
-        messagesColor: {
-          color: 'black'
-        },
-        div: {
+      div: {
         paddingLeft: 200, 
         paddingRight: 200
+      }, 
+      font: {
+        fontSize: 22,
+        color: 'black'
+      }, 
+      textfont: {
+        fontSize: 18,
+        color: 'black'
       }
-      }
+    }
 
     return (
         <div style={styles.div}>
           <h2> Settings </h2>
           <h4> Change your contact information here </h4>
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={7}>
           <Form onSubmit={this.handleSubmit}>
-            <Form.Field width='5'>
+            <Form.Field >
               <label>First Name</label>
               <input name="first_name" placeholder='First Name' value={this.state.first_name} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Form.Field width='5'>
+            <Form.Field >
               <label>Last Name</label>
               <input name= "last_name" placeholder='Last Name' value={this.state.last_name} onChange={this.handleInputChange}/>
             </Form.Field>
-            <Form.Field width='5'>
+            <Form.Field >
                     <label>
           Text Notifications:
           <input
@@ -127,6 +134,12 @@ class Settings extends React.Component {
         </Form.Field >
         <Form.Field width='5'>
         <label>
+            <Form.Field>
+              <label>Phone Number</label>
+              <input name="phone" placeholder='10 digits' value={this.state.phone} onChange={this.handleInputChange}/>
+            </Form.Field >
+                        <Form.Field>
+                    <label>
           Email Notifications:
           <input
             name="email_notification"
@@ -137,8 +150,21 @@ class Settings extends React.Component {
         </Form.Field>
             <Button type='submit'>Save</Button>
           </Form>
-            <Message content={this.state.message} header='error msg'>
+            <Message content={this.state.message} header='Change Something!'>
             </Message>
+          </Grid.Column>
+          <Grid.Column width={8}>
+            <Message color='blue'>
+                  <Message.Header style={styles.font}>
+                    Change your information and contact information here. 
+                  </Message.Header>
+                  <Message.List style={styles.textfont}>
+                    Please make sure your phone number and email are correct!
+            </Message.List>
+            </Message>
+          </Grid.Column>
+         </Grid.Row>
+        </Grid>  
         </div>
     );
   }

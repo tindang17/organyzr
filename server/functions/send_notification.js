@@ -58,6 +58,7 @@ module.exports = (knex, game_id, user_id, res) => {
 
         //emailstuff: (niceData.emails(array) + format niceData.gameinfo(object with game info) -> send)
 
+
         //send when all done
         res.send('phone ' + niceData.phoneNumbers.length.toString())
       })

@@ -12,13 +12,23 @@ class ManageGameCard extends Component {
     this.state = {
       viewRoster: [],
       active: false,
-      location: this.props.game.location,
-      description: this.props.game.description,
-      notification: 'Send Reminder to Attending Players'
+      notification: 'Send Reminder to Attending Players',
+      delete: 'Delete'
     }
     this.getRoster = this.getRoster.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
+
+
+  componentDidMount() {
+    let teams;
+    let self = this;
+    console.log('self.props.', self.props);
+    self.setState({location: self.props.game.location,
+      description: self.props.game.description})
+  }
+
+
 
   handleInputChange(event) {
     const target = event.target;
@@ -68,7 +78,17 @@ class ManageGameCard extends Component {
   }
 
   deleteGame (gameid) {
-    this.props.delete(gameid)
+
+    let self = this
+    if (this.state.delete === 'Delete') {
+      this.setState({delete: 'Are you sure?'})
+    } else if (this.state.delete === 'Are you sure?') {
+
+      this.props.delete(gameid)
+    }
+
+
+
   }
 
   handleClick () {
@@ -81,7 +101,7 @@ let gameID = self.props.game.id
 let active = this.state.active
 let editorsave = active ?  'Save' : 'Edit'
 let description = function(){if (active) {
-  return (<input name="description" type="text" 
+  return (<input name="description" type="text"
     value={self.state.description} onChange={self.handleInputChange}/>);
   } else {
     return (
@@ -92,7 +112,7 @@ let description = function(){if (active) {
 }}
 
 
-let location= function(){ 
+let location= function(){
   if (active) {
     return (<input name="location" type="text" value={self.state.location} onChange={self.handleInputChange}/>);
   } else {
@@ -126,7 +146,7 @@ const styles = {
                   </Card.Header>
                   <Card.Meta style={styles.time}>
                     <span className="time">
-                      {game.time} - 
+                      {game.time} -
                     </span>
                     <span className="rink">
                       {location()}
@@ -142,7 +162,7 @@ const styles = {
                     <Button onClick= {() => this.editGame(gameID)} basic floated='right' color='green' fluid active>{editorsave}</Button>
                     <Button onClick= {() => this.sendNotification(gameID)} floated='right' fluid basic color='purple'>{self.state.notification}</Button>
                     <br/>
-                    <Button onClick= {() => this.deleteGame(gameID)} floated='right' size='small' fluid basic color='red'>Delete</Button>
+                    <Button onClick= {() => this.deleteGame(gameID)} floated='right' size='small' fluid basic color='red'>{self.state.delete}</Button>
                     </span>
                     <br/>
                   </div>
@@ -153,7 +173,7 @@ const styles = {
                       </Dropdown.Menu>
                     </Dropdown>
                     <br/>
-                    
+
                   <div>
                    </div>
                 </Card.Content>
