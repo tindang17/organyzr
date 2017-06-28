@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Message, Dropdown, Card, Icon, Label, Menu, Table, Button, Segment, Image, Grid, Form } from 'semantic-ui-react'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory, withRouter } from 'react-router';
 import Moment from 'react-moment';
+const uuidv4 = require('uuid/v4');
 
 import axios from 'axios';
 import Calendar from './teams/Calendar.jsx';
@@ -28,7 +29,7 @@ class ManageTeam extends Component {
     axios.get(`/games/data/`+self.state.team)
     .then(res => {
       self.setState({games: self.state.games.concat(res.data)})
-      
+
     })
   }
 
@@ -43,7 +44,6 @@ class ManageTeam extends Component {
     console.log(res.body)
     self.setState({notification: res.body})
     })
-
   }
   deleteGame (gameid) {
     let self = this
@@ -51,18 +51,15 @@ class ManageTeam extends Component {
     .then(res => {
     console.log('res.body', res.body)
     self.setState({games: self.state.games.filter(function(game){
-
     return !(game.id === gameid)})})
     })
   }
-
   updateGame() {
     var self = this;
     axios.get(`/games/data/` + self.state.team)
     .then(res => {
       self.setState({games: res.data})
     })
-
   }
 
   render () {
@@ -76,7 +73,8 @@ class ManageTeam extends Component {
     if (gameCards.length !=  null) {
       for (let i = 0; i < gameCards.length; i++) {
         htmlGames.push(
-        <ManageGameCard game={gameCards[i]} 
+
+        <ManageGameCard key={uuidv4()} game={gameCards[i]}
           edit={self.editGame}
           delete={self.deleteGame}/>
         )

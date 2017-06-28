@@ -10,7 +10,7 @@ module.exports = (knex, profile, done) => {
     console.log(user_data)
     knex('users').insert(user_data).returning('id')
     .then(function(id){console.log('inserted', user_data)
-
+        return done(null, id)
                     })
     .catch(function(err) {console.log(err)
 

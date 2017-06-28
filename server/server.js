@@ -21,7 +21,7 @@ const {compareSync} = require("bcrypt");
 const gamesRoutes = require('./routes/games');
 const teamsRoutes = require('./routes/teams');
 const loginRoutes = require('./routes/test/login');
-// const twilioRoutes = require('./routes/twilio');
+// const twilioRoutes = require('./functions/twilio');
 
 const webpack = {
   core: require('webpack'),
@@ -61,7 +61,33 @@ const get_my_teams =  require("./functions/get_my_teams.js");
 const getTeamGames = require("./functions/get_team_games.js");
 const getRosterData = require("./functions/get_roster.js");
 const update_game = require("./functions/update_game.js");
-const send_notification = require("./functions/send_notification.js");
+const sendNotification = require("./functions/send_notification.js");
+
+let nodemailer = require('nodemailer');
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USERNAME,
+    pass: process.env.GMAIL_PASSWORD
+  }
+});
+
+var mailOptions = {
+  from: 'organyzr@gmail.com',
+  to: 'boomerandzapper@yahoo.com',
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+
 
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
@@ -121,8 +147,8 @@ passport.use(new FacebookStrategy({
     .where({email: profile.emails[0].value})
     .from("users").first().then(user => {
       if (!user) {
-        console.log('user not found')
-        return done(null, false, { message: 'Incorrect email.' });
+        console.log('user not found, creating new user')
+        add_user_facebook(knex, profile, done)
       }
       return done(null, user);
       }).catch(function(err) {
@@ -161,7 +187,6 @@ app.post('/logout', function(req, res){
   // res.redirect('/#/login');
 });
 
-// app.use('/manage', twilioRoutes());
 
 app.post('/updategame/:game_id', function(req, res) {
   console.log(req.body)
@@ -262,9 +287,10 @@ app.post('/deletegame/:game_id',
     }
 );
 
+
 app.post('/notification/:game_id',
     function(req, res) {
-      send_notification(knex, req.params.game_id, req.session.passport.user, res)
+      sendNotification(knex, req.params.game_id, req.session.passport.user, res)
     }
 );
 
