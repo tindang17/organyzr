@@ -132,22 +132,7 @@ class Settings extends React.Component {
               <font color="red">{this.state.errorMessage}</font>
             </div>
         </Form.Field >
-        <Form.Field width='5'>
-        <label>
-            <Form.Field>
-              <label>Phone Number</label>
-              <input name="phone" placeholder='10 digits' value={this.state.phone} onChange={this.handleInputChange}/>
-            </Form.Field >
-                        <Form.Field>
-                    <label>
-          Email Notifications:
-          <input
-            name="email_notification"
-            type="checkbox"
-            checked={this.state.email_notification}
-            onChange={this.handleInputChange} />
-        </label>
-        </Form.Field>
+        
             <Button type='submit'>Save</Button>
           </Form>
             <Message content={this.state.message} header='Change Something!'>
