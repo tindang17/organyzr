@@ -38,7 +38,7 @@ class Signup extends React.Component {
       formInputs: newFormInputs
     });
     let allGood = true;
-    // looping through the all the field to check 
+    // looping through the all the field to check
     // for the form input.
     let {phone} = this.state.formInputs;
     for (let input in this.state.formInputs) {
@@ -53,7 +53,7 @@ class Signup extends React.Component {
     let errorMessages = {password: [], phone: []};
     if(this.state.formInputs.password !== this.state.formInputs.password_confirmation) {
       errorMessages['password'].push('Passwords do not match');
-    } 
+    }
     this.setState({
       errorMessages: errorMessages
     });
@@ -85,9 +85,6 @@ class Signup extends React.Component {
         })
       })
       .then(function(response) {
-        if (response.message === 'Success!') {
-        console.log('sucess');
-      }
         return response.json()
       })
       .then(function(body) {
@@ -95,7 +92,40 @@ class Signup extends React.Component {
         // self.setState({message: body.message});
         self.setState({message: body.message})
         if(self.state.message === 'Success!') {
-          self.setState({redirect: true})
+
+
+
+
+
+    fetch('/test/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          username: self.state.formInputs.email,
+          password: self.state.formInputs.password
+        })
+      })
+      .then(function(response) {
+        if (response.statusText === 'Unauthorized') {
+          console.log('unauth');
+        } else {
+          return response.text();
+        }})
+      .then(function(body) {
+        // console.log("body message", JSON.parse(body));
+        if (body) {
+          console.log('body');
+          self.setState({redirect: true});
+        } else {
+          self.setState({errorMessage: 'Incorrect Credentials'})
+        }
+      })
+
+
         } else if(self.state.message === 'users_email_unique') {
           errorMessages['email'].push('Email already exists');
         } else if(self.state.message === 'users_phone_unique') {
@@ -108,7 +138,8 @@ class Signup extends React.Component {
     const {redirect} = this.state;
 
     if (redirect) {
-      return <Redirect to='/'/>;
+      //return <Redirect to='/'/>;
+      window.location.reload()
     }
 
     const items = [
@@ -128,7 +159,7 @@ class Signup extends React.Component {
     }
     return (
       <div>
-        <Header as='h2' textAlign='centered'> Signup With Us! </Header> 
+        <Header as='h2' textAlign='centered'> Signup With Us! </Header>
         <Grid divided padded >
           <Grid.Row columns={2}>
             <Grid.Column width={5}>
@@ -171,7 +202,7 @@ class Signup extends React.Component {
                   <input type="number" name="phone" placeholder='10 digits' value={this.state.formInputs.phone} onChange={this.handleInputChange}/>
                   <div className='error'>
                     <font color="red">{this.state.errorMessages.phone}</font>
-                  </div>          
+                  </div>
                 </Form.Field >
                 <Button type='submit' disabled={!this.state.isEnabled}>Submit</Button>
               </Form>

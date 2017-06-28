@@ -121,8 +121,8 @@ passport.use(new FacebookStrategy({
     .where({email: profile.emails[0].value})
     .from("users").first().then(user => {
       if (!user) {
-        console.log('user not found')
-        return done(null, false, { message: 'Incorrect email.' });
+        console.log('user not found, creating new user')
+        add_user_facebook(knex, profile, done)
       }
       return done(null, user);
       }).catch(function(err) {
