@@ -9,7 +9,6 @@ class Signup extends React.Component {
     this.state = {formInputs: {
                               first_name: '',
                               last_name: '',
-                              team_name: '',
                               email: '',
                               password: '',
                               password_confirmation: '',
@@ -77,7 +76,6 @@ class Signup extends React.Component {
         body: JSON.stringify({
           first_name: this.state.formInputs.first_name,
           last_name: this.state.formInputs.last_name,
-          team_name: this.state.formInputs.team_name,
           email: this.state.formInputs.email,
           password: this.state.formInputs.password,
           confirmation: this.state.formInputs.password_confirmation,
@@ -171,10 +169,6 @@ class Signup extends React.Component {
                 <Form.Field width='12'>
                   <label>Last Name</label>
                   <input name= "last_name" placeholder='Last Name' value={this.state.formInputs.last_name} onChange={this.handleInputChange}/>
-                </Form.Field>
-                <Form.Field width='12'>
-                  <label>Team Name</label>
-                  <input name="team_name" placeholder='Team Name' value={this.state.formInputs.team_name} onChange={this.handleInputChange}/>
                 </Form.Field>
                 <Form.Field width='12'>
                   <label>Email</label>

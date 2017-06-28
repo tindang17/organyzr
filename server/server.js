@@ -63,6 +63,32 @@ const getRosterData = require("./functions/get_roster.js");
 const update_game = require("./functions/update_game.js");
 const send_notification = require("./functions/send_notification.js");
 
+let nodemailer = require('nodemailer');
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_USERNAME,
+    pass: process.env.GMAIL_PASSWORD
+  }
+});
+
+var mailOptions = {
+  from: 'organyzr@gmail.com',
+  to: 'boomerandzapper@yahoo.com',
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+
+
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
  , FacebookStrategy = require('passport-facebook').Strategy;
