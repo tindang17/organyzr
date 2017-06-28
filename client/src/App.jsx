@@ -62,10 +62,6 @@ class App extends Component {
         sidebar: () => <Faq/>,
         main: () => <Faq/>
       },
-      { path: '/signup',
-        sidebar: () => <Signup/>,
-        main: () => <Signup/>
-      },
       { path: '/myteams',
         sidebar: () => <MyTeams user={this.state.userid}/>,
         main: MyTeams
@@ -187,13 +183,17 @@ class App extends Component {
       (checkLogin === 'not logged in') ?
       (<Login/>) : (<Redirect to='/'/>)}/>
 
+      <Route path='/signup' render = { () =>
+      (checkLogin === 'not logged in') ?
+      (<Signup/>) : (<Redirect to='/'/>)}/>
+
       <Route path='/logout' render = { () =>
       (checkLogin === 'not logged in') ?
       (<Redirect to='/'/>) : (<Logout/>)}/>
 
-    </div>  
+    </div>
   </div>
-  
+
   </div>
 </Router>
 
