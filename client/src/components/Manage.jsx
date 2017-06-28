@@ -67,10 +67,10 @@ class Manage extends Component {
       let teamPath = '/manageteam/' + teamCards[i].uuid;
       htmlTeams.push(
           <Table.Row>
-            <Table.Cell negative>
+            <Table.Cell>
             <div >{teamCards[i].name}</div>
           </Table.Cell>
-            <Table.Cell negative>
+            <Table.Cell>
               <Router>
                 <div>
               <Link to={teamPath}><Button>Manage</Button></Link>
@@ -87,7 +87,7 @@ class Manage extends Component {
     return (
       <div style={styles.div}>
         <h3> Hello Manager. These are the teams you're managing. </h3>
-        <Table celled color='red' style={{fontSize: '20px'}}>
+        <Table celled color='blue' style={{fontSize: '20px'}}>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Team Name</Table.HeaderCell>

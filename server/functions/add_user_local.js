@@ -19,7 +19,6 @@ module.exports = (knex, data, res) => {
                   add_team(knex, parseInt(id), team)
                   res
                   .json({ success: true, message: 'Success!' })
-                  .redirect('/')
                   })
   .catch(function(err) {console.log(err)
                     res

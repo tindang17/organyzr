@@ -44,6 +44,8 @@ class ManageGameCard extends Component {
       self.setState({viewRoster: gameRoster})
 
     })
+
+    //  testing for twilio
   }
 
   editGame (gameid) {
