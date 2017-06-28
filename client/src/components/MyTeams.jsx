@@ -18,9 +18,10 @@ class Manage extends Component {
     this.state = {
       teams: [],
       edit: null,
-      user: this.props.user
+      user: ''
     }
     this.updateTeam = this.updateTeam.bind(this);
+
       }
 
 
@@ -53,11 +54,20 @@ class Manage extends Component {
   }
   let self = this
   let teamCards = this.state.teams;
+  // console.log(self.state.user === '', 'test');
+  // if (self.state.user === '') {
+  //   axios.get(`/landing/check`)
+  //   .then(res => {
+  //     console.log('in render of myteams', res);
+  //     self.setState({userid: res})
+  //   })
+  // }
 
   let htmlTeams = [];
     if (teamCards.length !=  null) {
       for (let i = 0; i < teamCards.length; i++) {
         let teamPath = '/schedule/' + teamCards[i].uuid;
+        
         htmlTeams.push(
             <Table.Row>
               <Table.Cell positive>
@@ -78,7 +88,7 @@ class Manage extends Component {
 
     return (
       <div style={styles.div}>
-        <h2> Hello {this.props.user}</h2>
+        <h2> Hello </h2>
         <h3> These are the teams you are playing for. </h3>
 
         <Table celled color='green' style={{fontSize: '20px'}}>

@@ -29,6 +29,7 @@ class Manage extends Component {
     var self = this;
     axios.get(`/teams/data`)
     .then(res => {
+      console.log('managedata', res.data);
       self.setState({teams: self.state.teams.concat(res.data)})
     })
     // testing for twilio
