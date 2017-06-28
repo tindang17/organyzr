@@ -32,16 +32,14 @@ class Login extends React.Component {
       formInputs: newFormInputs
     });
     let allGood = true;
-    // looping through the all the field to check 
+    // looping through the all the field to check
     // for the form input.
     for (let input in this.state.formInputs) {
       var inputValue = this.state.formInputs[input];
-      console.log('where is the input',inputValue);
       allGood = allGood && (inputValue.length > 0);
     }
     this.setState({isEnabled:allGood});
-   
-    console.log('true or false', this.state.isEnabled)
+
   }
 
   handleSubmit(e) {
@@ -66,15 +64,14 @@ class Login extends React.Component {
       })
       .then(function(response) {
         if (response.statusText === 'Unauthorized') {
-          console.log('unauth'); 
+          console.log('unauth');
         } else {
           return response.text();
         }})
       .then(function(body) {
         // console.log("body message", JSON.parse(body));
-        if (body) {
-          console.log('body');
-          self.setState({redirect: true});
+        if (body && !(body==='unauth')) {
+          self.setState({redirect: true})
         } else {
           self.setState({errorMessage: 'Incorrect Credentials'})
         }
@@ -83,17 +80,17 @@ class Login extends React.Component {
   render() {
     const styles = {
       div: {
-        paddingLeft: 200, 
+        paddingLeft: 200,
         paddingRight: 200
       },
       font: {
         fontSize: 22,
         color: 'black'
-      }, 
+      },
       textfont: {
         fontSize: 18,
         color: 'black'
-      } 
+      }
     }
     const {redirect} = this.state;
 
@@ -112,7 +109,7 @@ class Login extends React.Component {
     return (
 
       <div style={styles.div}>
-        <Header as='h2' textAlign='centered' style={styles.font}> Login! </Header> 
+        <Header as='h2' textAlign='center' style={styles.font}> Login! </Header>
         <Grid divided padded >
           <Grid.Row columns={2}>
             <Grid.Column width={5}>
@@ -129,9 +126,7 @@ class Login extends React.Component {
               </Form>
               <span><font color="red">{this.state.errorMessage}</font></span>
                 <br/>
-                <Button color='blue'>
-                <a style={{fontSize: '20px', color: 'white'}} href="/auth/facebook">Login with Facebook</a>
-                </Button>
+                <a style={{fontSize: '20px', color: 'white'}} href="/auth/facebook"><Button color='blue'>Login with Facebook</Button></a>
             </Grid.Column>
             <Grid.Column width={10}>
                 <Message color= 'blue' >

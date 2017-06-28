@@ -23,6 +23,11 @@ module.exports = (knex, game_id, user_id, res) => {
     .then( ([emailsData, phonenumbersData, gameinfoData, eitherData]) => {
       let niceData = {emails: emailsData, phoneNumbers: phonenumbersData, gameinfo: gameinfoData, number: eitherData}
       console.log(niceData)
+
+      let result = "";
+      emailsData.forEach(function(email){result += email})
+      console.log(result)
+
       res.send(eitherData.length.toString())
     });
 
