@@ -100,7 +100,7 @@ class Settings extends React.Component {
     }
 
     return (
-        <div style={styles.div}>
+    <div style={styles.div}>
           <h2> Settings </h2>
           <h4> Change your contact information here </h4>
           <Grid>
@@ -133,12 +133,6 @@ class Settings extends React.Component {
             </div>
         </Form.Field >
         <Form.Field width='5'>
-        <label>
-            <Form.Field>
-              <label>Phone Number</label>
-              <input name="phone" placeholder='10 digits' value={this.state.phone} onChange={this.handleInputChange}/>
-            </Form.Field >
-                        <Form.Field>
                     <label>
           Email Notifications:
           <input
