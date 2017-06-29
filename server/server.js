@@ -67,6 +67,7 @@ const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
  , FacebookStrategy = require('passport-facebook').Strategy;
 
+const scheduler = require('./functions/scheduler');
 app.use(knexLogger(knex));
 
 app.use(cookieSession({
@@ -261,6 +262,8 @@ app.post('/deletegame/:game_id',
     }
 );
 
+
+scheduler.start(knex);
 
 app.post('/notification/:game_id',
     function(req, res) {

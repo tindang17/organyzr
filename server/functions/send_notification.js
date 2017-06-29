@@ -10,7 +10,9 @@ const twilioNum = process.env.TWILIO_NUM;
 // const playerNum = process.env.PLAYER_NUM;
 const client = twilio(accountSid, authToken);
 const express = require('express');
-const scheduler = require('./scheduler')
+
+
+
 module.exports = (knex, game_id, user_id, res) => {
     
     const emails = knex('games_users').join('users', 'games_users.user_id', '=', 'users.id')
@@ -44,7 +46,7 @@ module.exports = (knex, game_id, user_id, res) => {
             client.messages.create({
               to: `+1${playerNum}`,
               from: twilioNum,
-              body: `You have a game today at ${game.location} at ${game.time}`
+              body: `You have a game today at ${game.location} at ${game.time} on ${game.date}`
             }, (err, message) => {
               if(err) {
                 console.log(err)
@@ -54,11 +56,11 @@ module.exports = (knex, game_id, user_id, res) => {
               }
             })
           }
+          res.send('phone ' + niceData.phoneNumbers.length.toString())
         }  
 
         //emailstuff: (niceData.emails(array) + format niceData.gameinfo(object with game info) -> send)
 
         //send when all done
-        res.send('phone ' + niceData.phoneNumbers.length.toString())
       })
   }
