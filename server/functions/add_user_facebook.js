@@ -8,9 +8,10 @@ module.exports = (knex, profile, done) => {
     user_data['facebook_id'] = profile.id
 
     console.log(user_data)
-    knex('users').insert(user_data).returning('id')
-    .then(function(id){console.log('inserted', user_data)
-        return done(null, id)
+    knex('users').insert(user_data).returning('*')
+    .then(function(user){console.log('inserted', user_data)
+        console.log(user[0])
+        return done(null, user[0])
                     })
     .catch(function(err) {console.log(err)
 

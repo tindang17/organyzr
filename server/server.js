@@ -61,7 +61,10 @@ const get_my_teams =  require("./functions/get_my_teams.js");
 const getTeamGames = require("./functions/get_team_games.js");
 const getRosterData = require("./functions/get_roster.js");
 const update_game = require("./functions/update_game.js");
-const sendNotification = require("./functions/send_notification.js");
+const send_notification = require("./functions/send_notification.js");
+
+const opt_in = require("./functions/opt_in.js");
+const opt_out = require("./functions/opt_out.js");
 
 let nodemailer = require('nodemailer');
 
@@ -150,8 +153,9 @@ passport.use(new FacebookStrategy({
       if (!user) {
         console.log('user not found, creating new user')
         add_user_facebook(knex, profile, done)
-      }
+      } else {
       return done(null, user);
+    }
       }).catch(function(err) {
       return done(err);
     });
@@ -160,8 +164,8 @@ passport.use(new FacebookStrategy({
 
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
   console.log("serialize", user.id)
+  done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
@@ -266,15 +270,18 @@ app.post('/login',
     else { return res.json({ success: true, message: 'success'}); }
   });
 
+app.post('/optin/:games_users_uuid',
+  function(req, res) {
+    console.log('optin', req.params.games_users_uuid)
+    opt_in(knex, req.params.games_users_uuid, res)
+  });
 
+app.post('/optout/:games_users_uuid',
+  function(req, res) {
+     console.log('optout', req.params.games_users_uuid)
+     opt_out(knex, req.params.games_users_uuid, res)
+  });
 
-// app.post('/test/login',
-//   passport.authenticate('local'),
-//     function(req, res) {
-//       console.log('this is res', res)
-//       res.json({message: 'success'})
-//     }
-// );
 
 app.post('/schedule/:game_id',
     function(req, res) {
@@ -293,7 +300,7 @@ scheduler.start(knex);
 
 app.post('/notification/:game_id',
     function(req, res) {
-      sendNotification(knex, req.params.game_id, req.session.passport.user, res)
+      send_notification(knex, req.params.game_id, req.session.passport.user, transporter, res)
     }
 );
 
