@@ -18,9 +18,10 @@ class Manage extends Component {
     this.state = {
       teams: [],
       edit: null,
-      user: this.props.user
+      user: ''
     }
     this.updateTeam = this.updateTeam.bind(this);
+
       }
 
 
@@ -53,11 +54,30 @@ class Manage extends Component {
   }
   let self = this
   let teamCards = this.state.teams;
+  // console.log(self.state.user === '', 'test');
+  // if (self.state.user === '') {
+  //   axios.get(`/landing/check`)
+  //   .then(res => {
+  //     console.log('in render of myteams', res);
+  //     self.setState({userid: res})
+  //   })
+  // }
 
   let htmlTeams = [];
+  let defaultImage = <Image src={require('../images/default_image.png')}  size='tiny' centered/> 
+  let teamLogo = '';
+  let logoURL = '';
     if (teamCards.length !=  null) {
       for (let i = 0; i < teamCards.length; i++) {
         let teamPath = '/schedule/' + teamCards[i].uuid;
+
+        if (teamCards[i].logo === null || teamCards[i].logo === '') {
+          teamLogo = defaultImage;
+        } else {
+          logoURL = teamCards[i].logo
+          teamLogo = <Image src={logoURL} size='small' centered/>
+        }
+        
         htmlTeams.push(
             <Table.Row>
               <Table.Cell positive>
@@ -71,6 +91,9 @@ class Manage extends Component {
                 </div>
                 </Router>
               </Table.Cell>
+              <Table.Cell>
+                {teamLogo}
+              </Table.Cell>
             </Table.Row>
         )
       }
@@ -78,7 +101,7 @@ class Manage extends Component {
 
     return (
       <div style={styles.div}>
-        <h2> Hello {this.props.user}</h2>
+        <h2> Hello </h2>
         <h3> These are the teams you are playing for. </h3>
 
         <Table celled color='green' style={{fontSize: '20px'}}>
@@ -86,6 +109,7 @@ class Manage extends Component {
             <Table.Row>
               <Table.HeaderCell>Team Name</Table.HeaderCell>
               <Table.HeaderCell>Options</Table.HeaderCell>
+              <Table.HeaderCell>Logo</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -94,9 +118,6 @@ class Manage extends Component {
         </Table>
         <div>
           <AddTeam className='add-team' updateTeam={this.updateTeam}/>
-        </div>
-        <div>
-          <Calendar games={[]} className='team-calendar'/>
         </div>
       </div>
     );
