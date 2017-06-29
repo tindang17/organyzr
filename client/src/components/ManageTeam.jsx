@@ -90,7 +90,7 @@ class ManageTeam extends Component {
         paddingRight: 200
       }
     }
-
+    console.log('props', self.props.user);
     return (
       <div style={styles.div}>
         <h3> Hello Manager </h3>

@@ -153,6 +153,9 @@ class Signup extends React.Component {
       message: {
         fontSize: 16,
         color: 'black'
+      },
+      circle: {
+        borderRadius: '50%'
       }
     }
     return (

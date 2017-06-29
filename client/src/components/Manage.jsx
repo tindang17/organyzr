@@ -64,19 +64,20 @@ class Manage extends Component {
   let htmlTeams = [];
 
   if (teamCards.length !=  null) {
+    console.log(teamCards,'teamcards');
     for (let i = 0; i < teamCards.length; i++) {
       let teamPath = '/manageteam/' + teamCards[i].uuid;
       htmlTeams.push(
-          <Table.Row>
+          <Table.Row key={i}>
             <Table.Cell>
-            <div >{teamCards[i].name}</div>
+            <div key={i}>{teamCards[i].name}</div>
           </Table.Cell>
             <Table.Cell>
               <Router>
                 <div>
               <Link to={teamPath}><Button color='blue'>Manage</Button></Link>
               <LinkButton uuid={teamCards[i].uuid}></LinkButton>
-              <Route path={teamPath} component={<ManageTeam user={teamCards[i].name} uuid={teamCards[i].uuid}/>} />
+              <Route path={teamPath} component={<ManageTeam key={i} user={teamCards[i].name} uuid={teamCards[i].uuid}/>} />
                 </div>
               </Router>
             </Table.Cell>
@@ -88,10 +89,6 @@ class Manage extends Component {
     return (
       <div style={styles.div}>
         <h3> Hello Manager. These are the teams you're managing. </h3>
-        <Message color='blue'>
-          <Message.List color='black' style={{fontSize: 18}}>
-            These are games currently scheduled for your players. </Message.List>
-        </Message>
         <Table celled color='blue' style={{fontSize: '20px'}}>
           <Table.Header>
             <Table.Row>

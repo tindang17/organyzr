@@ -47,10 +47,10 @@ class Landing extends Component {
     }
     let landing = [];
     if (this.state.userid === false) {
-      landing.push(<Loader active inline='centered' />) 
+      landing.push(<Loader key='1' active inline='centered' />) 
     } else if (this.state.userid === 'not logged in') {
       landing.push(
-        <Router>
+        <Router key='2'>
           <div>
             <Segment padded size='tiny'>
               <Link to='/login'>
@@ -68,7 +68,7 @@ class Landing extends Component {
           </div>
         </Router>)
     } else {
-      landing.push(<Message color='green'>
+      landing.push(<Message key='3' color='green'>
         <Message.Header style={styles.font}> Hello {this.state.userid[0].first_name}</Message.Header>
         <Message.List style={styles.textfont}> You can now manage your teams or check-in with teams you play on. </Message.List>
         </Message>)
@@ -76,13 +76,12 @@ class Landing extends Component {
 
     return(
     <div style={styles.div}>
-        <Image src={require('../images/banner4.png')}  size='massive' centered/>
+        <Image src={require('../images/banner5.png')}  size='massive' centered/>
     <br/>
     <Grid divided centered style={styles.text}>
             <Grid.Row>
               <Grid.Column width={7}>
                 {landing}
-                {/*<Image src={require('../images/gtran.jpg')}/>*/}
               </Grid.Column>
               <Grid.Column width={8}>
                 <Message color='blue'>

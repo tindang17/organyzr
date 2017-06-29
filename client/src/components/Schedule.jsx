@@ -23,6 +23,7 @@ class Schedule extends Component {
     console.log('before axios request');
     axios.get(`/mygames/data/`+self.state.team)
     .then(res => {
+      console.log('res.data', res.data);
       self.setState({games: self.state.games.concat(res.data)})
       console.log(self.state.games);
     })
@@ -45,7 +46,7 @@ let team = self.state.team
 if (gameCards.length !=  null) {
   for (let i = 0; i < gameCards.length; i++) {
     htmlGames.push(
-    <ScheduleGameCard game={gameCards[i]} />)
+    <ScheduleGameCard key={i} game={gameCards[i]} />)
   }
 } 
 
@@ -62,14 +63,11 @@ if (gameCards.length === 0) {
 
     return (
       <div style={styles.div}>
-        <h3> Hello Player </h3>
+        <h3> Hello </h3>
         <div>
         
         {noGamesMessage}
-        
         </div>
-
-
       <Grid columns={3} style={styles.grid}>
       <Grid.Row>
       {htmlGames}

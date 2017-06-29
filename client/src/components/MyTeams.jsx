@@ -6,6 +6,7 @@ import Calendar from './teams/Calendar.jsx';
 import AddTeam from './AddTeam.jsx';
 import LinkButton from './LinkButton.jsx';
 import Games from './Games.jsx';
+import Schedule from './Schedule.jsx';
 import {
   HashRouter as Router,
   Route,
@@ -79,7 +80,7 @@ class Manage extends Component {
         }
         
         htmlTeams.push(
-            <Table.Row>
+            <Table.Row key={i}>
               <Table.Cell positive>
                 <div >{teamCards[i].name}</div>
               </Table.Cell>
@@ -87,7 +88,7 @@ class Manage extends Component {
                 <Router>
                 <div>
                   <Link to={teamPath}><Button >View Schedule</Button></Link>
-                  <Route path={teamPath} component={<Games name={teamCards[i].name}/>}/>
+                  <Route path={teamPath}/>
                 </div>
                 </Router>
               </Table.Cell>

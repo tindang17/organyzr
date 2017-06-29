@@ -18,7 +18,7 @@ class ManageGameCard extends Component {
     }
     this.getRoster = this.getRoster.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.toggleHover = this.toggleHover.bind(this)
+    this.toggleHover = this.toggleHover.bind(this);
   }
 
 

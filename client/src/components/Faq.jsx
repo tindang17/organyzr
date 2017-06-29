@@ -67,9 +67,7 @@ class Faq extends React.Component {
           </Message>
         </Grid.Column>
         <Grid.Column width={4}>
-          <div style={styles.circle}>
-             <Image  src={require('../images/tennis.jpg')}/>
-          </div>
+             <Image style={styles.circle} src={require('../images/tennis_square2.png')}/>
         </Grid.Column>
       </Grid>
       </div>

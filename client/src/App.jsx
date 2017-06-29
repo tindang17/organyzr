@@ -149,7 +149,7 @@ class App extends Component {
     } else if (this.state.userid === 'not logged in') {
       manageGames = [];
     } else {
-      manageGames.push(<div><br/>
+      manageGames.push(<div key='1'><br/>
           <li style={styles.liitem}><Link style={styles.linkItems} to={gamesLink}><Button color='blue' fluid >My Teams</Button></Link></li>
           <li style={styles.liitem}><Link style={styles.linkItems} to="/manage"><Button color='blue' fluid >Manage</Button></Link></li>
           <li style={styles.liitem}><Link style={styles.linkItems} to="/settings"><Button color='blue' fluid >Settings</Button></Link></li>
