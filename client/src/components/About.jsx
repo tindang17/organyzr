@@ -58,7 +58,7 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
                     Tin Dang
                   </Message.Header>
                   <p style={styles.messagesColor}>
-                    A SFU grad who has an interest in coding. Tin decided to pursue a career as a web developer because it is new thing to him. When he's not coding, Tin usually hits the gym.
+                    A SFU grad who has an interest in coding. Tin decided to pursue a career as a web developer because he wants to build web applications. When he's not coding, Tin usually hits the gym.
                   </p>
                 </Message>
               </Grid.Column>

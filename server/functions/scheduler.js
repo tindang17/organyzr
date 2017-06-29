@@ -1,17 +1,22 @@
 var CronJob = require('cron').CronJob;
 const moment = require('moment');
-const notificationsWorker = require('./notificationWorker')
+const sendNotification = require('./send_notification')
 const schedulerFactory = function() {
   return {
-    start: function() {
+    start: function(knex) {
       console.log('beginning of scheduler')
-      new CronJob('* * * * * *', function() {
+      new CronJob('00 27 19 * * *', function() {
         console.log('Running Send Notifications Worker for ' +
           moment().format());
-        notificationsWorker.run();
+          knex('games_users').select('game_id').returning('game_id')
+          .then((game_id) => {
+            for(let id of game_id) {
+              console.log('show the game id ', id.game_id)
+              sendNotification(knex, id.game_id)
+            }
+          })
       }, null, true, '');
     },
   };
 };
-console.log('schedule factory', schedulerFactory)
 module.exports = schedulerFactory();
