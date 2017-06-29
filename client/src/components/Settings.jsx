@@ -100,7 +100,7 @@ class Settings extends React.Component {
     }
 
     return (
-        <div style={styles.div}>
+    <div style={styles.div}>
           <h2> Settings </h2>
           <h4> Change your contact information here </h4>
           <Grid>
@@ -132,7 +132,16 @@ class Settings extends React.Component {
               <font color="red">{this.state.errorMessage}</font>
             </div>
         </Form.Field >
-        
+        <Form.Field width='5'>
+                    <label>
+          Email Notifications:
+          <input
+            name="email_notification"
+            type="checkbox"
+            checked={this.state.email_notification}
+            onChange={this.handleInputChange} />
+        </label>
+        </Form.Field>
             <Button type='submit'>Save</Button>
           </Form>
             <Message content={this.state.message} header='Change Something!'>
