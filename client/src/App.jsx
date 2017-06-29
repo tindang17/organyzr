@@ -26,7 +26,8 @@ import ManageTeam from './components/ManageTeam.jsx';
 import { Button, Menu, Loader, Segment } from 'semantic-ui-react'
 import Settings from './components/Settings.jsx';
 
-
+import OptIn from './components/OptIn.jsx';
+import OptOut from './components/OptOut.jsx';
 
 
 class App extends Component {
@@ -85,6 +86,14 @@ class App extends Component {
         path: '/settings',
         sidebar: () => <Settings/>,
         main: () => <Settings/>
+      },
+      {
+        path: '/optout',
+        main: OptOut
+      },
+      {
+        path: '/optin',
+        main: OptIn
       }
     ]
 
