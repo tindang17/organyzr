@@ -291,7 +291,7 @@ app.post('/deletegame/:game_id',
 
 app.post('/notification/:game_id',
     function(req, res) {
-      send_notification(knex, req.params.game_id, req.session.passport.user, res)
+      send_notification(knex, req.params.game_id, req.session.passport.user, transporter, res)
     }
 );
 

@@ -6,7 +6,7 @@ module.exports = (knex, user_id, team_uuid, res) => {
   .select("*").where('uuid', team_uuid).andWhere('teams_users.user_id', user_id)
   .asCallback((error, results) => {
     if (results.length === 0) {
-      
+
       knex.table('teams_users').first('')
         knex('teams').select('id').where('uuid', team_uuid)
         .then(function(id){
@@ -19,7 +19,7 @@ module.exports = (knex, user_id, team_uuid, res) => {
               games.forEach(function(game) {
                 let id = game.id
                 console.log('for each add team game', game)
-                knex('games_users').insert({user_id: user_id, game_id: id})
+                knex('games_users').insert({user_id: user_id, game_id: id, uuid: uuidv4()})
                 .then(function(){ console.log('successful add');
                 })})
             })
@@ -32,6 +32,6 @@ module.exports = (knex, user_id, team_uuid, res) => {
       console.log('cannot add');
     }
   })
-  
+
 
 }

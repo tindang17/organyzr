@@ -17,7 +17,7 @@ module.exports = (knex, user_id, game_data) => {
           teams_users.forEach(function(team_user) {
             let user_id_integer = team_user.user_id
             console.log('adding a game for user', user_id_integer)
-            knex('games_users').insert({user_id: user_id_integer, game_id: game[0].id})
+            knex('games_users').insert({user_id: user_id_integer, game_id: game[0].id, uuid: uuidv4()})
             .then(function(a){console.log('added finally', a)})
             .catch(function(err) {console.log(err)})
           })

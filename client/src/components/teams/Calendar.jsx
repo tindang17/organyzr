@@ -33,8 +33,8 @@ class Calendar extends React.Component {
   let events = this.props.games.map(function(game){
   let timeseconds = (moment.duration(game.time, "HH:mm:ss").asSeconds())
 
-  let momentstart = moment(game.date).add(timeseconds, "s").subtract(17, "h")
-  let momentend = moment(game.date).add(timeseconds, "s").add(2,"h").subtract(17, "h")
+  let momentstart = moment(game.date).add(timeseconds, "s")
+  let momentend = moment(game.date).add(timeseconds, "s").add(2,"h")
 
 
   let start = momentstart.toDate()
