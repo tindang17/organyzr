@@ -9,14 +9,18 @@ class Faq extends React.Component {
   render () {
 
     const items = [
-      'Team Managers',
-      'Players'
+      'Register for an account',
+      'Create a New Team in "Manage" - don\'t your logo!',
+      'Give your unique team code to your players',
+      'Add Games for your players - Date, Time, and Location'
     ]
 
     const items2 = [
-      'Automated Texts, Emails, and Facebook Messenger', 
-      'UI to display all game scheduled', 
-      'Automated reminders'
+      'Register for an account', 
+      'Contact your Manager for a unique team code', 
+      'Add your team unique\'s code under "My Team"',
+      'View your team\'s schedule and confirm your attendance',
+      'Don\'t forget to include up to date email and phone number for friendly reminders and notifications'
     ]
 
     const styles = {
@@ -33,7 +37,7 @@ class Faq extends React.Component {
     }
     return (
     <div>
-    <Header as='h2' textAlign='center'> FAQ </Header> 
+    <Header as='h2' textAlign='center'> FAQ - How to use Organyzer </Header> 
     <br/>
       <Grid divided centered style={styles.grid}>
         <Grid.Column width={4}>
@@ -41,14 +45,14 @@ class Faq extends React.Component {
         </Grid.Column>
         <Grid.Column width={9}>
           <Message style={styles.message} color='blue'>
-            <Message.Header style={styles.messagesColor}>Who is Organyzr for?</Message.Header>
+            <Message.Header style={styles.messagesColor}>I'm a Manager, how do I use Organyzr?</Message.Header>
             <Message.List style={styles.messagesColor} items={items} />
           </Message>
         </Grid.Column>
 
         <Grid.Column width={9}>
-          <Message style={styles.message} color='blue'>
-            <Message.Header style={styles.messagesColor}>What are the features of Organyzr?</Message.Header>
+          <Message style={styles.message} color='green'>
+            <Message.Header style={styles.messagesColor}>I'm a Player, how do I use Organyzer?</Message.Header>
             <Message.List style={styles.messagesColor} items={items2} />
           </Message>
         </Grid.Column>

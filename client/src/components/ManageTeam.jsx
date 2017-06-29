@@ -95,7 +95,7 @@ class ManageTeam extends Component {
     return (
       <div style={styles.div}>
         <h3> Hello Manager </h3>
-        <Message color='red'>
+        <Message color='blue'>
           <Message.List color='black' style={{fontSize: 18}}>
             These are games currently scheduled for your players. </Message.List>
           </Message>

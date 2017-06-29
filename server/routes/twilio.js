@@ -1,19 +1,21 @@
 // require('dotenv').config();
-
+// // const sendNotification = require('../functions/send_notification');
+// // console.log('send notification', sendNotification)
 // const twilio = require ('twilio');
 // const accountSid = process.env.TWILIO_ACCOUNT_SID;
 // const authToken  = process.env.TWILIO_AUTH_TOKEN;
 // const twilioNum = process.env.TWILIO_NUM;
-// const playerNum = process.env.PLAYER_NUM;
+// // const playerNum = process.env.PLAYER_NUM;
 // const client = twilio(accountSid, authToken);
 
 // const express = require('express');
-// module.exports = () => {
+// module.exports = (knex, passport) => {
 //   const router = express.Router();
-//   router.post("/message", (req, res) => {
+//   router.post("/:game_id", (req, res) => {
 //     console.log('start sending')
+//     sendNotification(knex, req.params.game_id, req.session.passport.user, res);
 //     client.messages.create({
-//       to: playerNum,
+//       to: `+1${phoneNumbers}`,
 //       from: twilioNum,
 //       body: 'You have a game today at 12:05 AM'
 //     }, (err, message) => {

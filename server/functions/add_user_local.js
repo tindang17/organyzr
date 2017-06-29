@@ -16,7 +16,6 @@ module.exports = (knex, data, res) => {
   .then(function(id){console.log('inserted', user_data)
                   res
                   .json({ success: true, message: 'Success!' })
-                  .redirect('/')
                   })
   .catch(function(err) {console.log(err)
                     res

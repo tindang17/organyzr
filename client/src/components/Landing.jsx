@@ -4,7 +4,7 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import { Segment, Button, Divider, Image } from 'semantic-ui-react'
+import { Segment, Button, Divider, Image, Advertisement } from 'semantic-ui-react'
 
 import Signup from './Signup.jsx';
 import Login from './Login.jsx';
@@ -72,10 +72,11 @@ class Landing extends Component {
         <Message.Header style={styles.font}> Hello {this.state.userid[0].first_name}</Message.Header>
         <Message.List style={styles.textfont}> You can now manage your teams or check-in with teams you play on. </Message.List>
         </Message>)
-    }
+    } 
+
     return(
     <div style={styles.div}>
-    <Image src={require('../images/banner.png')}  size='huge' centered/>
+        <Image src={require('../images/banner4.png')}  size='massive' centered/>
     <br/>
     <Grid divided centered style={styles.text}>
             <Grid.Row>

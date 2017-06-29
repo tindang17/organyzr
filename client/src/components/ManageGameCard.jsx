@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Message, Dropdown, Card, Icon, Label, Menu, Table, Button, Segment, Image, Grid, Form } from 'semantic-ui-react'
+import { Modal, Message, Dropdown, Card, Icon, Label, Menu, Table, Button, Segment, Image, Grid, Form } from 'semantic-ui-react'
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory, withRouter } from 'react-router';
 import Moment from 'react-moment';
 
@@ -54,6 +54,8 @@ class ManageGameCard extends Component {
       self.setState({viewRoster: gameRoster})
 
     })
+
+    //  testing for twilio
   }
 
   editGame (gameid) {
@@ -164,6 +166,17 @@ const styles = {
                     </span>
                     <br/>
                   </div>
+                    <Modal trigger={<Button>See Roster</Button>} onOpen= {() => this.getRoster(gameID)}
+                    small>
+                      <Modal.Header>Player's Attending</Modal.Header>
+                      <Modal.Content >
+                        <Modal.Description>
+                          <p>
+                        {this.state.viewRoster.map((item)=> <Dropdown.Item text={item} />)}</p>
+                          
+                        </Modal.Description>
+                      </Modal.Content>
+                    </Modal>
                   <Dropdown button basic text='See Roster' onClick= {() => this.getRoster(gameID)}>
                       <Dropdown.Menu>
                          <Dropdown.Header content='Players Attending' />
