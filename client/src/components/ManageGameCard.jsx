@@ -13,10 +13,12 @@ class ManageGameCard extends Component {
       viewRoster: [],
       active: false,
       notification: 'Send Reminder to Attending Players',
-      delete: 'Delete'
+      delete: 'Delete',
+      hover: false
     }
     this.getRoster = this.getRoster.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.toggleHover = this.toggleHover.bind(this)
   }
 
 
@@ -28,7 +30,10 @@ class ManageGameCard extends Component {
       description: self.props.game.description})
   }
 
-
+  toggleHover() {
+    console.log('here')
+    this.setState({hover: !this.state.hover})
+  }
 
   handleInputChange(event) {
     const target = event.target;
@@ -137,9 +142,22 @@ const styles = {
   }
 }
 
+const flexStyle = {
+  display: {display: 'flex'},
+  column: {display: 'flex',flexDirection: 'column'}
+}
+let cardStyle;
+if (this.state.hover) {
+  console.log('do it')
+  cardStyle = {transform: 'scale(1.1)'};
+} else {
+  console.log('dont grow')
+  cardStyle = {transform: 'scale(1)'}
+}
+
   return (
       <Grid.Column>
-              <Card fluid color='red' >
+              <Card fluid color='red' style={cardStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
                 <Card.Content>
                   <Card.Header style={styles.header}>
                   <Moment format='LL' date={game.date}/>
@@ -156,13 +174,13 @@ const styles = {
                   {description()}
                   </Card.Description>
                 </Card.Content>
-                <Card.Content extra>
-                  <div className='ui buttons'>
+                <Card.Content extra style={flexStyle.column}>
+                  <div className='ui buttons' style={flexStyle.column}>
                     <span style={{textOverflow: 'ellipsis'}}>
                     <Button onClick= {() => this.editGame(gameID)} basic floated='right' color='green' fluid active>{editorsave}</Button>
-                    <Button onClick= {() => this.sendNotification(gameID)} floated='right' fluid basic color='purple'>{self.state.notification}</Button>
+                    <Button style={{marginTop: 10}} onClick= {() => this.sendNotification(gameID)} floated='right' fluid basic color='purple'>{self.state.notification}</Button>
                     <br/>
-                    <Button onClick= {() => this.deleteGame(gameID)} floated='right' size='small' fluid basic color='red'>{self.state.delete}</Button>
+                    <Button style={{marginTop: 10}} onClick= {() => this.deleteGame(gameID)} floated='right' size='small' fluid basic color='red'>{self.state.delete}</Button>
                     </span>
                     <br/>
                   </div>
@@ -177,7 +195,7 @@ const styles = {
                         </Modal.Description>
                       </Modal.Content>
                     </Modal>
-                  <Dropdown button basic text='See Roster' onClick= {() => this.getRoster(gameID)}>
+                  <Dropdown style={{marginTop: 10}} button basic text='See Roster' onClick= {() => this.getRoster(gameID)}>
                       <Dropdown.Menu>
                          <Dropdown.Header content='Players Attending' />
                         {this.state.viewRoster.map((item)=> <Dropdown.Item text={item} />)}

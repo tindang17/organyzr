@@ -22,6 +22,9 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
         div: {
         paddingLeft: 200,
         paddingRight: 200
+      }, 
+      pic: {
+        borderRadius: '50%'
       }
       }
       return (
@@ -32,7 +35,7 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
           <Grid divided centered style={styles.text}>
             <Grid.Row>
               <Grid.Column width={3}>
-                <Image src={require('../images/gtran.jpg')}/>
+                <Image style={styles.pic} src={require('../images/gtran.jpg')}/>
               </Grid.Column>
               <Grid.Column width={10}>
                 <Message color='blue'>
@@ -60,13 +63,13 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
                 </Message>
               </Grid.Column>
               <Grid.Column width={3}>
-                <Image src={require('../images/tdang.jpg')}/>
+                <Image style={styles.pic} src={require('../images/tdang.jpg')}/>
               </Grid.Column>
             </Grid.Row>
 
             <Grid.Row>
               <Grid.Column width={3}>
-                <Image src={require('../images/sang.png')}/>
+                <Image style={styles.pic} src={require('../images/sang.png')}/>
               </Grid.Column>
               <Grid.Column width={10}>
                 <Message color='blue'>

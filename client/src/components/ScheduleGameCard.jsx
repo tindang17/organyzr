@@ -56,9 +56,9 @@ class LinkButton extends Component {
                 </Card.Content>
                 <Card.Content extra>
                   <div className='ui two buttons'>
-                    <span style={{textOverflow: 'ellipsis'}}>
-                    <Button size='medium' toggle  active={active} onClick={this.handleClickGoing}>Going</Button>
-                    <Button size='medium'   active={!active}
+                    <span style={{textOverflow: 'ellipsis', display: 'flex', width: '100%'}}>
+                    <Button style={{flex: 1}} size='medium' toggle  active={active} onClick={this.handleClickGoing}>Going</Button>
+                    <Button style={{flex: 1}} size='medium'   active={!active}
                       color={!active ? 'red' : null}onClick={this.handleClickNotGoing}>Fuck This</Button>
                     </span>
                   </div>

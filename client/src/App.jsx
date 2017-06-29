@@ -93,8 +93,7 @@ class App extends Component {
         fontSize: 24,
         fontFamily: 'helvetica',
         listStyleType: 'none',
-        padding: 0,
-        position: 'fixed'
+        padding: 0
       },
       liitem: {
         padding: 10
@@ -154,9 +153,10 @@ class App extends Component {
   <div style={{ display: 'flex'}}>
     <div style={{
       padding: '10px',
-      width: '10%',
+      width: '190px',
       background: '#143153',
-      minHeight: '100vh'
+      minHeight: '100vh',
+      position: 'fixed'
       }}>
         <ul style={styles.ulitem}>
           <li style={styles.liitem}><Link style={styles.linkItems} to="/"><Button color='blue' fluid>Home</Button></Link></li>
@@ -167,7 +167,7 @@ class App extends Component {
           <br/>
         </ul>
       </div>
-      <div style={{ flex: 1, padding: '20px' }}>
+      <div style={{ flex: 1, padding: 20, marginLeft: 190 }}>
         {routes.map((route, index) => (
         // Render more <Route>s with the same paths as
         // above, but different components this time.

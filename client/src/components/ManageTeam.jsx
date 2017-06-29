@@ -83,8 +83,7 @@ class ManageTeam extends Component {
 
     const styles = {
       grid: {
-        paddingLeft: 50,
-        paddingRight: 50
+        
       },
       div: {
         paddingLeft: 200,

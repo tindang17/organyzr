@@ -25,7 +25,9 @@ class Faq extends React.Component {
 
     const styles = {
       message: {
-        fontSize: 16
+        fontSize: 16,
+        flex: 1
+        
       },
       messagesColor: {
           color: 'black'
@@ -33,6 +35,14 @@ class Faq extends React.Component {
       grid: {
         paddingLeft: 75, 
         paddingRight: 75
+      },
+      circle: {
+        borderRadius: '50%',
+        overflow: 'hidden'
+      },
+      alignCenter: {
+        display: 'flex',
+        alignItems: 'center'
       }
     }
     return (
@@ -41,23 +51,25 @@ class Faq extends React.Component {
     <br/>
       <Grid divided centered style={styles.grid}>
         <Grid.Column width={4}>
-          <Image src={require('../images/outside_rink_net.png')}/>
+          <Image style={styles.circle} src={require('../images/outside_rink_net.png')}/>
         </Grid.Column>
-        <Grid.Column width={9}>
+        <Grid.Column width={9} style={styles.alignCenter}>
           <Message style={styles.message} color='blue'>
             <Message.Header style={styles.messagesColor}>I'm a Manager, how do I use Organyzr?</Message.Header>
             <Message.List style={styles.messagesColor} items={items} />
           </Message>
         </Grid.Column>
 
-        <Grid.Column width={9}>
+        <Grid.Column width={9} style={styles.alignCenter}>
           <Message style={styles.message} color='green'>
             <Message.Header style={styles.messagesColor}>I'm a Player, how do I use Organyzer?</Message.Header>
             <Message.List style={styles.messagesColor} items={items2} />
           </Message>
         </Grid.Column>
         <Grid.Column width={4}>
-          <Image src={require('../images/tennis.jpg')}/>
+          <div style={styles.circle}>
+             <Image  src={require('../images/tennis.jpg')}/>
+          </div>
         </Grid.Column>
       </Grid>
       </div>
