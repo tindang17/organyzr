@@ -100,7 +100,7 @@ class Settings extends React.Component {
     }
 
     return (
-        <div style={styles.div}>
+    <div style={styles.div}>
           <h2> Settings </h2>
           <h4> Change your contact information here </h4>
           <Grid>
