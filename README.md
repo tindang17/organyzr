@@ -1,4 +1,4 @@
-# SourceCode
+# Organyzr
 
 Welcome to Organyzr - a Lighthouse Labs final project. The application looks to solve the problem of having to text, email, use Facebook groups, and all the mundane, time-consuming tasks of organizing a sports team. Organyzr looks to assist team managers by allowing them to aggregate their schedule and players into one place, and let them send text/email notifications from the dashboard. 
 
