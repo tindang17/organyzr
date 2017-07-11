@@ -5,13 +5,8 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
     constructor(props){
       super(props);
     }
-    // sending request to the server
-
-    componentDidMount() {
-    }
 
     render () {
-
       const styles = {
         text: {
           fontSize: 16
@@ -20,18 +15,19 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
           color: 'black'
         },
         div: {
-        paddingLeft: 200,
-        paddingRight: 200
-      }, 
-      pic: {
-        borderRadius: '50%'
+          paddingLeft: 200,
+          paddingRight: 200
+        }, 
+        pic: {
+          borderRadius: '50%'
+        }
       }
-      }
+
       return (
         <div style={styles.div}>
-        <Image src={require('../images/organyzr_aboutus_banner_resized.jpg')}  fluid centered/>
-        <Header as='h1' textAlign='center'> About Us! </Header>
-        <br/>
+          <Image src={require('../images/organyzr_aboutus_banner_resized.jpg')}  fluid centered/>
+          <Header as='h1' textAlign='center'> About Us! </Header>
+          <br/>
           <Grid divided centered style={styles.text}>
             <Grid.Row>
               <Grid.Column width={3}>
@@ -50,7 +46,6 @@ import { Grid, Image, Message, Header } from 'semantic-ui-react'
                 </Message>
               </Grid.Column>
             </Grid.Row>
-
             <Grid.Row>
               <Grid.Column width={10}>
                 <Message color='blue'>
