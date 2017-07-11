@@ -195,12 +195,6 @@ if (this.state.hover) {
                         </Modal.Description>
                       </Modal.Content>
                     </Modal>
-                  <Dropdown style={{marginTop: 10}} button basic text='See Roster' onClick= {() => this.getRoster(gameID)}>
-                      <Dropdown.Menu>
-                         <Dropdown.Header content='Players Attending' />
-                        {this.state.viewRoster.map((item)=> <Dropdown.Item text={item} />)}
-                      </Dropdown.Menu>
-                    </Dropdown>
                     <br/>
 
                   <div>
