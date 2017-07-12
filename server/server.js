@@ -16,12 +16,12 @@ const knexLogger  = require('knex-logger');
 
 const bcrypt = require('bcrypt');
 const {compareSync} = require("bcrypt");
+const nodemailer = require('nodemailer');
 
 //Routes
 const gamesRoutes = require('./routes/games');
 const teamsRoutes = require('./routes/teams');
 const loginRoutes = require('./routes/test/login');
-// const twilioRoutes = require('./functions/twilio');
 
 const webpack = {
   core: require('webpack'),
@@ -43,8 +43,6 @@ if (ENV === 'development') {
 //Functions
 
 const add_user_local = require("./functions/add_user_local.js");
-
-// const add_user_local = require("./functions/passport/add_user_local.js");
 const add_user_facebook = require("./functions/add_user_facebook.js");
 const add_team = require("./functions/add_team.js");
 const add_game = require("./functions/add_game.js");
@@ -66,7 +64,6 @@ const send_notification = require("./functions/send_notification.js");
 const opt_in = require("./functions/opt_in.js");
 const opt_out = require("./functions/opt_out.js");
 
-let nodemailer = require('nodemailer');
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -78,7 +75,7 @@ let transporter = nodemailer.createTransport({
 
 var mailOptions = {
   from: 'organyzr@gmail.com',
-  to: 'boomerandzapper@yahoo.com',
+  to: 'grant.tran@gmail.com',
   subject: 'Sending Email using Node.js',
   text: 'That was easy!'
 };
@@ -101,7 +98,7 @@ app.use(knexLogger(knex));
 
 app.use(cookieSession({
   name: 'session',
-  keys: ['kfpoier0tu5g0rejgre', 'erljfo34if0jwfdkepf']
+  keys: [process.env.COOKIE_KEY1, process.env.COOKIE_KEY2]
 }));
 
 app.use(bodyParser.json());
@@ -138,7 +135,6 @@ passport.use(new LocalStrategy(
   }
 ));
 
-//CHANGE CALLBACK URL TO WHAT WE USE
 passport.use(new FacebookStrategy({
   clientID: '891703524347118',
   clientSecret: '98717a1f70a79ad745206c6a7e6323f9',
@@ -164,12 +160,10 @@ passport.use(new FacebookStrategy({
 
 
 passport.serializeUser((user, done) => {
-  console.log("serialize", user.id)
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  console.log("deserialize", id)
   knex('users').where({id: id}).first()
   .then((user) => { done(null, user); })
   .catch((err) => { done(err,null); });
@@ -182,21 +176,13 @@ app.get('/auth/facebook/callback',
                                       failureRedirect: '/#/login' }));
 
 
-// app.use('/games', gamesRoutes(knex));
-
-
 app.post('/logout', function(req, res){
-  // req.logout();
   req.session = null;
   res.redirect('/');
-  // res.redirect('/#/login');
 });
 
 
 app.post('/updategame/:game_id', function(req, res) {
-  console.log(req.body)
-  console.log(req.params.game_id)
-  console.log(req.session.passport.user)
   update_game(knex, req.body, req.params.game_id, req.session.passport.user, res)
 })
 
@@ -228,8 +214,6 @@ app.post('/signup', function(req, res) {
 // Listen to POST requests to /users.
 app.post('/new_team', function(req, res) {
   // Get sent data.
-  console.log('req', req.body)
-  console.log('new_team')
   let user_id = req.session.passport.user
   // Do a MySQL query
   add_team(knex, user_id, req.body.name, req.body.logo)
@@ -239,9 +223,6 @@ app.post('/new_team', function(req, res) {
 app.post('/add_team', function(req, res) {
   // Get sent data.
   let user_id = req.session.passport.user
-  console.log('req', req.body)
-  console.log('adding a team for', user_id)
-
   // Do a MySQL query.
 
   add_my_team(knex, user_id, req.body.uuid, res);
@@ -252,8 +233,6 @@ app.post('/add_team', function(req, res) {
 // Listen to POST requests to /users.
 app.post('/new_game', function(req, res) {
   // Get sent data.
-  console.log('req', req.body)
-  console.log('new_team')
   let user_id = req.session.passport.user
   // Do a MySQL query.
 
@@ -264,7 +243,6 @@ app.post('/new_game', function(req, res) {
 
 app.post('/login',
   passport.authenticate('local'), function(err, user, info) {
-    console.log('login post')
     if (err) { return (err); }
     if (!user) { return res.send({ success: false, message: info.message}); }
     else { return res.json({ success: true, message: 'success'}); }
@@ -272,13 +250,11 @@ app.post('/login',
 
 app.post('/optin/:games_users_uuid',
   function(req, res) {
-    console.log('optin', req.params.games_users_uuid)
     opt_in(knex, req.params.games_users_uuid, res)
   });
 
 app.post('/optout/:games_users_uuid',
   function(req, res) {
-     console.log('optout', req.params.games_users_uuid)
      opt_out(knex, req.params.games_users_uuid, res)
   });
 
@@ -308,15 +284,8 @@ app.post('/notification/:game_id',
 
 // Listen to POST requests to /users.
 app.post('/settings', function(req, res) {
-  // Get sent data.
-
   const data = req.body;
   let user_id = req.session.passport.user;
-  console.log('user_id', user_id)
-  console.log('data', data)
-  // Do a MySQL query.
-
-  // add_user_local(knex, user, res)
   update_user(knex, data, user_id, res)
 });
 
@@ -351,62 +320,41 @@ app.use('/test/login', loginRoutes(knex, passport));
 
 
 app.get('/mygames/data/:team_uuid', function(req, res) {
-    console.log('server side');
-    console.log(req.params.team_uuid)
-    console.log(req.session.passport.user)
     getMyGames(knex, res, req.session.passport.user, req.params.team_uuid);
 })
 
 app.get('/games/data/:team_uuid', function(req, res) {
-    console.log('server side');
-    console.log(req.params.team_uuid)
-    console.log(req.session.passport.user)
     getTeamGames(knex, res, req.session.passport.user, req.params.team_uuid);
 })
 
 app.get('/myteams/data', function(req, res) {
-    console.log('server side');
-    console.log(req.session.passport)
-    console.log(req.session.passport.user)
     get_my_teams(knex, res, req.session.passport.user);
 })
 
 app.get('/teams/data', function(req, res) {
-    console.log('server side');
-    console.log(req.session.passport)
-    console.log(req.session.passport.user)
     teamsRoutes(knex, res, req.session.passport.user);
 })
 
 app.get('/settings/data', function(req, res) {
-    console.log('server side settings');
-    console.log(req.session.passport)
-    console.log(req.session.passport.user)
     settings_data(knex, res, req.session.passport.user);
 })
 
 app.get('/player/data/:team_uuid/:game_id', function(req, res) {
-  console.log('passport',req);
-  console.log('params',req.params);
-  // res.send(req.session.passport.user.toString());
   getRosterData(knex, res, req.session.passport.user, req.params.team_uuid, req.params.game_id);
 })
 
 
 app.get('/landing/check', function(req, res) {
-  // console.log(req.session.passport.user);
   if (!req.session.passport) {
     res.send('not logged in');
   } else {
     knex.select("*").from("users").where({
       id: req.session.passport.user
     }).then(function(results){
-      console.log(results);
       res.send(results);
   }
 )}
 })
-
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
