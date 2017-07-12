@@ -12,7 +12,6 @@ import ManageGameCard from './ManageGameCard.jsx';
 class ManageTeam extends Component {
   constructor (props) {
     super(props);
-    console.log('super props', this.props.location.pathname.split('/')[1])
     this.state = {
       team: this.props.location.pathname.split('/')[2],
       games: [],
@@ -25,7 +24,6 @@ class ManageTeam extends Component {
   componentDidMount() {
     let teams;
     let self = this;
-    console.log('self.props.', self.props);
     axios.get(`/games/data/`+self.state.team)
     .then(res => {
       self.setState({games: self.state.games.concat(res.data)})
@@ -40,8 +38,6 @@ class ManageTeam extends Component {
     description: description
     })
     .then(res => {
-    console.log('updated game!')
-    console.log(res.body)
     self.setState({notification: res.body})
     })
   }
@@ -49,7 +45,6 @@ class ManageTeam extends Component {
     let self = this
     axios.post('/deletegame/' + gameid.toString())
     .then(res => {
-    console.log('res.body', res.body)
     self.setState({games: self.state.games.filter(function(game){
     return !(game.id === gameid)})})
     })
@@ -63,17 +58,13 @@ class ManageTeam extends Component {
   }
 
   render () {
-  let self = this
-
-  console.log('first in render', this.state.games);
-  let team = self.state.team
-  let gameCards = this.state.games;
-  let htmlGames = [];
-  console.log('games', gameCards)
+    let self = this
+    let team = self.state.team
+    let gameCards = this.state.games;
+    let htmlGames = [];
     if (gameCards.length !=  null) {
       for (let i = 0; i < gameCards.length; i++) {
         htmlGames.push(
-
         <ManageGameCard key={uuidv4()} game={gameCards[i]}
           edit={self.editGame}
           delete={self.deleteGame}/>
@@ -90,7 +81,7 @@ class ManageTeam extends Component {
         paddingRight: 200
       }
     }
-    console.log('props', self.props.user);
+
     return (
       <div style={styles.div}>
         <h3> Hello Manager </h3>
@@ -103,12 +94,11 @@ class ManageTeam extends Component {
           {htmlGames}
           </Grid.Row>
         </Grid>
-
         <div>
-            <NewGame className='new-team' updateGame={this.updateGame} uuid={team}/>
+          <NewGame className='new-team' updateGame={this.updateGame} uuid={team}/>
         </div>
         <div>
-            <Calendar games={gameCards} className='team-calendar'/>
+          <Calendar games={gameCards} className='team-calendar'/>
         </div>
       </div>
     );
