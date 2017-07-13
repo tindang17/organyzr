@@ -136,8 +136,8 @@ passport.use(new LocalStrategy(
 ));
 
 passport.use(new FacebookStrategy({
-  clientID: '891703524347118',
-  clientSecret: '98717a1f70a79ad745206c6a7e6323f9',
+  clientID: process.env.FACEBOOK_ID,
+  clientSecret: process.env.FACEBOOK_SECRET,
   callbackURL: "http://localhost:8080/auth/facebook/callback",
   profileFields: ['id', 'email', 'name']
   },
@@ -166,7 +166,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((id, done) => {
   knex('users').where({id: id}).first()
   .then((user) => { done(null, user); })
-  .catch((err) => { done(err,null); });
+  .catch((err) => { done(err, null); });
 });
 
 
@@ -235,7 +235,6 @@ app.post('/new_game', function(req, res) {
   // Get sent data.
   let user_id = req.session.passport.user
   // Do a MySQL query.
-
   add_game(knex, user_id, req.body)
   res.sendStatus(200);
 });
