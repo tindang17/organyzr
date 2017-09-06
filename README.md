@@ -1,12 +1,3 @@
-This app aims to make it easier for team manager to manage team schedule.
+Welcome to Organyzr - a Lighthouse Labs final project. The application looks to solve the problem of having to text, email, use Facebook groups, and all the mundane, time-consuming tasks of organizing a sports team. Organyzr looks to assist team managers by allowing them to aggregate their schedule and players into one place, and let them send text/email notifications from the dashboard.
 
-This web app was built using:
-  Javascript
-  NodeJS
-  ExpressJS
-  ReactJS
-  PostgresQL-Knex
-  Webpack
-  SemanticUI
-
-To test this app, you can clone it, then run npm install to install all the dependencies.
+Stack - Organyzr was built with a ReactJS front-end paired with Semantic-UI-React for styling components. The back-end uses a NodeJS + Express server set-up, with a PostgreSQL database implementation. Organyzr also uses a Babel + Webpack set-up, and is deployed using DigitalOcean + nginx here
