@@ -47,33 +47,32 @@ class Faq extends React.Component {
     }
     return (
     <div>
-    <Header as='h2' textAlign='center'> FAQ - How to use Organyzer </Header> 
-    <br/>
-      <Grid divided centered style={styles.grid}>
-        <Grid.Column width={4}>
-          <Image style={styles.circle} src={require('../images/outside_rink_net.png')}/>
-        </Grid.Column>
-        <Grid.Column width={9} style={styles.alignCenter}>
-          <Message style={styles.message} color='blue'>
-            <Message.Header style={styles.messagesColor}>I'm a Manager, how do I use Organyzr?</Message.Header>
-            <Message.List style={styles.messagesColor} items={items} />
-          </Message>
-        </Grid.Column>
+      <Header as='h2' textAlign='center'> FAQ - How to use Organyzer </Header> 
+      <br/>
+        <Grid divided centered style={styles.grid}>
+          <Grid.Column width={4}>
+            <Image style={styles.circle} src={require('../images/outside_rink_net.png')}/>
+          </Grid.Column>
+          <Grid.Column width={9} style={styles.alignCenter}>
+            <Message style={styles.message} color='blue'>
+              <Message.Header style={styles.messagesColor}>I'm a Manager, how do I use Organyzr?</Message.Header>
+              <Message.List style={styles.messagesColor} items={items} />
+            </Message>
+          </Grid.Column>
 
-        <Grid.Column width={9} style={styles.alignCenter}>
-          <Message style={styles.message} color='green'>
-            <Message.Header style={styles.messagesColor}>I'm a Player, how do I use Organyzer?</Message.Header>
-            <Message.List style={styles.messagesColor} items={items2} />
-          </Message>
-        </Grid.Column>
-        <Grid.Column width={4}>
-             <Image style={styles.circle} src={require('../images/tennis_square2.png')}/>
-        </Grid.Column>
-      </Grid>
+          <Grid.Column width={9} style={styles.alignCenter}>
+            <Message style={styles.message} color='green'>
+              <Message.Header style={styles.messagesColor}>I'm a Player, how do I use Organyzer?</Message.Header>
+              <Message.List style={styles.messagesColor} items={items2} />
+            </Message>
+          </Grid.Column>
+          <Grid.Column width={4}>
+              <Image style={styles.circle} src={require('../images/tennis_square2.png')}/>
+          </Grid.Column>
+        </Grid>
       </div>
     )
   }
 }
-
 
 export default Faq;

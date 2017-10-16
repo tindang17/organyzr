@@ -32,8 +32,6 @@ class Login extends React.Component {
       formInputs: newFormInputs
     });
     let allGood = true;
-    // looping through the all the field to check
-    // for the form input.
     for (let input in this.state.formInputs) {
       var inputValue = this.state.formInputs[input];
       allGood = allGood && (inputValue.length > 0);
@@ -43,13 +41,8 @@ class Login extends React.Component {
   }
 
   handleSubmit(e) {
-    console.log(e)
-    console.log('fetch call')
     e.preventDefault();
     var self = this;
-    // let formData = new FormData();
-    // formData.append('username', self.state.email)
-    // On submit of the form, send a POST request with the data to the server.
     fetch('/test/login', {
         method: 'POST',
         headers: {

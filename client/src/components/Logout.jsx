@@ -9,11 +9,9 @@ import { Button, Checkbox, Form, Message } from 'semantic-ui-react'
 class Logout extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       redirect: false
     }
-
   }
 
   componentDidMount () {
@@ -31,10 +29,9 @@ class Logout extends React.Component {
       window.location.reload()
     }
     return (
-
-        <div>
-          <h3> Logging you out....</h3>
-        </div>
+      <div>
+        <h3> Logging you out....</h3>
+      </div>
     );
   }
 }

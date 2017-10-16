@@ -10,7 +10,6 @@ const config = {
   // context: path(__dirname, 'src'),
 
   entry: [
-    // 'webpack-dev-server/client?http://localhost:8080',
     'webpack-hot-middleware/client',
     './client/src/index.jsx'
     // the entry point of our app
@@ -21,8 +20,6 @@ const config = {
 
     path: path.resolve(__dirname, 'dist' )
 
-    // publicPath: '/'
-    // necessary for HMR to know where to load the hot update chunks
   },
 
   devtool: ENV === 'production' ? 'cheap-source-map' : 'inline-source-map',

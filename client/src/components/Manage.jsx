@@ -29,15 +29,8 @@ class Manage extends Component {
     var self = this;
     axios.get(`/teams/data`)
     .then(res => {
-      console.log('managedata', res.data);
       self.setState({teams: self.state.teams.concat(res.data)})
     })
-    // testing for twilio
-    // axios.post(`/manage/message`)
-    // .then(res => {
-    //   self.setState({redirect: true})
-    // })
-  // console.log('last thing in comp did mount');
   }
 
   updateTeam() {
@@ -68,20 +61,20 @@ class Manage extends Component {
     for (let i = 0; i < teamCards.length; i++) {
       let teamPath = '/manageteam/' + teamCards[i].uuid;
       htmlTeams.push(
-          <Table.Row key={i}>
-            <Table.Cell>
+        <Table.Row key={i}>
+          <Table.Cell>
             <div key={i}>{teamCards[i].name}</div>
           </Table.Cell>
-            <Table.Cell>
-              <Router>
-                <div>
-              <Link to={teamPath}><Button color='blue'>Manage</Button></Link>
-              <LinkButton uuid={teamCards[i].uuid}></LinkButton>
-              <Route path={teamPath} component={<ManageTeam key={i} user={teamCards[i].name} uuid={teamCards[i].uuid}/>} />
-                </div>
-              </Router>
-            </Table.Cell>
-            </Table.Row>
+          <Table.Cell>
+            <Router>
+              <div>
+                <Link to={teamPath}><Button color='blue'>Manage</Button></Link>
+                  <LinkButton uuid={teamCards[i].uuid}></LinkButton>
+                <Route path={teamPath} component={<ManageTeam key={i} user={teamCards[i].name} uuid={teamCards[i].uuid}/>} />
+              </div>
+            </Router>
+          </Table.Cell>
+        </Table.Row>
         )
       }
     }
