@@ -65,28 +65,28 @@ const opt_in = require("./functions/opt_in.js");
 const opt_out = require("./functions/opt_out.js");
 
 
-let transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USERNAME,
-    pass: process.env.GMAIL_PASSWORD
-  }
-});
+// let transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: process.env.GMAIL_USERNAME,
+//     pass: process.env.GMAIL_PASSWORD
+//   }
+// });
 
-var mailOptions = {
-  from: 'organyzr@gmail.com',
-  to: 'grant.tran@gmail.com',
-  subject: 'Sending Email using Node.js',
-  text: 'That was easy!'
-};
+// var mailOptions = {
+//   from: 'organyzr@gmail.com',
+//   to: 'grant.tran@gmail.com',
+//   subject: 'Sending Email using Node.js',
+//   text: 'That was easy!'
+// };
 
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
+// transporter.sendMail(mailOptions, function(error, info){
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('Email sent: ' + info.response);
+//   }
+// });
 
 
 const passport = require('passport')
@@ -271,13 +271,13 @@ app.post('/deletegame/:game_id',
 );
 
 
-scheduler.start(knex);
+// scheduler.start(knex);
 
-app.post('/notification/:game_id',
-    function(req, res) {
-      send_notification(knex, req.params.game_id, req.session.passport.user, transporter, res)
-    }
-);
+// app.post('/notification/:game_id',
+//     function(req, res) {
+//       send_notification(knex, req.params.game_id, req.session.passport.user, transporter, res)
+//     }
+// );
 
 
 
