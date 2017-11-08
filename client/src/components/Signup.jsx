@@ -90,40 +90,33 @@ class Signup extends React.Component {
         // self.setState({message: body.message});
         self.setState({message: body.message})
         if(self.state.message === 'Success!') {
-
-
-
-
-
-    fetch('/test/login', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          username: self.state.formInputs.email,
-          password: self.state.formInputs.password
-        })
-      })
-      .then(function(response) {
-        if (response.statusText === 'Unauthorized') {
-          console.log('unauth');
-        } else {
-          return response.text();
-        }})
-      .then(function(body) {
-        // console.log("body message", JSON.parse(body));
-        if (body) {
-          console.log('body');
-          self.setState({redirect: true});
-        } else {
-          self.setState({errorMessage: 'Incorrect Credentials'})
-        }
-      })
-
-
+          fetch('/test/login', {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+              username: self.state.formInputs.email,
+              password: self.state.formInputs.password
+            })
+          })
+          .then(function(response) {
+            if (response.statusText === 'Unauthorized') {
+              console.log('unauth');
+            } else {
+              return response.text();
+            }})
+          .then(function(body) {
+            // console.log("body message", JSON.parse(body));
+            if (body) {
+              console.log('body');
+              self.setState({redirect: true});
+            } else {
+              self.setState({errorMessage: 'Incorrect Credentials'})
+            }
+          })
         } else if(self.state.message === 'users_email_unique') {
           errorMessages['email'].push('Email already exists');
         } else if(self.state.message === 'users_phone_unique') {

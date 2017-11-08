@@ -18,8 +18,8 @@ module.exports = (knex, passport, res) => {
     passport.authenticate('local'),
     function(req, res) {
       // console.log(req)
-      console.log('post to login')
-      res.json({ success: true, message: 'success'})
+      console.log('post to login');
+      res.json({ success: true, message: 'success'});
     }
   );
   return router;

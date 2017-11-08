@@ -20,12 +20,11 @@ class Landing extends Component {
   }
 
   componentDidMount() { 
-    
   let self = this;
    axios.get(`/landing/check`)
     .then(res => {
       self.setState({userid: res.data})
-    })
+    });
   }
 
   render() {

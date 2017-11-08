@@ -44,31 +44,31 @@ class Login extends React.Component {
     e.preventDefault();
     var self = this;
     fetch('/test/login', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          username: this.state.formInputs.email,
-          password: this.state.formInputs.password
-        })
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        username: this.state.formInputs.email,
+        password: this.state.formInputs.password
       })
-      .then(function(response) {
-        if (response.statusText === 'Unauthorized') {
-          console.log('unauth');
-        } else {
-          return response.text();
-        }})
-      .then(function(body) {
-        // console.log("body message", JSON.parse(body));
-        if (body && !(body==='unauth')) {
-          self.setState({redirect: true})
-        } else {
-          self.setState({errorMessage: 'Incorrect Credentials'})
-        }
-      })
+    })
+    .then(function(response) {
+      if (response.statusText === 'Unauthorized') {
+        console.log('unauth');
+      } else {
+        return response.text();
+      }})
+    .then(function(body) {
+      const parsedBody = JSON.parse(body);
+      if (parsedBody && (parsedBody.success === true)) {
+        self.setState({redirect: true});
+      } else {
+        self.setState({errorMessage: 'Incorrect Credentials'});
+      }
+    });
   }
   render() {
     const styles = {
@@ -96,8 +96,7 @@ class Login extends React.Component {
 
 
     if (redirect) {
-
-      window.location.reload()
+      window.location.reload();
     }
     return (
 

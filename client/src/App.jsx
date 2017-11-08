@@ -108,7 +108,6 @@ class App extends Component {
       checkLogin = 'not logged in'
     } else {
       checkLogin = 'logged in'
-
     }
 
     let signupLogin = [];
