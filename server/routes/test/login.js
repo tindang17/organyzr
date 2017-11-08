@@ -17,9 +17,9 @@ module.exports = (knex, passport, res) => {
   router.post('/',
     passport.authenticate('local'),
     function(req, res) {
-      console.log(req)
+      // console.log(req)
       console.log('post to login')
-      res.json({ success: false, message: 'success'})
+      res.json({ success: true, message: 'success'})
     }
   );
   return router;

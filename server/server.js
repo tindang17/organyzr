@@ -16,7 +16,7 @@ const knexLogger  = require('knex-logger');
 
 const bcrypt = require('bcrypt');
 const {compareSync} = require("bcrypt");
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 
 //Routes
 const gamesRoutes = require('./routes/games');
@@ -65,35 +65,35 @@ const opt_in = require("./functions/opt_in.js");
 const opt_out = require("./functions/opt_out.js");
 
 
-let transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USERNAME,
-    pass: process.env.GMAIL_PASSWORD
-  }
-});
+// let transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: process.env.GMAIL_USERNAME,
+//     pass: process.env.GMAIL_PASSWORD
+//   }
+// });
 
-var mailOptions = {
-  from: 'organyzr@gmail.com',
-  to: 'grant.tran@gmail.com',
-  subject: 'Sending Email using Node.js',
-  text: 'That was easy!'
-};
+// var mailOptions = {
+//   from: 'organyzr@gmail.com',
+//   to: 'grant.tran@gmail.com',
+//   subject: 'Sending Email using Node.js',
+//   text: 'That was easy!'
+// };
 
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
+// transporter.sendMail(mailOptions, function(error, info){
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('Email sent: ' + info.response);
+//   }
+// });
 
 
 const passport = require('passport')
  , LocalStrategy = require('passport-local').Strategy
  , FacebookStrategy = require('passport-facebook').Strategy;
 
-const scheduler = require('./functions/scheduler');
+// const scheduler = require('./functions/scheduler');
 app.use(knexLogger(knex));
 
 app.use(cookieSession({
@@ -271,13 +271,13 @@ app.post('/deletegame/:game_id',
 );
 
 
-scheduler.start(knex);
+// scheduler.start(knex);
 
-app.post('/notification/:game_id',
-    function(req, res) {
-      send_notification(knex, req.params.game_id, req.session.passport.user, transporter, res)
-    }
-);
+// app.post('/notification/:game_id',
+//     function(req, res) {
+//       send_notification(knex, req.params.game_id, req.session.passport.user, transporter, res)
+//     }
+// );
 
 
 
