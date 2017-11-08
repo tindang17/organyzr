@@ -73,20 +73,20 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-var mailOptions = {
-  from: 'organyzr@gmail.com',
-  to: 'boomerandzapper@yahoo.com',
-  subject: 'Sending Email using Node.js',
-  text: 'That was easy!'
-};
+// var mailOptions = {
+//   from: 'organyzr@gmail.com',
+//   to: 'boomerandzapper@yahoo.com',
+//   subject: 'Sending Email using Node.js',
+//   text: 'That was easy!'
+// };
 
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
+// transporter.sendMail(mailOptions, function(error, info){
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('Email sent: ' + info.response);
+//   }
+// });
 
 
 const passport = require('passport')
@@ -289,7 +289,7 @@ app.post('/deletegame/:game_id',
 );
 
 
-scheduler.start(knex);
+// scheduler.start(knex);
 
 app.post('/notification/:game_id',
     function(req, res) {
