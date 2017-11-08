@@ -9,7 +9,6 @@ import ScheduleGameCard from './ScheduleGameCard.jsx';
 class Schedule extends Component {
   constructor (props) {
     super(props);
-    console.log('super props', this.props.location.pathname.split('/')[1])
     this.state = {
       team: this.props.location.pathname.split('/')[2],
       games: []
@@ -20,14 +19,10 @@ class Schedule extends Component {
   componentDidMount() {
     let teams;
     var self = this;
-    console.log('before axios request');
     axios.get(`/mygames/data/`+self.state.team)
     .then(res => {
-      console.log('res.data', res.data);
       self.setState({games: self.state.games.concat(res.data)})
-      console.log(self.state.games);
     })
-    console.log('props in comp did mout ', self.props)
   }
 
 
@@ -38,11 +33,9 @@ class Schedule extends Component {
 
 let self = this
 let noGamesMessage;
-    console.log('first in render', this.state.games);
 let team = self.state.team
     let gameCards = this.state.games;
   let htmlGames = [];
-  console.log('games', gameCards)
 if (gameCards.length !=  null) {
   for (let i = 0; i < gameCards.length; i++) {
     htmlGames.push(
@@ -53,7 +46,6 @@ if (gameCards.length !=  null) {
 if (gameCards.length === 0) {
   noGamesMessage = <Message color='blue'>No games are currently scheduled. Please contact your manager.</Message>
 }
-  console.log('no games', noGamesMessage);
     const styles = {
       div: {
         paddingLeft: 250,

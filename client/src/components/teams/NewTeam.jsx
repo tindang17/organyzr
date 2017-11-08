@@ -45,14 +45,16 @@ class NewTeam extends React.Component {
       })
       .then(function(response) {
         if (response.status === 200) {
+          console.log('in if', response)
           self.props.updateTeam();
           self.state.name = '';
           self.state.logo = '';
         }
-        return response.json()
+        return response;
       })
       .then(function(body) {
-        self.setState({message: body.message, redirect: true});
+        console.log('lastbody', body);
+        self.setState({message: body.statusText, redirect: true});
       });
   }
 

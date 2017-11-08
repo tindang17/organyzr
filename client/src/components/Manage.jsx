@@ -12,7 +12,7 @@ import {
 } from 'react-router-dom';
 import ManageTeam from './ManageTeam.jsx';
 
-class Manage extends Component {
+class Manage extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -32,15 +32,15 @@ class Manage extends Component {
       self.setState({teams: self.state.teams.concat(res.data)})
     })
   }
-
-  updateTeam() {
-    var self = this;
-    axios.get(`/teams/data`)
-    .then(res => {
-      self.setState({teams: res.data})
-    })
-
-  }
+    updateTeam() {
+      var self = this;
+      axios.get(`/teams/data`)
+      .then(res => {
+        console.log('updateteam cb', res.data)
+        self.setState({teams: res.data})
+      })
+    }
+  
 
   render () {
 
@@ -57,7 +57,6 @@ class Manage extends Component {
   let htmlTeams = [];
 
   if (teamCards.length !=  null) {
-    console.log(teamCards,'teamcards');
     for (let i = 0; i < teamCards.length; i++) {
       let teamPath = '/manageteam/' + teamCards[i].uuid;
       htmlTeams.push(
