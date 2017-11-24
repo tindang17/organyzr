@@ -64,6 +64,9 @@ const send_notification = require("./functions/send_notification.js");
 const opt_in = require("./functions/opt_in.js");
 const opt_out = require("./functions/opt_out.js");
 
+// let nodemailer = require('nodemailer');
+
+
 // let transporter = nodemailer.createTransport({
 //   service: 'gmail',
 //   auth: {
