@@ -62,8 +62,7 @@ class Login extends React.Component {
         return response.text();
       }})
     .then(function(body) {
-      const parsedBody = JSON.parse(body);
-      if (parsedBody && (parsedBody.success === true)) {
+      if (body && !(body === 'unauth')) {
         self.setState({redirect: true});
       } else {
         self.setState({errorMessage: 'Incorrect Credentials'});
@@ -96,7 +95,8 @@ class Login extends React.Component {
 
 
     if (redirect) {
-      window.location.reload();
+      console.log(window.location)
+      // window.location.reload();
     }
     return (
 

@@ -19,7 +19,7 @@ class Landing extends Component {
     }
   }
 
-  componentDidMount() { 
+  componentDidMount() {
   let self = this;
    axios.get(`/landing/check`)
     .then(res => {
@@ -30,13 +30,13 @@ class Landing extends Component {
   render() {
     const styles = {
       div: {
-        paddingLeft: 200, 
+        paddingLeft: 200,
         paddingRight: 200
-      }, 
+      },
       font: {
         fontSize: 24,
         color: 'black'
-      }, 
+      },
       textfont: {
         fontSize: 20,
         color: 'black'
@@ -48,7 +48,7 @@ class Landing extends Component {
     if (this.state.userid === false) {
       landing.push(
       <Loader key='1' active inline='centered' />
-      ) 
+      )
     } else if (this.state.userid === 'not logged in') {
         landing.push(
           <Router key='2'>
@@ -70,11 +70,11 @@ class Landing extends Component {
         landing.push(
           <Message key='3' color='green'>
             <Message.Header style={styles.font}> Hello {this.state.userid[0].first_name}</Message.Header>
-            <Message.List style={styles.textfont}> 
-              You can now manage your teams or check-in with teams you play on. 
+            <Message.List style={styles.textfont}>
+              You can now manage your teams or check-in with teams you play on.
             </Message.List>
           </Message>)
-    } 
+    }
 
     return (
     <div style={styles.div}>
@@ -102,7 +102,7 @@ class Landing extends Component {
                 <br/>
                 Email: organyzr01@gmail.com <br/>
                 Password: sports123
-              </Message.List>  
+              </Message.List>
                 <br/>
             </Message>
           </Grid.Column>
@@ -114,5 +114,5 @@ class Landing extends Component {
 }
 
 
-  
+
 export default Landing;
