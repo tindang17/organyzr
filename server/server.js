@@ -63,15 +63,15 @@ const getRosterData = require("./functions/get_roster.js");
 const update_game = require("./functions/update_game.js");
 const sendNotification = require("./functions/send_notification.js");
 
-let nodemailer = require('nodemailer');
+// let nodemailer = require('nodemailer');
 
-let transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USERNAME,
-    pass: process.env.GMAIL_PASSWORD
-  }
-});
+// let transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: process.env.GMAIL_USERNAME,
+//     pass: process.env.GMAIL_PASSWORD
+//   }
+// });
 
 // var mailOptions = {
 //   from: 'organyzr@gmail.com',
